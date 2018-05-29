@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroupDirective, NgForm, ValidatorFn, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Location} from '@angular/common';
 
@@ -40,6 +40,14 @@ function usernameValidator(): ValidatorFn {
 })
 export class LoginComponent implements OnInit {
 
+  stepIndex = 0;
+
+  userTypes = [
+    {value: 'vip', viewValue: 'vip'},
+    {value: 'ven', viewValue: 'venues'},
+    {value: 'mgr', viewValue: 'manager'}
+  ];
+
   @Input() username: string;
 
   @Input() password: string;
@@ -56,7 +64,7 @@ export class LoginComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   constructor(
-    private location: Location
+    private location: Location,
   ) {
   }
 

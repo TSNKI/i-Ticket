@@ -1,38 +1,71 @@
-<mat-card class="login-form-card">
+<mat-card *ngIf="stepIndex==0" class="login-form-card">
   <mat-card-title>
     Login
   </mat-card-title>
-  <form class="login-form">
-    <mat-form-field class="full-width">
-      <input matInput
-             placeholder="Username"
-             [formControl]="usernameFormControl"
-             [errorStateMatcher]="matcher"
-             [(ngModel)]="username">
-      <mat-hint>Enter your username.</mat-hint>
-      <mat-error *ngIf="usernameFormControl.hasError('invalidName') && !usernameFormControl.hasError('required')">
-        Please enter a valid email address, user ID or manager ID
-      </mat-error>
-      <mat-error *ngIf="usernameFormControl.hasError('required')">
-        Username is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="full-width">
-      <input matInput
-             #passwordInput
-             placeholder="Password"
-             type="password"
-             [formControl]="passwordFormControl"
-             [(ngModel)]="password">
-      <mat-hint>Enter your password.</mat-hint>
-      <mat-error *ngIf="usernameFormControl.hasError('required')">
-        Password is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-  </form>
+
+  <mat-card-content>
+    <form class="login-form">
+      <mat-form-field style="width: 27%">
+        <mat-select placeholder="User Type">
+          <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
+            {{ userType.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 72%; float: right">
+        <input matInput
+               placeholder="Username"
+               [formControl]="usernameFormControl"
+               [errorStateMatcher]="matcher"
+               [(ngModel)]="username">
+        <mat-error *ngIf="usernameFormControl.hasError('invalidName') && !usernameFormControl.hasError('required')">
+          Please enter a valid email address, user ID or manager ID
+        </mat-error>
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </form>
+  </mat-card-content>
+
   <mat-card-actions>
     <div align="left" style="float: left">
       <button mat-button color="primary" class="back-btn" (click)="goBack()">Back</button>
+    </div>
+    <div align="right">
+      <a mat-button color="primary" class="sign-up-btn" routerLink="/user/signup">Sign up</a>
+      <button mat-raised-button color="primary" class="login-btn" (click)="stepIndex=1">Next</button>
+    </div>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="stepIndex==1" class="login-form-card">
+  <mat-card-title>
+    Login
+  </mat-card-title>
+
+  <mat-card-content>
+    <form class="login-form">
+      <mat-form-field class="full-width">
+        <input matInput
+               #passwordInput
+               placeholder="Password"
+               type="password"
+               [formControl]="passwordFormControl"
+               [(ngModel)]="password">
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div align="left" style="float: left">
+      <button mat-button color="primary" class="back-btn" (click)="stepIndex=0">Back</button>
     </div>
     <div align="right">
       <a mat-button color="primary" class="sign-up-btn" routerLink="/user/signup">Sign up</a>

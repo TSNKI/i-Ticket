@@ -1,10 +1,11 @@
 .login-form-card {
   min-width: 150px;
   max-width: 500px;
-  width: 100%;
+  width: 350px;
+  height: 450px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 180px;
+  margin-top: 100px;
 }
 
 .full-width {
@@ -17,25 +18,5 @@
   width: 95%;
   margin-left: auto;
   margin-right: auto;
-}
-
-.login-form > mat-form-field {
-  margin-bottom: 15px;
-}
-
-.login-form-card > mat-card-actions {
-
-}
-
-mat-card-actions .back-btn {
-
-}
-
-mat-card-actions .sign-up-btn {
-  margin-left: auto;
-}
-
-mat-card-actions .login-btn {
-  /*margin-top: 15px;*/
 }
 
