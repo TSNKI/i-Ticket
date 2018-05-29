@@ -42,12 +42,6 @@ export class LoginComponent implements OnInit {
 
   stepIndex = 0;
 
-  userTypes = [
-    {value: 'vip', viewValue: 'vip'},
-    {value: 'ven', viewValue: 'venues'},
-    {value: 'mgr', viewValue: 'manager'}
-  ];
-
   @Input() username: string;
 
   @Input() password: string;
@@ -73,6 +67,10 @@ export class LoginComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  nextStep(): void {
+    this.stepIndex = 1;
   }
 
   submit(): void {
