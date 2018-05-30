@@ -1,63 +1,76 @@
-<mat-card *ngIf="stepIndex==0" class="login-form-card">
-  <form class="login-form">
-    <div class="login-heading">
-      <div class="heading-text">登陆</div>
-      <div class="heading-subtext">使用您的邮箱地址/场馆编号/管理员账号</div>
-    </div>
+<mat-card class="login-form-card">
+  <mat-horizontal-stepper [linear]="isLinear" class="login-stepper-header">
+    <mat-step [stepControl]="usernameFormControl">
+      <form>
+        <div class="login-heading">
+          <div class="heading-text">登陆</div>
+          <div class="heading-subtext">使用您的邮箱地址/场馆编号/管理员账号</div>
+        </div>
 
-    <mat-form-field class="full-width" style="margin-top: 36px">
-      <input matInput
-             placeholder="用户名"
-             [formControl]="usernameFormControl"
-             [errorStateMatcher]="matcher"
-             [(ngModel)]="username">
-      <mat-error *ngIf="usernameFormControl.hasError('invalidName') && !usernameFormControl.hasError('required')">
-        请输入<strong>正确</strong>的用户名
-      </mat-error>
-      <mat-error *ngIf="usernameFormControl.hasError('required')">
-        用户名 <strong>不能为空</strong>
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field class="full-width" style="margin-top: 64px">
+          <input matInput
+                 placeholder="用户名"
+                 [formControl]="usernameFormControl"
+                 [errorStateMatcher]="matcher"
+                 [(ngModel)]="username">
+          <mat-error *ngIf="usernameFormControl.hasError('invalidName') && !usernameFormControl.hasError('required')">
+            用户名不正确
+          </mat-error>
+          <mat-error *ngIf="usernameFormControl.hasError('notExist') && !usernameFormControl.hasError('required')">
+            用户不存在
+          </mat-error>
+          <mat-error *ngIf="usernameFormControl.hasError('required')">
+            请输入用户名
+          </mat-error>
+        </mat-form-field>
 
-    <div class="btn-group">
-      <div align="left" style="float: left">
-        <button mat-button color="primary" class="back-btn" (click)="goBack()">返回</button>
-      </div>
-      <div align="right">
-        <a mat-button color="primary" class="sign-up-btn" routerLink="/user/signup">创建账号</a>
-        <button mat-raised-button color="primary" class="login-btn" (click)="nextStep()">下一步</button>
-      </div>
-    </div>
-  </form>
-</mat-card>
+        <div class="btn-group">
+          <div align="left" style="float: left">
+            <a mat-button color="primary" class="btn-link btn-signup" routerLink="/user/signup">创建账号</a>
+          </div>
+          <div align="right">
+            <button mat-raised-button color="primary" class="btn-primary" matStepperNext>下一步</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="passwordFormControl">
+      <form>
+        <div class="login-heading">
+          <div class="heading-text">登陆</div>
+          <div class="heading-subtext">
+            <div align="left" style="float: left">
+              <button mat-button disabled class="btn-link btn-primary btn-username" matStepperPrevious>
+                {{userType+' '+username}}
+              </button>
+            </div>
+            <div align="right">
+              <button mat-button color="primary" class="btn-link btn-primary" matStepperPrevious>更换账户</button>
+            </div>
+          </div>
+        </div>
 
-<mat-card *ngIf="stepIndex==1" class="login-form-card">
-  <form class="login-form">
-    <div class="login-heading">
-      <div class="heading-text">登陆</div>
-      <div class="heading-subtext">使用您的邮箱地址/场馆编号/管理员账号</div>
-    </div>
+        <mat-form-field class="full-width" style="margin-top: 64px">
+          <input matInput
+                 #passwordInput
+                 placeholder="密码"
+                 type="password"
+                 [formControl]="passwordFormControl"
+                 [(ngModel)]="password">
+          <mat-error *ngIf="usernameFormControl.hasError('required')">
+            密码 <strong>不能为空</strong>
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="full-width" style="margin-top: 36px">
-      <input matInput
-             #passwordInput
-             placeholder="密码"
-             type="password"
-             [formControl]="passwordFormControl"
-             [(ngModel)]="password">
-      <mat-error *ngIf="usernameFormControl.hasError('required')">
-        密码 <strong>不能为空</strong>
-      </mat-error>
-    </mat-form-field>
-
-    <div class="btn-group">
-      <div align="left" style="float: left">
-        <button mat-button color="primary" class="back-btn" (click)="stepIndex=0">上一步</button>
-      </div>
-      <div align="right">
-        <a mat-button color="primary" class="sign-up-btn" routerLink="/user/signup">忘记密码</a>
-        <button mat-raised-button color="primary" class="login-btn" (click)="submit()">登陆</button>
-      </div>
-    </div>
-  </form>
+        <div class="btn-group">
+          <div align="left" style="float: left">
+            <a mat-button color="primary" class="btn-link btn-forget" routerLink="/user/signup">忘记了密码？</a>
+          </div>
+          <div align="right">
+            <button mat-raised-button color="primary" class="btn-primary" (click)="submit()">登陆</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
 </mat-card>

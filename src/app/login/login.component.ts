@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Location} from '@angular/common';
+import {ValidationService} from '../services/validation.service';
+import {UserService} from '../services/user.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -11,36 +13,15 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-function usernameValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } => {
-    function isVip(value: string) {
-      const reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
-      return reg.test(value);
-    }
-
-    function isVen(value: string) {
-      const reg = /^[0-9]{7}$/;
-      return reg.test(value);
-    }
-
-    function isMgr(value: string) {
-      const reg = /^M[0-9]{7}$/;
-      return reg.test(value);
-    }
-
-    const valid = isVip(control.value) || isVen(control.value) || isMgr(control.value);
-    return valid ? null : {'invalidName': {value: control.value}};
-  };
-}
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  isLinear = true;
 
-  stepIndex = 0;
+  userType: string;
 
   @Input() username: string;
 
@@ -48,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   usernameFormControl = new FormControl('', [
     Validators.required,
-    usernameValidator(),
+    this.usernameValidator(),
   ]);
 
   passwordFormControl = new FormControl('', [
@@ -59,21 +40,72 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private location: Location,
+    private validationService: ValidationService,
+    private userService: UserService
   ) {
   }
 
   ngOnInit() {
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
-  nextStep(): void {
-    this.stepIndex = 1;
-  }
-
   submit(): void {
     alert(this.username);
   }
+
+  usernameValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+
+      const valid = this.isVip(control.value) || this.isVen(control.value) || this.isMgr(control.value);
+      if (!valid) {
+        return {'invalidName': {value: control.value}};
+      } else {
+        let exist = false;
+        switch (this.userType) {
+          case '会员':
+            exist = this.userService.vipCheck(control.value);
+            break;
+          case '场馆':
+            exist = this.userService.venCheck(control.value);
+            break;
+          case '管理员':
+            exist = this.userService.mgrCheck(control.value);
+            break;
+          default:
+            exist = false;
+        }
+        return exist ? null : {'notExist': {value: control.value}};
+      }
+    };
+  }
+
+  isVip(value: string): boolean {
+    const isVip = this.validationService.isVip(value);
+    if (isVip) {
+      this.userType = '会员';
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isVen(value: string): boolean {
+    const isVip = this.validationService.isVen(value);
+    if (isVip) {
+      this.userType = '场馆';
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isMgr(value: string): boolean {
+    const isVip = this.validationService.isMgr(value);
+    if (isVip) {
+      this.userType = '管理员';
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

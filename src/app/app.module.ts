@@ -4,10 +4,12 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {AppRoutingModule} from './/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
 import {AppHomeComponent} from './app-home/app-home.component';
-import {MaterialModule} from './/material.module';
+import {MaterialModule} from './material.module';
+import {ValidationService} from './services/validation.service';
+import {UserService} from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,10 @@ import {MaterialModule} from './/material.module';
     AppRoutingModule,
     MaterialModule,
   ],
-  providers: [],
+  providers: [
+    ValidationService,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
