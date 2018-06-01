@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent} from './user/login/login.component';
 import {AppHomeComponent} from './app-home/app-home.component';
 import {MaterialModule} from './material.module';
 import {ValidationService} from './services/validation.service';

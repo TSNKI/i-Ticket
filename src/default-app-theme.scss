@@ -118,3 +118,11 @@ body {
 mat-horizontal-stepper.login-stepper-header .mat-horizontal-stepper-header-container {
   display: none;
 }
+
+.btn-navbar.mat-button.mat-primary {
+  color: white;
+}
+
+.btn-navbar.mat-button.mat-primary .mat-button-focus-overlay {
+  background-color: $white-12-opacity;
+}
