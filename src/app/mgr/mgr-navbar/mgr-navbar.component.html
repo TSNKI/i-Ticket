@@ -6,12 +6,17 @@
            class="app-logo">
       <span>票票</span>
     </button>
-    <a mat-button color="primary" class="btn-navbar" href="https://angular.io/tutorial">Tour of Heroes</a>
-    <a mat-button color="primary" class="btn-navbar" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a>
-    <a mat-button color="primary" class="btn-navbar" href="https://blog.angular.io/">Angular blog</a>
+    <a mat-button color="primary" class="btn-navbar" href="#">审批</a>
+    <a mat-button color="primary" class="btn-navbar" href="#">结算</a>
+    <a mat-button color="primary" class="btn-navbar" href="#">统计</a>
   </span>
   <span class="fill-in"></span>
   <span>
-    <button mat-button color="primary" class="btn-navbar">{{ username }}</button>
+    <button mat-button color="primary" class="btn-navbar" [matMenuTriggerFor]="menu">{{ username }}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
   </span>
 </mat-toolbar>

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {CookiesService} from '../../services/cookies.service';
 
 @Component({
   selector: 'app-ven-navbar',
@@ -7,10 +8,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class VenNavbarComponent implements OnInit {
 
-  constructor() {
+  username: string;
+
+  constructor(
+    private cookieService: CookiesService
+  ) {
   }
 
   ngOnInit() {
+    // this.username = this.cookieService.getCookie('username');
+    this.username = 'cbb';
   }
 
 }

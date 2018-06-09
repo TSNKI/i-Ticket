@@ -13,6 +13,9 @@ import {UserService} from './services/user.service';
 import {MgrNavbarComponent} from './mgr/mgr-navbar/mgr-navbar.component';
 import {VipNavbarComponent} from './vip/vip-navbar/vip-navbar.component';
 import {VenNavbarComponent} from './ven/ven-navbar/ven-navbar.component';
+import {MgrHomeComponent} from './mgr/mgr-home/mgr-home.component';
+import {VenHomeComponent} from './ven/ven-home/ven-home.component';
+import {VipHomeComponent} from './vip/vip-home/vip-home.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import {VenNavbarComponent} from './ven/ven-navbar/ven-navbar.component';
     MgrNavbarComponent,
     VipNavbarComponent,
     VenNavbarComponent,
+    MgrHomeComponent,
+    VenHomeComponent,
+    VipHomeComponent,
   ],
   imports: [
     BrowserModule,
