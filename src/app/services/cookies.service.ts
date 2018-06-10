@@ -8,10 +8,11 @@ export class CookiesService {
   constructor() {
   }
 
-  setCookie(name: string, value: any, timeout: any): void {
+  setCookie(name: string, value: any, timeout: number): void {
     const d = new Date();
     d.setDate(d.getDate() + timeout);
     document.cookie = name + '=' + value + ';expires=' + d;
+    console.log(name + '=' + value + ';expires=' + d);
   }
 
   getCookie(name: string): string {

@@ -4,6 +4,8 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {Location} from '@angular/common';
 import {ValidationService} from '../../services/validation.service';
 import {UserService} from '../../services/user.service';
+import {CookiesService} from '../../services/cookies.service';
+import {Router} from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -40,8 +42,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private location: Location,
+    private router: Router,
     private validationService: ValidationService,
-    private userService: UserService
+    private userService: UserService,
+    private cookieService: CookiesService
   ) {
   }
 
@@ -49,7 +53,28 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
-    alert(this.username);
+    switch (this.userType) {
+      case '会员':
+        if (this.userService.vipLogin(this.username, this.password)) {
+          this.cookieService.setCookie('username', this.username, 1);
+          this.router.navigateByUrl('vip');
+        }
+        break;
+      case '场馆':
+        if (this.userService.venLogin(this.username, this.password)) {
+          this.cookieService.setCookie('username', this.username, 1);
+          this.router.navigateByUrl('ven');
+        }
+        break;
+      case '管理员':
+        if (this.userService.mgrLogin(this.username, this.password)) {
+          this.cookieService.setCookie('username', this.username, 1);
+          this.router.navigateByUrl('mgr');
+        }
+        break;
+      default:
+      // exist = false;
+    }
   }
 
   usernameValidator(): ValidatorFn {

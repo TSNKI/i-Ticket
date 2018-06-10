@@ -16,8 +16,8 @@ export class MgrNavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.username = this.cookieService.getCookie('username');
-    this.username = 'cbb';
+    this.username = this.cookieService.getCookie('username');
+    // this.username = 'cbb';
   }
 
 }
