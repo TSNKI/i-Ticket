@@ -1,9 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import {Location} from '@angular/common';
-import {ValidationService} from '../../services/validation.service';
-import {UserService} from '../../services/user.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { Location } from '@angular/common';
+import { ValidationService } from '../../services/validation.service';
+import { UserService } from '../../services/user.service';
+import { CookiesService } from '../../services/cookies.service';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -16,7 +18,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: [ './login.component.css' ]
 })
 export class LoginComponent implements OnInit {
   isLinear = true;
@@ -40,8 +42,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private location: Location,
+    private router: Router,
     private validationService: ValidationService,
-    private userService: UserService
+    private userService: UserService,
+    private cookieService: CookiesService
   ) {
   }
 
@@ -49,15 +53,36 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
-    alert(this.username);
+    switch (this.userType) {
+      case '会员':
+        if (this.userService.vipLogin(this.username, this.password)) {
+          this.cookieService.setCookie('username', this.username, 1);
+          this.router.navigateByUrl('vip');
+        }
+        break;
+      case '场馆':
+        if (this.userService.venLogin(this.username, this.password)) {
+          this.cookieService.setCookie('username', this.username, 1);
+          this.router.navigateByUrl('ven');
+        }
+        break;
+      case '管理员':
+        if (this.userService.mgrLogin(this.username, this.password)) {
+          this.cookieService.setCookie('username', this.username, 1);
+          this.router.navigateByUrl('mgr');
+        }
+        break;
+      default:
+      // exist = false;
+    }
   }
 
   usernameValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
+    return (control: AbstractControl): { [ key: string ]: any } => {
 
       const valid = this.isVip(control.value) || this.isVen(control.value) || this.isMgr(control.value);
       if (!valid) {
-        return {'invalidName': {value: control.value}};
+        return { 'invalidName': { value: control.value } };
       } else {
         let exist = false;
         switch (this.userType) {
@@ -73,7 +98,7 @@ export class LoginComponent implements OnInit {
           default:
             exist = false;
         }
-        return exist ? null : {'notExist': {value: control.value}};
+        return exist ? null : { 'notExist': { value: control.value } };
       }
     };
   }

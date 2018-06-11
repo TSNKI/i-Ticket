@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MgrNavbarComponent } from './mgr-navbar.component';
+import { VenHomeComponent } from './ven-home.component';
 
-describe('MgrNavbarComponent', () => {
-  let component: MgrNavbarComponent;
-  let fixture: ComponentFixture<MgrNavbarComponent>;
+describe('VenHomeComponent', () => {
+  let component: VenHomeComponent;
+  let fixture: ComponentFixture<VenHomeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MgrNavbarComponent ]
+      declarations: [ VenHomeComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MgrNavbarComponent);
+    fixture = TestBed.createComponent(VenHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

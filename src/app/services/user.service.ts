@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class UserService {
   }
 
   vipCheck(username: string): boolean {
-    return username === '929509707@qq.com';
+    return username === 'mock@sample.com';
   }
 
   venCheck(username: string): boolean {
@@ -21,7 +21,7 @@ export class UserService {
   }
 
   vipLogin(username: string, password: string): boolean {
-    return username === '929509707@qq.com' && password === '123456';
+    return username === 'mock@sample.com' && password === '123456';
   }
 
   venLogin(username: string, password: string): boolean {
