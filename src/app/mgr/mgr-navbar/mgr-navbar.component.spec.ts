@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {MgrNavbarComponent} from './mgr-navbar.component';
+import { MgrNavbarComponent } from './mgr-navbar.component';
 
 describe('MgrNavbarComponent', () => {
   let component: MgrNavbarComponent;
@@ -8,7 +8,7 @@ describe('MgrNavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MgrNavbarComponent]
+      declarations: [ MgrNavbarComponent ]
     })
       .compileComponents();
   }));

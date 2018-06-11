@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import {Location} from '@angular/common';
-import {ValidationService} from '../../services/validation.service';
-import {UserService} from '../../services/user.service';
-import {CookiesService} from '../../services/cookies.service';
-import {Router} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { Location } from '@angular/common';
+import { ValidationService } from '../../services/validation.service';
+import { UserService } from '../../services/user.service';
+import { CookiesService } from '../../services/cookies.service';
+import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -18,7 +18,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: [ './login.component.css' ]
 })
 export class LoginComponent implements OnInit {
   isLinear = true;
@@ -78,11 +78,11 @@ export class LoginComponent implements OnInit {
   }
 
   usernameValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } => {
+    return (control: AbstractControl): { [ key: string ]: any } => {
 
       const valid = this.isVip(control.value) || this.isVen(control.value) || this.isMgr(control.value);
       if (!valid) {
-        return {'invalidName': {value: control.value}};
+        return { 'invalidName': { value: control.value } };
       } else {
         let exist = false;
         switch (this.userType) {
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
           default:
             exist = false;
         }
-        return exist ? null : {'notExist': {value: control.value}};
+        return exist ? null : { 'notExist': { value: control.value } };
       }
     };
   }

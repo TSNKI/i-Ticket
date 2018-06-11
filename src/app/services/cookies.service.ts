@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +18,10 @@ export class CookiesService {
   getCookie(name: string): string {
     const arr = document.cookie.split('; ');
     for (let i = 0; i < arr.length; i++) {
-      const arr2 = arr[i].split('='); // ['abc','cba']
-      if (arr2[0] === name) {
-        console.log(arr2[1]);
-        return arr2[1];
+      const arr2 = arr[ i ].split('='); // ['abc','cba']
+      if (arr2[ 0 ] === name) {
+        console.log(arr2[ 1 ]);
+        return arr2[ 1 ];
       }
     }
     return '';

@@ -16,7 +16,8 @@
           <mat-error *ngIf="usernameFormControl.hasError('invalidName') && !usernameFormControl.hasError('required')">
             用户名不正确
           </mat-error>
-          <mat-error *ngIf="usernameFormControl.hasError('notExist') && !usernameFormControl.hasError('required')">
+          <mat-error
+            *ngIf="usernameFormControl.hasError('notExist') && !usernameFormControl.hasError('invalidName') && !usernameFormControl.hasError('required')">
             用户不存在
           </mat-error>
           <mat-error *ngIf="usernameFormControl.hasError('required')">

@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {CookiesService} from '../../services/cookies.service';
+import { Component, OnInit } from '@angular/core';
+import { CookiesService } from '../../services/cookies.service';
 
 @Component({
   selector: 'app-ven-navbar',
   templateUrl: './ven-navbar.component.html',
-  styleUrls: ['./ven-navbar.component.css']
+  styleUrls: [ './ven-navbar.component.css' ]
 })
 export class VenNavbarComponent implements OnInit {
 

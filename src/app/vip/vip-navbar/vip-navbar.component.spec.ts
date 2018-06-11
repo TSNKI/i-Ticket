@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {VipNavbarComponent} from './vip-navbar.component';
+import { VipNavbarComponent } from './vip-navbar.component';
 
 describe('VipNavbarComponent', () => {
   let component: VipNavbarComponent;
@@ -8,7 +8,7 @@ describe('VipNavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [VipNavbarComponent]
+      declarations: [ VipNavbarComponent ]
     })
       .compileComponents();
   }));
