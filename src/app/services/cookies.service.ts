@@ -11,8 +11,8 @@ export class CookiesService {
   setCookie(name: string, value: any, timeout: number): void {
     const d = new Date();
     d.setDate(d.getDate() + timeout);
-    document.cookie = name + '=' + value + ';expires=' + d;
-    console.log(name + '=' + value + ';expires=' + d);
+    document.cookie = name + '=' + value + ';expires=' + d.toUTCString();
+    console.log(name + '=' + value + ';expires=' + d.toUTCString());
   }
 
   getCookie(name: string): string {

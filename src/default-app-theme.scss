@@ -23,7 +23,7 @@ $default-app-theme: mat-light-theme($default-app-primary, $default-app-accent, $
 // that you are using.
 @include angular-material-theme($default-app-theme);
 
-$default-undercoat: map_get($mat-gray, 100);
+$default-undercoat: map_get($mat-grey, 100);
 
 @mixin material-icons() {
   @font-face {
@@ -115,14 +115,58 @@ body {
   background-color: transparent;
 }
 
-mat-horizontal-stepper.login-stepper-header .mat-horizontal-stepper-header-container {
+mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
   display: none;
 }
 
 .btn-navbar.mat-button.mat-primary {
-  color: white;
+  color: black;
 }
 
 .btn-navbar.mat-button.mat-primary .mat-button-focus-overlay {
   background-color: $black-12-opacity;
+}
+
+.head-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  min-width: auto;
+
+  border-top: 3px map_get($mat-deep-purple, 400) solid;
+  padding: 5px 0;
+  background: $default-undercoat;
+  box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
+}
+
+.head-bar .head-bar-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 72px;
+}
+
+.head-bar .head-bar-container .search-box {
+  margin-left: 12px;
+  width: 120px;
+  border: none;
+  box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 0 rgba(59, 64, 69, 0.1);
+  border-radius: 100px;
+  padding: 5px 16px;
+  transition: width .2s ease-in-out;
+}
+
+.head-bar .head-bar-container .search-box:focus {
+  width: 170px;
+  outline: none;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.container {
+  margin-top: 50px;
+  padding: 12px 88px 0;
 }
