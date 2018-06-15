@@ -11,18 +11,18 @@
       <!--<a mat-button color="primary" class="btn-navbar" href="#">虚位</a>-->
       <!--<a mat-button color="primary" class="btn-navbar" href="#">虚位</a>-->
     </span>
-    <input placeholder="Favorite food" value="Sushi" class="search-box">
+    <input placeholder="搜索..." class="search-box">
     <span class="flex-spacer"></span>
     <span>
       <button *ngIf="!username" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
       <div *ngIf="username">
         <button mat-button disabled class="btn-navbar" style="color: black">{{ username }}</button>
-        <button mat-icon-button matTooltip="个人资料">
+        <button mat-icon-button matTooltip="个人资料" routerLink="/profile">
           <mat-icon aria-label="Personal Profile">
             <i class="material-icons">description</i>
           </mat-icon>
         </button>
-        <button mat-icon-button matTooltip="我的订单">
+        <button mat-icon-button matTooltip="我的订单" routerLink="/orders">
           <mat-icon aria-label="My Orders">
             <i class="material-icons">list_alt</i>
           </mat-icon>

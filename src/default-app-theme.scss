@@ -148,8 +148,8 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 }
 
 .head-bar .head-bar-container .search-box {
-  margin-left: 12px;
-  width: 120px;
+  margin-left: 36px;
+  width: 150px;
   border: none;
   box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 0 rgba(59, 64, 69, 0.1);
   border-radius: 100px;
@@ -158,7 +158,7 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 }
 
 .head-bar .head-bar-container .search-box:focus {
-  width: 170px;
+  width: 250px;
   outline: none;
 }
 

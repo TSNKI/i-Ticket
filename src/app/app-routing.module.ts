@@ -6,14 +6,16 @@ import { MgrHomeComponent } from './mgr/mgr-home/mgr-home.component';
 import { VenHomeComponent } from './ven/ven-home/ven-home.component';
 import { VipHomeComponent } from './vip/vip-home/vip-home.component';
 import { VipProfileComponent } from './vip/vip-profile/vip-profile.component';
+import { VipOrdersComponent } from './vip/vip-orders/vip-orders.component';
 
 const routes: Routes = [
   { path: '', component: VipHomeComponent },
+  { path: 'profile', component: VipProfileComponent },
+  { path: 'orders', component: VipOrdersComponent },
   { path: 'user/login', component: LoginComponent },
   { path: 'mgr', component: MgrHomeComponent },
   { path: 'ven', component: VenHomeComponent },
   // { path: 'vip', component: VipHomeComponent },
-  { path: 'vip/profile', component: VipProfileComponent },
   { path: 'vip', redirectTo: '', pathMatch: 'full' },
 ];
 

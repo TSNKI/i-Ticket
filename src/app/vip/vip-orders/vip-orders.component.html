@@ -1,0 +1,22 @@
+<app-vip-navbar></app-vip-navbar>
+<div class="container">
+  <div class="ticket-list">
+    <mat-accordion multi>
+
+      <mat-expansion-panel *ngFor="let ticket of tickets">
+        <mat-expansion-panel-header>
+          <table width="500px">
+            <tr>
+              <td width="150px">{{ticket.title}}</td>
+              <td width="100px"><span style="color: red">¥{{ticket.price}}</span></td>
+              <td width="150px">{{ticket.date}}</td>
+              <td width="50px">已支付</td>
+            </tr>
+          </table>
+        </mat-expansion-panel-header>
+        Sth. here
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+</div>

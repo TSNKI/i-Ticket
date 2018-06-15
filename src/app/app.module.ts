@@ -19,6 +19,7 @@ import { VenHomeComponent } from './ven/ven-home/ven-home.component';
 import { VipHomeComponent } from './vip/vip-home/vip-home.component';
 import { VipProfileComponent } from './vip/vip-profile/vip-profile.component';
 import { VipLoginComponent } from './vip/vip-login/vip-login.component';
+import { VipOrdersComponent } from './vip/vip-orders/vip-orders.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { VipLoginComponent } from './vip/vip-login/vip-login.component';
     SignupComponent,
     VipProfileComponent,
     VipLoginComponent,
+    VipOrdersComponent,
   ],
   entryComponents: [
     VipLoginComponent,
