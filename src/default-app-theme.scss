@@ -144,7 +144,7 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 .head-bar .head-bar-container {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 72px;
+  margin: 0 88px 0 72px;
 }
 
 .head-bar .head-bar-container .search-box {
@@ -153,7 +153,7 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
   border: none;
   box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 0 rgba(59, 64, 69, 0.1);
   border-radius: 100px;
-  padding: 5px 16px;
+  padding: 2px 16px;
   transition: width .2s ease-in-out;
 }
 
