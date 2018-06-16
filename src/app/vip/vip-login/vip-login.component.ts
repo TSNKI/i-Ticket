@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-vip-login',
   templateUrl: './vip-login.component.html',
-  styleUrls: [ './vip-login.component.css' ]
+  styleUrls: [ './vip-login.component.scss' ]
 })
 export class VipLoginComponent implements OnInit {
   isLinear = true;

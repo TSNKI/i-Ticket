@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 @Component({
   selector: 'app-vip-navbar',
   templateUrl: './vip-navbar.component.html',
-  styleUrls: [ './vip-navbar.component.css' ]
+  styleUrls: [ './vip-navbar.component.scss' ]
 })
 export class VipNavbarComponent implements OnInit {
 

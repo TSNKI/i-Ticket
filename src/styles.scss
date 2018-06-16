@@ -1,0 +1,147 @@
+@import "default-app-theme.scss";
+
+@mixin material-icons() {
+  @font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(~material-design-icons/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(~material-design-icons/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+    url(~material-design-icons/iconfont/MaterialIcons-Regular.woff) format('woff'),
+    url(~material-design-icons/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+  }
+
+  .material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px; /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+
+  /* Rules for sizing the icon. */
+  .material-icons.md-18 {
+    font-size: 18px;
+  }
+
+  .material-icons.md-24 {
+    font-size: 24px;
+  }
+
+  .material-icons.md-36 {
+    font-size: 36px;
+  }
+
+  .material-icons.md-48 {
+    font-size: 48px;
+  }
+
+  .material-icons.align-bottom {
+    vertical-align: text-bottom;
+  }
+
+  /* Rules for using icons as black on a light background. */
+  .material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+  }
+
+  /* Rules for using icons as white on a dark background. */
+  .material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: $default-undercoat;
+}
+
+.btn-link.mat-button.mat-primary .mat-button-focus-overlay {
+  background-color: transparent;
+}
+
+mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
+  display: none;
+}
+
+.btn-navbar.mat-button.mat-primary {
+  color: black;
+}
+
+.btn-navbar.mat-button.mat-primary .mat-button-focus-overlay {
+  background-color: $black-12-opacity;
+}
+
+.head-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  min-width: auto;
+
+  border-top: 3px map_get($mat-deep-purple, 400) solid;
+  padding: 5px 0;
+  background: $default-undercoat;
+  box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
+}
+
+.head-bar .head-bar-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 88px 0 72px;
+}
+
+.head-bar .head-bar-container .search-box {
+  margin-left: 36px;
+  width: 150px;
+  border: none;
+  box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 0 rgba(59, 64, 69, 0.1);
+  border-radius: 100px;
+  padding: 2px 16px;
+  transition: width .2s ease-in-out;
+}
+
+.head-bar .head-bar-container .search-box:focus {
+  width: 250px;
+  outline: none;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
+
+.container {
+  margin-top: 50px;
+  padding: 12px 88px 0;
+}
