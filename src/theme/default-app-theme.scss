@@ -25,3 +25,4 @@ $default-app-theme: mat-light-theme($default-app-primary, $default-app-accent, $
 
 $default-undercoat: map_get($mat-grey, 100);
 
+$default-border: 1px map_get($mat-grey, 300) solid;
