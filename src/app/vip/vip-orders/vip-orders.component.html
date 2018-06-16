@@ -1,22 +1,61 @@
 <app-vip-navbar></app-vip-navbar>
 <div class="container">
+  <div class="statistic-list">
+    <mat-card class="statistic-item">
+      <div align="middle">
+        <mat-progress-spinner [value]="72" [mode]="'determinate'"></mat-progress-spinner>
+      </div>
+    </mat-card>
+    <mat-card class="statistic-item">
+      <div align="middle">
+        <mat-progress-spinner [value]="44" [mode]="'determinate'" color="warn"></mat-progress-spinner>
+      </div>
+    </mat-card>
+    <mat-card class="statistic-item">
+      <div align="middle">
+        <mat-progress-spinner [value]="88" [mode]="'determinate'" color="primary"></mat-progress-spinner>
+      </div>
+    </mat-card>
+    <mat-card class="statistic-item">
+      <div align="middle">
+        <mat-progress-spinner [value]="76" [mode]="'determinate'" color="accent"></mat-progress-spinner>
+      </div>
+    </mat-card>
+  </div>
   <div class="ticket-list">
-    <mat-accordion multi>
+    <div class="list-tool-bar" [ngStyle]="toolBarStyle">
+      <div class="list-tool-bar-container">
+        <mat-form-field [ngStyle]="selectorStyle">
+          <mat-select placeholder="排序方式">
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{ food.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox style="margin: 20px 0 0 24px;">升序</mat-checkbox>
+        <span class="flex-spacer"></span>
+        <button mat-button color="primary" (click)="accordion.closeAll()">全部折叠</button>
+        <button mat-button color="primary" (click)="accordion.openAll()">全部展开</button>
+      </div>
+    </div>
+    <div class="ticket-list-container">
+      <mat-accordion multi>
 
-      <mat-expansion-panel *ngFor="let ticket of tickets">
-        <mat-expansion-panel-header>
-          <table width="500px">
-            <tr>
-              <td width="150px">{{ticket.title}}</td>
-              <td width="100px"><span style="color: red">¥{{ticket.price}}</span></td>
-              <td width="150px">{{ticket.date}}</td>
-              <td width="50px">已支付</td>
-            </tr>
-          </table>
-        </mat-expansion-panel-header>
-        Sth. here
-      </mat-expansion-panel>
+        <mat-expansion-panel *ngFor="let ticket of tickets">
+          <mat-expansion-panel-header>
+            <table width="100%">
+              <tr>
+                <td width="30%">{{ticket.title}}</td>
+                <td width="30%">{{ticket.date}}</td>
+                <td width="20%"><span style="color: red">¥{{ticket.price}}</span></td>
+                <td width="20%">已支付</td>
+              </tr>
+            </table>
+          </mat-expansion-panel-header>
+          Sth. here
+        </mat-expansion-panel>
 
-    </mat-accordion>
+      </mat-accordion>
+    </div>
   </div>
 </div>
