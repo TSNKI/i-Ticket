@@ -8,7 +8,7 @@
     </div>
   </mat-card>
   <div class="profile-list">
-    <div class="list-tool-bar">
+    <div class="list-tool-bar" [ngStyle]="toolBarStyle">
       <div class="list-tool-bar-container">
         <span class="flex-spacer"></span>
         <button mat-button color="primary" (click)="accordion.closeAll()">全部折叠</button>
