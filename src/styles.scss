@@ -112,7 +112,7 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 
   border-top: 3px map_get($mat-deep-purple, 400) solid;
   padding: 5px 0;
-  background: $default-undercoat;
+  background: white;
   box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
 }
 
@@ -142,6 +142,6 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 }
 
 .container {
-  margin-top: 50px;
-  padding: 12px 88px 0;
+  margin-top: 53px;
+  padding: 12px 88px;
 }
