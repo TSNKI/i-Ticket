@@ -1,10 +1,25 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-vip-orders',
   templateUrl: './vip-orders.component.html',
-  styleUrls: [ './vip-orders.component.scss' ]
+  styleUrls: [ './vip-orders.component.scss' ],
+  animations: [
+    trigger('toolBarState', [
+      state('inactive', style({
+        marginLeft: '12px',
+        marginRight: '12px'
+      })),
+      state('active', style({
+        marginLeft: 0,
+        marginRight: 0
+      })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ])
+  ]
 })
 export class VipOrdersComponent implements OnInit {
   foods = [
@@ -110,10 +125,7 @@ export class VipOrdersComponent implements OnInit {
     }
   ];
 
-  toolBarStyle = {
-    marginLeft: '12px',
-    marginRight: '12px',
-  };
+  toolBarState = 'inactive';
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -125,20 +137,11 @@ export class VipOrdersComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const delta = window.scrollY - 164;
-    if (delta <= 0) {
-      this.toolBarStyle = {
-        marginLeft: '12px',
-        marginRight: '12px',
-      };
-    } else if (delta <= 16) {
-      this.toolBarStyle.marginLeft = 12 - Math.round(delta * 12 / 16) + 'px';
-      this.toolBarStyle.marginRight = 12 - Math.round(delta * 12 / 16) + 'px';
+    const threshold = 164;
+    if (window.scrollY >= threshold) {
+      this.toolBarState = 'active';
     } else {
-      this.toolBarStyle = {
-        marginLeft: '0',
-        marginRight: '0',
-      };
+      this.toolBarState = 'inactive';
     }
   }
 }

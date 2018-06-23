@@ -1,4 +1,4 @@
-<app-vip-navbar></app-vip-navbar>
+<app-vip-headbar></app-vip-headbar>
 <div class="container">
   <div class="statistic-list">
     <mat-card class="statistic-item">
@@ -23,7 +23,7 @@
     </mat-card>
   </div>
   <div class="ticket-list">
-    <div class="list-tool-bar" [ngStyle]="toolBarStyle">
+    <div class="list-tool-bar" [@toolBarState]="toolBarState">
       <div class="list-tool-bar-container">
         <mat-form-field [ngStyle]="selectorStyle">
           <mat-select placeholder="排序方式">

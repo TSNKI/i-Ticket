@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VipNavbarComponent } from './vip-navbar.component';
+import { VipHeadbarComponent } from './vip-headbar.component';
 
-describe('VipNavbarComponent', () => {
-  let component: VipNavbarComponent;
-  let fixture: ComponentFixture<VipNavbarComponent>;
+describe('VipHeadbarComponent', () => {
+  let component: VipHeadbarComponent;
+  let fixture: ComponentFixture<VipHeadbarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VipNavbarComponent ]
+      declarations: [ VipHeadbarComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VipNavbarComponent);
+    fixture = TestBed.createComponent(VipHeadbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

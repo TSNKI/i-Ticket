@@ -1,6 +1,22 @@
-<app-vip-navbar></app-vip-navbar>
+<app-vip-headbar></app-vip-headbar>
 <div class="container">
-  <p>
-    vip-home works!
-  </p>
+  <div class="focus-panel">
+    <div class="focus-carousel">
+      <nz-carousel nzAutoPlay #carousel>
+        <div nz-carousel-content *ngFor="let data of hotSpotData"><h3>{{data.title}}</h3></div>
+      </nz-carousel>
+    </div>
+    <div class="focus-list">
+      <mat-nav-list>
+        <mat-list-item *ngFor="let data of hotSpotData" (click)="slideTo(data.id, carousel)">{{data.title}}
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+  </div>
+  <div class="navigation-bar" [@navBarState]="navBarState">
+    <div class="navigation-bar-container">
+      <button mat-flat-button>Button</button>
+    </div>
+  </div>
+  <div style="height: 10000px"></div>
 </div>

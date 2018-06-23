@@ -4,11 +4,11 @@ import { VipLoginComponent } from '../vip-login/vip-login.component';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'app-vip-navbar',
-  templateUrl: './vip-navbar.component.html',
-  styleUrls: [ './vip-navbar.component.scss' ]
+  selector: 'app-vip-headbar',
+  templateUrl: './vip-headbar.component.html',
+  styleUrls: [ './vip-headbar.component.scss' ]
 })
-export class VipNavbarComponent implements OnInit {
+export class VipHeadbarComponent implements OnInit {
 
   username: string;
 

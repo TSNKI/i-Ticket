@@ -1,4 +1,4 @@
-<app-vip-navbar></app-vip-navbar>
+<app-vip-headbar></app-vip-headbar>
 <div class="container">
   <mat-card class="person-info">
     <div align="middle">
@@ -8,7 +8,7 @@
     </div>
   </mat-card>
   <div class="profile-list">
-    <div class="list-tool-bar" [ngStyle]="toolBarStyle">
+    <div class="list-tool-bar" [@toolBarState]="toolBarState">
       <div class="list-tool-bar-container">
         <span class="flex-spacer"></span>
         <button mat-button color="primary" (click)="accordion.closeAll()">全部折叠</button>

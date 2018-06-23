@@ -1,21 +1,34 @@
 import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material';
 import { CdkAccordion } from '@angular/cdk/accordion';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-vip-profile',
   templateUrl: './vip-profile.component.html',
-  styleUrls: [ './vip-profile.component.scss' ]
+  styleUrls: [ './vip-profile.component.scss' ],
+  animations: [
+    trigger('toolBarState', [
+      state('inactive', style({
+        left: '446px',
+        right: '88px',
+        paddingRight: 0
+      })),
+      state('active', style({
+        left: '430px',
+        right: '80px',
+        paddingRight: '8px'
+      })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ])
+  ]
 })
 export class VipProfileComponent implements OnInit {
 
   panelOpenState = false;
 
-  toolBarStyle = {
-    left: '466px',
-    right: '88px',
-    paddingRight: '0'
-  };
+  toolBarState = 'inactive';
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -27,23 +40,11 @@ export class VipProfileComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    const delta = window.scrollY;
-    if (delta <= 0) {
-      this.toolBarStyle = {
-        left: '466px',
-        right: '88px',
-        paddingRight: '0'
-      };
-    } else if (delta <= 16) {
-      this.toolBarStyle.left = 466 - Math.round(delta * 12 / 16) + 'px';
-      this.toolBarStyle.right = 88 - Math.round(delta * 5 / 16) + 'px';
-      this.toolBarStyle.paddingRight = Math.round(delta * 5 / 16) + 'px';
+    const threshold = 12;
+    if (window.scrollY > threshold) {
+      this.toolBarState = 'active';
     } else {
-      this.toolBarStyle = {
-        left: '454px',
-        right: '83px',
-        paddingRight: '5px'
-      };
+      this.toolBarState = 'inactive';
     }
   }
 

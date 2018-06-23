@@ -24,6 +24,7 @@
     "@angular/router": "^6.0.5",
     "core-js": "^2.5.4",
     "material-design-icons": "^3.0.1",
+    "ng-zorro-antd": "^1.0.0",
     "rxjs": "^6.2.1",
     "zone.js": "^0.8.26"
   },

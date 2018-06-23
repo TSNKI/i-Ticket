@@ -12,7 +12,7 @@ import { MaterialModule } from './material.module';
 import { ValidationService } from './services/validation.service';
 import { UserService } from './services/user.service';
 import { MgrNavbarComponent } from './mgr/mgr-navbar/mgr-navbar.component';
-import { VipNavbarComponent } from './vip/vip-navbar/vip-navbar.component';
+import { VipHeadbarComponent } from './vip/vip-headbar/vip-headbar.component';
 import { VenNavbarComponent } from './ven/ven-navbar/ven-navbar.component';
 import { MgrHomeComponent } from './mgr/mgr-home/mgr-home.component';
 import { VenHomeComponent } from './ven/ven-home/ven-home.component';
@@ -21,6 +21,12 @@ import { VipProfileComponent } from './vip/vip-profile/vip-profile.component';
 import { VipLoginComponent } from './vip/vip-login/vip-login.component';
 import { VipOrdersComponent } from './vip/vip-orders/vip-orders.component';
 import { VenProfileComponent } from './ven/ven-profile/ven-profile.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+
+registerLocaleData(zh);
 
 @NgModule({
   declarations: [
@@ -28,7 +34,7 @@ import { VenProfileComponent } from './ven/ven-profile/ven-profile.component';
     LoginComponent,
     AppHomeComponent,
     MgrNavbarComponent,
-    VipNavbarComponent,
+    VipHeadbarComponent,
     VenNavbarComponent,
     MgrHomeComponent,
     VenHomeComponent,
@@ -49,10 +55,13 @@ import { VenProfileComponent } from './ven/ven-profile/ven-profile.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
+    HttpClientModule,
+    NgZorroAntdModule,
   ],
   providers: [
     ValidationService,
-    UserService
+    UserService,
+    { provide: NZ_I18N, useValue: zh_CN }
   ],
   bootstrap: [ AppComponent ]
 })
