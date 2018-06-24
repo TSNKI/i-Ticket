@@ -20,14 +20,16 @@
   top: 0;
   width: 240px;
   height: 100%;
-  background-color: rgba(255, 255, 255, .5);
+  color: white;
+  @include default-blur-effect(5px);
+  background-color: rgba(map_get($default-app-primary, 400), .8);
 }
 
 [nz-carousel-content] {
   height: 480px;
   text-align: center;
   line-height: 160px;
-  background: #364d79;
+  background: map_get($mat-grey, 700);
   color: #fff;
   overflow: hidden;
 }
@@ -43,20 +45,19 @@ h3 {
   z-index: 1000;
 
   margin-top: 12px;
-  //border-bottom: 3px map_get($default-app-primary, 400) solid;
   border: none;
   background: rgba(white, .92);
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 
   padding: 5px 16px;
   min-height: 50px;
-}
 
-.float-bar .float-bar-container {
-  min-height: 40px;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
+  .float-bar-container {
+    min-height: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+  }
 }
 
 .fixed-anchor {
@@ -66,4 +67,204 @@ h3 {
   width: 100px;
   height: 130px;
   top: -130px;
+}
+
+.cat-container {
+  width: 100%;
+
+  .divider {
+    clear: both;
+  }
+
+  .cat-title-bar {
+    border-bottom: 3px map_get($default-app-primary, 400) solid;
+    padding: 6px 0 12px;
+    margin-bottom: 16px;
+
+    .cat-title-bar-container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 12px 0 18px;
+      border-left: 12px map_get($default-app-primary, 400) solid;
+
+      .cat-title {
+        font-size: 18px;
+      }
+
+      .cat-subtitle {
+        position: relative;
+        min-height: 27px;
+        min-width: 42px;
+
+        a, span {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          font-size: 12px;
+          color: map_get($mat-grey, 700);
+
+        }
+      }
+    }
+  }
+
+  .cat-exhibit-container {
+    width: 72%;
+    height: 100%;
+    float: left;
+
+    .title {
+    }
+
+    .date {
+      color: map_get($mat-grey, 600);
+      font-size: 12px;
+    }
+
+    .address {
+      color: map_get($mat-grey, 800);
+      font-size: 12px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: red;
+
+      .prefix {
+        font-size: 14px;
+        font-weight: normal;
+        margin-right: 4px;
+      }
+
+      .suffix {
+        font-size: 12px;
+        font-weight: normal;
+        margin-left: 6px;
+        color: map_get($mat-grey, 400);
+      }
+    }
+
+    .cat-exhibit-top {
+      width: 100%;
+      height: 100%;
+
+      img {
+        background: map_get($mat-grey, 200);
+      }
+
+      .title {
+        margin-top: 12px;
+      }
+
+      .title, .date, .address, .price {
+        max-width: 240px;
+      }
+
+      .date, .address {
+        min-width: 150px;
+        float: left;
+      }
+
+      .price {
+        font-size: 24px;
+        float: right;
+        margin-right: 51px;
+
+        .prefix {
+          font-size: 20px;
+        }
+
+        .suffix {
+          font-size: 18px;
+        }
+      }
+
+    }
+
+    .cat-exhibit-rest {
+      width: 100%;
+      height: 100%;
+
+      img {
+        background: map_get($mat-grey, 200);
+      }
+
+      .title, .date, .address, .price {
+        max-width: 112px;
+      }
+
+      dt, dd {
+        float: left;
+        min-width: 88px;
+        margin-left: 12px;
+      }
+    }
+  }
+
+  .cat-rank-container {
+    width: 22%;
+    height: 100%;
+    float: right;
+    font-size: 12px;
+    color: map_get($mat-grey, 900);
+
+    .cat-rank-top {
+      height: 175px;
+
+      dt {
+        position: relative;
+
+        .top-rank-logo {
+          position: absolute;
+          left: -4px;
+          top: -1px;
+          width: 65px;
+          height: 30px;
+
+          padding-left: 12px;
+
+          background-color: map_get($default-app-primary, 400);
+          font-weight: bold;
+          font-size: 20px;
+          font-style: italic;
+          color: white;
+        }
+
+        img {
+          background: map_get($mat-grey, 200);
+        }
+      }
+
+      dd {
+        margin-top: 6px;
+        padding: 0 12px
+      }
+    }
+
+    .cat-rank-rest {
+      width: 100%;
+
+      dt {
+        float: left;
+        width: 22px;
+        height: 50px;
+        border-top: 3px map_get($mat-grey, 400) solid;
+
+        padding-top: 3px;
+
+        font-size: 20px;
+        color: map_get($mat-grey, 600);
+      }
+
+      dd {
+        margin-left: 20px;
+        height: 50px;
+        border-top: 2px map_get($mat-grey, 200) dotted;
+
+        margin-bottom: 0;
+        padding: 8px 16px;
+      }
+    }
+  }
 }

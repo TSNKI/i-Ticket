@@ -1,6 +1,6 @@
 @import "theme/default-app-theme";
 
-@mixin material-icons() {
+@mixin material-icons {
   @font-face {
     font-family: 'Material Icons';
     font-style: normal;
@@ -79,6 +79,15 @@
 
 }
 
+@include material-icons;
+
+@mixin default-blur-effect($blur: 15px) {
+  /* Safari for macOS & iOS */
+  -webkit-backdrop-filter: blur($blur);
+  /* Google Chrome */
+  backdrop-filter: blur($blur);
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -109,16 +118,29 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
   z-index: 1050;
   width: 100%;
 
+  @include default-blur-effect;
+  background: rgba(map_get($mat-grey, 50), .8);
   border-top: 3px map_get($default-app-primary, 400) solid;
-  padding: 5px 0;
-  background: map_get($mat-grey, 50);
   box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
-}
 
-.head-bar .head-bar-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 88px;
+  padding: 5px 0;
+
+  .head-bar-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 88px;
+
+    .search-box {
+      margin-left: 36px;
+      width: 150px;
+      transition: width .2s ease-in-out;
+
+      &:focus {
+        width: 250px;
+        outline: none;
+      }
+    }
+  }
 }
 
 .container {
@@ -144,17 +166,6 @@ footer {
 }
 
 .search-box:focus {
-  outline: none;
-}
-
-.head-bar-container .search-box {
-  margin-left: 36px;
-  width: 150px;
-  transition: width .2s ease-in-out;
-}
-
-.head-bar-container .search-box:focus {
-  width: 250px;
   outline: none;
 }
 
