@@ -1,4 +1,4 @@
-<div class="head-bar">
+<header class="head-bar">
   <div class="head-bar-container">
     <span>
       <button mat-button color="primary" class="btn-navbar" routerLink="/">
@@ -11,12 +11,20 @@
       <!--<a mat-button color="primary" class="btn-navbar" href="#">虚位</a>-->
       <!--<a mat-button color="primary" class="btn-navbar" href="#">虚位</a>-->
     </span>
-    <input placeholder="搜索场馆、演出" class="search-box">
+    <button mat-button color="primary" class="btn-navbar" *ngFor="let category of categories">
+      {{category.displayName}}
+    </button>
+    <!--<input placeholder="搜索场馆、演出" class="search-box">-->
     <span class="flex-spacer"></span>
     <span>
-      <button *ngIf="!username" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
-      <div *ngIf="username">
-        <button mat-button disabled class="btn-navbar" style="color: black">{{ username }}</button>
+      <button *ngIf="!user" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
+      <div *ngIf="user">
+        <button mat-icon-button matTooltip="搜索">
+          <mat-icon aria-label="Search">
+            <i class="material-icons">search</i>
+          </mat-icon>
+        </button>
+        <button mat-button disabled class="btn-navbar" style="color: black">{{ user.nickname }}</button>
         <button mat-icon-button matTooltip="个人资料" routerLink="/profile">
           <mat-icon aria-label="Personal Profile">
             <i class="material-icons">description</i>
@@ -35,4 +43,4 @@
       </div>
     </span>
   </div>
-</div>
+</header>

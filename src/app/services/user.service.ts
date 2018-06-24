@@ -31,4 +31,16 @@ export class UserService {
   mgrLogin(username: string, password: string): boolean {
     return username === 'M0000001' && password === '123456';
   }
+
+  getUserInfo(username: string): { username: string, nickname: string } {
+    if (this.vipCheck(username)) {
+      const info = {
+        username,
+        nickname: 'CBBAmazing'
+      };
+      return info;
+    } else {
+      return null;
+    }
+  }
 }

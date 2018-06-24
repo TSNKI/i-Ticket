@@ -1,3 +1,5 @@
+@import "../../../styles";
+
 .focus-panel {
   position: relative;
   width: 100%;
@@ -34,21 +36,34 @@ h3 {
   color: #fff;
 }
 
-.navigation-bar {
-  position: fixed;
+.float-bar {
+  position: sticky;
+  position: -webkit-sticky;
   top: 65px;
   z-index: 1000;
-  left: 72px;
-  right: 72px;
-  background: rgba(white, .8);
+
+  margin-top: 12px;
+  //border-bottom: 3px map_get($default-app-primary, 400) solid;
+  border: none;
+  background: rgba(white, .92);
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 
-  padding: 5px 0;
+  padding: 5px 16px;
+  min-height: 50px;
 }
 
-.navigation-bar .navigation-bar-container {
+.float-bar .float-bar-container {
+  min-height: 40px;
   display: flex;
   flex-wrap: wrap;
+  margin: 0;
+}
 
-  margin: 0 12px 0 24px;
+.fixed-anchor {
+  background-color: transparent;
+  position: absolute;
+  display: block;
+  width: 100px;
+  height: 130px;
+  top: -130px;
 }

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VipHeadbarComponent } from './vip-headbar.component';
+import { VipHeadbarComponent } from './vip-header.component';
 
 describe('VipHeadbarComponent', () => {
   let component: VipHeadbarComponent;

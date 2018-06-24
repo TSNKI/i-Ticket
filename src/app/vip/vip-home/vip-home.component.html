@@ -1,4 +1,4 @@
-<app-vip-headbar></app-vip-headbar>
+<app-vip-header></app-vip-header>
 <div class="container">
   <div class="focus-panel">
     <div class="focus-carousel">
@@ -8,15 +8,24 @@
     </div>
     <div class="focus-list">
       <mat-nav-list>
-        <mat-list-item *ngFor="let data of hotSpotData" (click)="slideTo(data.id, carousel)">{{data.title}}
+        <mat-list-item *ngFor="let data of hotSpotData" (click)="carousel.goTo(data.id)">{{data.title}}
         </mat-list-item>
       </mat-nav-list>
     </div>
   </div>
-  <div class="navigation-bar" [@navBarState]="navBarState">
-    <div class="navigation-bar-container">
-      <button mat-flat-button>Button</button>
-    </div>
+  <!--<div class="navigation-bar" [@floatBarState]="floatBarState">-->
+  <!--<div class="navigation-bar-container">-->
+  <!--<div class="float-bar" [@floatBarState]="floatBarState">-->
+  <!--<div class="float-bar-container">-->
+  <!--<input placeholder="搜索..." class="search-box"/>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <div *ngFor="let category of categoryData" style="height: 500px;margin-top: 12px;position: relative">
+    <span class="fixed-anchor" id="{{category.name}}"></span>
+    <mat-card style="height: 100%">
+      {{category.displayName}}
+    </mat-card>
   </div>
-  <div style="height: 10000px"></div>
 </div>

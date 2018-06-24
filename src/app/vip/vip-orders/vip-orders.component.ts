@@ -8,16 +8,16 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrls: [ './vip-orders.component.scss' ],
   animations: [
     trigger('toolBarState', [
-      state('inactive', style({
+      state('invisible', style({
         marginLeft: '12px',
         marginRight: '12px'
       })),
-      state('active', style({
+      state('visible', style({
         marginLeft: 0,
         marginRight: 0
       })),
-      transition('inactive => active', animate('100ms ease-in')),
-      transition('active => inactive', animate('100ms ease-out'))
+      transition('invisible => visible', animate('100ms ease-in')),
+      transition('visible => invisible', animate('100ms ease-out'))
     ])
   ]
 })
@@ -125,7 +125,7 @@ export class VipOrdersComponent implements OnInit {
     }
   ];
 
-  toolBarState = 'inactive';
+  toolBarState = 'invisible';
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
@@ -139,9 +139,9 @@ export class VipOrdersComponent implements OnInit {
   onWindowScroll() {
     const threshold = 164;
     if (window.scrollY >= threshold) {
-      this.toolBarState = 'active';
+      this.toolBarState = 'visible';
     } else {
-      this.toolBarState = 'inactive';
+      this.toolBarState = 'invisible';
     }
   }
 }
