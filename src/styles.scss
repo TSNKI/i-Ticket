@@ -121,6 +121,21 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
   margin: 0 88px;
 }
 
+.container {
+  margin-top: 53px;
+  padding: 12px 88px 24px;
+}
+
+footer {
+  position: relative;
+  border-top: 4px map_get($mat-deep-purple, 400) solid;
+  border-bottom: none;
+  background: map_get($mat-grey, 700);
+
+  min-height: 250px;
+  color: white;
+}
+
 .search-box {
   min-width: 150px;
   border: $default-border;
@@ -145,10 +160,5 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 
 .flex-spacer {
   flex-grow: 1;
-}
-
-.container {
-  margin-top: 53px;
-  padding: 12px 88px;
 }
 

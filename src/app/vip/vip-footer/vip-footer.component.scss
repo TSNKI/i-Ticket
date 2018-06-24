@@ -1,0 +1,160 @@
+footer {
+  width: 100%;
+  line-height: 1;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    outline: none;
+
+    li {
+      outline: none;
+      list-style-type: none;
+
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .divider {
+    clear: both;
+  }
+
+  .footer-content {
+    width: 1200px;
+    margin: auto;
+    padding: 39px 0 32px;
+
+    .footer-nav {
+      float: left;
+      .nav-content {
+        float: left;
+
+        .nav-title {
+          font-size: 14px;
+          color: white;
+        }
+
+        .nav-list {
+          margin-top: 18px;
+          font-size: 12px;
+
+          a {
+            color: #b6b6b6;
+          }
+
+          li + li {
+            margin-top: 12px
+          }
+        }
+      }
+
+      .nav-content + .nav-content {
+        margin-left: 100px;
+      }
+    }
+
+    .footer-qr-code {
+      float: right;
+      .code-content {
+        float: left;
+        margin-left: 50px;
+
+        dt {
+          text-align: center;
+        }
+
+        dd {
+          margin-top: 8px;
+        }
+
+        .code-img {
+          width: 120px;
+          height: 120px;
+          vertical-align: baseline;
+        }
+
+        .code-description {
+          color: #b6b6b6;
+          text-align: center;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .footer-link-container {
+      width: 100%;
+      margin-top: 40px;
+      padding: 21px 0;
+      border-top: 1px solid #707070;
+      border-bottom: 1px solid #707070;
+      text-align: center;
+      font-size: 0;
+
+      .footer-link-item {
+        display: inline-block;
+        padding: 1px 8px;
+
+        a {
+          font-size: 12px;
+          color: #fff;
+        }
+      }
+
+      .footer-link-item + .footer-link-item {
+        border-left: 1px solid #fff;
+      }
+    }
+
+    .footer-info-content {
+      padding-top: 20px;
+      color: #b2b2b2;
+      font-size: 12px;
+
+      div {
+        margin: 0;
+
+      }
+
+      .footer-info-line {
+        p {
+          margin: 0;
+
+          a {
+            color: #b2b2b2;
+          }
+        }
+
+        .fl {
+          float: left;
+        }
+
+        .fr {
+          float: right;
+        }
+      }
+
+      .divider + .footer-info-line {
+        margin-top: 7px;
+      }
+    }
+
+    .footer-verify-content {
+      margin-top: 20px;
+      text-align: center;
+
+      .footer-verify-item {
+        display: inline-block;
+        margin-right: 10px;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
+
+      .footer-verify-img {
+        width: 79px;
+        height: 28px;
+      }
+    }
+  }
+}
+
