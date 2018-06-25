@@ -16,14 +16,14 @@
     </button>
     <!--<input placeholder="搜索场馆、演出" class="search-box">-->
     <span class="flex-spacer"></span>
-    <span>
+    <div>
+      <button mat-icon-button matTooltip="搜索" routerLink="/search">
+        <mat-icon aria-label="Search">
+          <i class="material-icons">search</i>
+        </mat-icon>
+      </button>
       <button *ngIf="!user" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
-      <div *ngIf="user">
-        <button mat-icon-button matTooltip="搜索">
-          <mat-icon aria-label="Search">
-            <i class="material-icons">search</i>
-          </mat-icon>
-        </button>
+      <span *ngIf="user">
         <button mat-button disabled class="btn-navbar" style="color: black">{{ user.nickname }}</button>
         <button mat-icon-button matTooltip="个人资料" routerLink="/profile">
           <mat-icon aria-label="Personal Profile">
@@ -40,8 +40,8 @@
             <i class="material-icons">exit_to_app</i>
           </mat-icon>
         </button>
-      </div>
-    </span>
+      </span>
+    </div>
   </div>
 </header>
 <a mat-mini-fab color="primary" class="back-top" [@backTopState]="backTopState" href="#top-of-page">

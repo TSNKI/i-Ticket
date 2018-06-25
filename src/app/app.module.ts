@@ -12,7 +12,7 @@ import { MaterialModule } from './material.module';
 import { ValidationService } from './services/validation.service';
 import { UserService } from './services/user.service';
 import { MgrNavbarComponent } from './mgr/mgr-navbar/mgr-navbar.component';
-import { VipHeadbarComponent } from './vip/vip-headbar/vip-header.component';
+import { VipHeadbarComponent } from './vip/vip-header/vip-header.component';
 import { VenNavbarComponent } from './ven/ven-navbar/ven-navbar.component';
 import { MgrHomeComponent } from './mgr/mgr-home/mgr-home.component';
 import { VenHomeComponent } from './ven/ven-home/ven-home.component';
@@ -26,6 +26,8 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { VipFooterComponent } from './vip/vip-footer/vip-footer.component';
+import { VipSearchComponent } from './vip/vip-search/vip-search.component';
+import { VipMovieComponent } from './vip/categories/vip-movie/vip-movie.component';
 
 registerLocaleData(zh);
 
@@ -46,6 +48,8 @@ registerLocaleData(zh);
     VipOrdersComponent,
     VenProfileComponent,
     VipFooterComponent,
+    VipSearchComponent,
+    VipMovieComponent,
   ],
   entryComponents: [
     VipLoginComponent,
