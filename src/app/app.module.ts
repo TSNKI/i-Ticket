@@ -28,6 +28,7 @@ import zh from '@angular/common/locales/zh';
 import { VipFooterComponent } from './vip/vip-footer/vip-footer.component';
 import { VipSearchComponent } from './vip/vip-search/vip-search.component';
 import { VipMovieComponent } from './vip/categories/vip-movie/vip-movie.component';
+import { MaxLengthPipe } from './pipes/max-length.pipe';
 
 registerLocaleData(zh);
 
@@ -50,6 +51,7 @@ registerLocaleData(zh);
     VipFooterComponent,
     VipSearchComponent,
     VipMovieComponent,
+    MaxLengthPipe,
   ],
   entryComponents: [
     VipLoginComponent,

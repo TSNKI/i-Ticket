@@ -11,7 +11,7 @@
     <div class="focus-list">
       <ul>
         <li *ngFor="let data of hotSpotData" (click)="carousel.goTo(data.id)" [class.selected]="selected[data.id]">
-          {{data.title | slice: 0:10}}
+          {{data.title | maxLength: 10}}
         </li>
       </ul>
     </div>
@@ -52,7 +52,7 @@
                       </a>
                     </dt>
                     <dd class="title">
-                      [洛阳] 2018岳云鹏《爱岳之城》相声专场-洛阳站
+                      {{'[洛阳] 2018岳云鹏《爱岳之城》相声专场-洛阳站' | maxLength: 40}}
                     </dd>
                     <dd class="date">
                       {{ '2018-05-09' | date }}
@@ -61,7 +61,7 @@
                       <span class="prefix">¥</span>128<span class="suffix">起</span>
                     </dd>
                     <dd class="address">
-                      洛阳新区-体育场
+                      {{'洛阳新区-体育场' | maxLength: 8}}
                     </dd>
                   </dl>
                 </div>
@@ -78,13 +78,13 @@
                       </a>
                     </dt>
                     <dd class="title">
-                      [西安] 青曲社相声大会暑期专场
+                      {{'[西安] 青曲社相声大会暑期专场' | maxLength: 20}}
                     </dd>
                     <dd class="date">
                       {{ '2018-05-09' | date }}
                     </dd>
                     <dd class="address">
-                      广西文化艺术中心音乐厅
+                      {{'广西文化艺术中心音乐厅' | maxLength: 8}}
                     </dd>
                     <dd class="price">
                       <span class="prefix">¥</span>128<span class="suffix">起</span>
@@ -113,7 +113,7 @@
                 <img width="268" height="130"/>
               </dt>
               <dd>
-                {{'打开音乐之门•2018北京音乐厅暑期系列音乐会 经典昆曲剧目《牡丹亭》' | slice: 0:30}}
+                {{'打开音乐之门•2018北京音乐厅暑期系列音乐会 经典昆曲剧目《牡丹亭》' | maxLength: 45}}
               </dd>
             </dl>
             <dl *ngFor="let i of [0,1,2,3,4] | slice:1" class="cat-rank-rest">
@@ -121,7 +121,7 @@
                 {{'0' + (i + 1)}}
               </dt>
               <dd>
-                {{'[北京] 太阳马戏《阿凡达前传：托鲁克-首次翱翔》全球巡演 北京站' | slice: 0:30}}
+                {{'[北京] 太阳马戏《阿凡达前传：托鲁克-首次翱翔》全球巡演 北京站' | maxLength: 40}}
               </dd>
             </dl>
           </div>
