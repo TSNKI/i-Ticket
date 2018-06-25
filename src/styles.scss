@@ -105,6 +105,8 @@ $secondary-text-color: rgba(black, .6);
 
 $disabled-text-color: rgba(black, .38);
 
+$content-width: 1264px;
+
 body {
   margin: 0;
   padding: 0;
@@ -129,8 +131,9 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 }
 
 .container {
-  margin-top: 53px;
-  padding: 12px 88px 24px;
+  margin: 65px auto 24px;
+  //padding: 12px 88px 24px;
+  width: $content-width;
 }
 
 .search-box {

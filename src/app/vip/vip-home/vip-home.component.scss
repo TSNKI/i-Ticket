@@ -112,6 +112,7 @@
 
 .cat-container {
   width: 100%;
+  min-width: 1216px;
 
   .divider {
     clear: both;
@@ -153,6 +154,7 @@
   .cat-exhibit-container {
     width: 72%;
     height: 100%;
+    min-width: 876px;
     float: left;
 
     .title {
@@ -248,6 +250,7 @@
   .cat-rank-container {
     width: 22%;
     height: 100%;
+    min-width: 268px;
     float: right;
     font-size: 12px;
     color: $primary-text-color;
