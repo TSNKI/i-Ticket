@@ -1,5 +1,14 @@
+@import '../../../styles';
+
 footer {
+
+  position: relative;
+  border-top: 4px map_get($mat-deep-purple, 400) solid;
+  border-bottom: none;
+  background: map_get($mat-grey, 700);
+
   width: 100%;
+  min-height: 250px;
   line-height: 1;
 
   ul {

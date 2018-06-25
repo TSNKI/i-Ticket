@@ -77,9 +77,7 @@ export class VipHomeComponent implements OnInit, AfterViewInit {
 
   categoryData: any[];
 
-  position: number[];
-
-  navActives = [ false, false, false, false, false, false ];
+  // position: number[];
 
   constructor(
     @Inject(DOCUMENT) private doc: any,
@@ -102,11 +100,11 @@ export class VipHomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.position = [];
-    this.categoryData.forEach(category => {
-      const dom = this.doc.getElementById(category.name);
-      this.position.push(dom.getBoundingClientRect().top - 300);
-    });
+    // this.position = [];
+    // this.categoryData.forEach(category => {
+    //   const dom = this.doc.getElementById(category.name);
+    //   this.position.push(dom.getBoundingClientRect().top - 300);
+    // });
   }
 
   @HostListener('window:scroll', [])
@@ -116,25 +114,6 @@ export class VipHomeComponent implements OnInit, AfterViewInit {
       this.floatBarState = 'expanded';
     } else {
       this.floatBarState = 'wrapped';
-    }
-
-    if (window.scrollY <= this.position[ 1 ]) {
-      console.log(this.navActives[ 0 ]);
-      this.navActives[ 0 ] = true;
-    } else {
-      this.navActives[ 0 ] = false;
-    }
-    for (let i = 1; i < this.position.length - 1; i++) {
-      if (this.position[ i ] < window.scrollY && window.scrollY <= this.position[ i + 1 ]) {
-        this.navActives[ i ] = true;
-      } else {
-        this.navActives[ i ] = false;
-      }
-    }
-    if (this.position[ this.position.length - 1 ] < window.scrollY) {
-      this.navActives[ this.position.length - 1 ] = true;
-    } else {
-      this.navActives[ this.position.length - 1 ] = false;
     }
   }
 

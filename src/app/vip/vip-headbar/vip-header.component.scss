@@ -1,3 +1,48 @@
+@import "../../../styles";
+
+.head-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+
+  @include default-blur-effect;
+  background: rgba(map_get($mat-grey, 50), .8);
+  border-top: 3px map_get($default-app-primary, 400) solid;
+  box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
+
+  padding: 5px 0;
+
+  .head-bar-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 88px;
+
+    .search-box {
+      margin-left: 36px;
+      width: 150px;
+      transition: width .2s ease-in-out;
+
+      &:focus {
+        width: 250px;
+        outline: none;
+      }
+    }
+  }
+}
+
 .app-logo {
   margin: 0 4px 3px 0;
+}
+
+#top-of-page {
+  @include hash-offset(65px);
+}
+
+.back-top {
+  position: fixed;
+  right: 22px;
+  bottom: 36px;
+  z-index: 2000;
 }
