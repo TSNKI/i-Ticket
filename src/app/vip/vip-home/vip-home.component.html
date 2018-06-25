@@ -2,14 +2,16 @@
 <div class="container">
   <div class="focus-panel">
     <div class="focus-carousel">
-      <nz-carousel nzAutoPlay #carousel>
-        <div nz-carousel-content *ngFor="let data of hotSpotData"><h3>{{data.title}}</h3></div>
+      <nz-carousel nzAutoPlay #carousel (nzAfterChange)="setSelected(carousel.activeIndex)" [nzDots]="false">
+        <div nz-carousel-content *ngFor="let data of hotSpotData">
+          <img width="100%" height="100%" [src]="data.img"/>
+        </div>
       </nz-carousel>
     </div>
     <div class="focus-list">
       <ul>
-        <li *ngFor="let data of hotSpotData" (click)="carousel.goTo(data.id)">
-          {{data.title}}
+        <li *ngFor="let data of hotSpotData" (click)="carousel.goTo(data.id)" [class.selected]="selected[data.id]">
+          {{data.title | slice: 0:10}}
         </li>
       </ul>
     </div>
