@@ -2,7 +2,7 @@
   <div class="head-bar-container">
     <span>
       <button mat-button color="primary" class="btn-navbar" routerLink="/">
-        <img width="26" alt="i-Ticket Logo"
+        <img width="26" alt="logo"
              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAAHeTXxYAAAAAXNSR0IArs4c6QAABIZJREFUSA2NVl1MHEUcn9nd+949EJM+tEhKFROqD33zMzQx6YWmBQRKY4rA7oFGqCY+9M0n39Q+mGgMjQl3HFBsD4+74yhpSiIPakxqTTSxMYZKv6ISK8hxH7t3uzvjzOpc7pNjH/Y//9/8/vOb/8x/ZheA/59zkZ0jtAnpS1lSbyATXcUovwGUWPI5Cp5cWXdQaz1KPPs2a1e3SkK9Wb2nAvUn1OUKkMSvFoNKLDNW7IORaDoxEMb2EnBfzkh050mSwCYlW/nSxlB4p5V3Csc5jL7DnP2/7NiqUMLw4q7fv6w9JAuSvkAB9pDp/87aBetPaJWgElcfFhikURAvBlmbLMB1Qtkwkb4w0yOtMZxjjWKrLGVuKEvZC8BEXwa7nBMc4D6m/coXW09QK9AXe8g0Vg2YezPY7fExTF5Ky9gEn1Lf1ta0STK9Z/WR7Fb9Ec0qDgsoe538ZN1B6uUugy0lA+E45M1bZBQjlc22LZxtSlIC3S/Jlbsb6HIeIm4rCypZCDmaPoYh7nA0i5PGn9r9QJfrICPu2w7NbHqqkauuHiUOhP8ShQbvLSWhWVMtDq4aNLGGRdElfR/scbcj03h3OKG27Bnkjz+S1GT2JgRcMyWSpJ9+8IPzj4Hw7epF7J96JJE6Wmej+pdzGm2T5b4sxzKfEX+H9VmWKpCyuVMCEocFUlyOZ+fkhNZmcayAZa0iwOokL38il1XimdDQYqqdYtzg3JYXcNKPwdPOpxip3GKMogBrH872Sb9YfWPXMS4nFfvkLC4MxraOFmNWRZB5Y9M0voEAouke93FGIDmEsa6+Hzrz+G2GVVg5lppkIFG4OnRl+1nm17Sj13RrquQsXSFJ1w9gI42tmHi0TkBJlbPA/Vhamx6HZ4HjhQ6cz3cF+6Sv9oqrWq97BVABet9ILu9PnKGfD5x2eDAPTynLueTIUuqZWrEl10otEsVpoSHgDrsb3Z3Zv1PvBfu9nQU+BodMPRef6fXW3M26S0cFMBQjEMLDyFB9072P3SMXiczZbJcAMs4Huj1Tw4ntFh67viYn7z45sWtkUB/H29p1Xe8jxWotaU0hSwCIi5CDh3Ws+Wa7Gwt3HsukIKgTwV7PFMOZlWPZjzhBeAvp+Y4KIUuAExcBhK25nOab72/cYIG1LPkUKYAXLiHDnAgRQXqViM7WGTLJl/S84aNHsCBEz66jwR0hgx0BeXgi0O+sK1AuLC/uvmETpc91VX1gmmZn4YwTojAaTjYhh30e8lyLmVa7Qq81/lY+QD3/nRXsSBnqZbKPz2vp9NFiARZLM4LDsdS4INguAgOPI2Skebv9BYzwekrbnV84eyDNyOWW/sYc0A/O8Rz/opnK+ELnat8hhaWjg4xEkqdMAd6Z6/H+OhjZarYJrm8BRpPTr4ofFIvQb5zoVGch5F42c7ovdEaqWdYsruQchfobrrEOh9CURCC7jQEWGVbYZKh16DqpxL6mn1lfPVuSUQkZY0j+qCY4m/0iQPo4wPAVwHM+QzdOkD3Yt0DJmPWc4Wj6dTn6z7F6vL36/wWubvn8dX/94wAAAABJRU5ErkJggg=="
              class="app-logo">
         <span>&nbsp;i-Ticket</span>
@@ -18,27 +18,19 @@
     <span class="flex-spacer"></span>
     <div>
       <button mat-icon-button matTooltip="搜索" routerLink="/search">
-        <mat-icon aria-label="Search">
-          <i class="material-icons">search</i>
-        </mat-icon>
+        <mat-icon aria-label="Search" svgIcon="search"></mat-icon>
       </button>
       <button *ngIf="!user" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
       <span *ngIf="user">
         <button mat-button disabled class="btn-navbar" style="color: black">{{ user.nickname }}</button>
-        <button mat-icon-button matTooltip="个人资料" routerLink="/profile">
-          <mat-icon aria-label="Personal Profile">
-            <i class="material-icons">description</i>
-          </mat-icon>
+        <button mat-icon-button matTooltip="设置" routerLink="/profile">
+          <mat-icon aria-label="设置" svgIcon="settings"></mat-icon>
         </button>
         <button mat-icon-button matTooltip="我的订单" routerLink="/orders">
-          <mat-icon aria-label="My Orders">
-            <i class="material-icons">list_alt</i>
-          </mat-icon>
+          <mat-icon aria-label="我的订单" svgIcon="orders"></mat-icon>
         </button>
         <button mat-icon-button matTooltip="登出" (click)="logout()">
-          <mat-icon aria-label="Logout">
-            <i class="material-icons">exit_to_app</i>
-          </mat-icon>
+          <mat-icon aria-label="登出" svgIcon="logout"></mat-icon>
         </button>
       </span>
     </div>

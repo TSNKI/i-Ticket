@@ -1,10 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CookiesService } from '../../services/cookies.service';
 import { VipLoginComponent } from '../vip-login/vip-login.component';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef, MatIconRegistry } from '@angular/material';
 import { EventService } from '../../services/event.service';
 import { UserService } from '../../services/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-vip-header',
@@ -37,8 +38,22 @@ export class VipHeadbarComponent implements OnInit {
     private cookieService: CookiesService,
     private eventService: EventService,
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer
   ) {
+    iconRegistry.addSvgIcon(
+      'search',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_search_24px.svg'));
+    iconRegistry.addSvgIcon(
+      'settings',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_settings_24px.svg'));
+    iconRegistry.addSvgIcon(
+      'orders',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_list_alt_24px.svg'));
+    iconRegistry.addSvgIcon(
+      'logout',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_exit_to_app_24px.svg'));
   }
 
   ngOnInit() {
