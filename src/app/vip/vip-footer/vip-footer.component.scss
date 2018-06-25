@@ -30,9 +30,9 @@ footer {
   }
 
   .footer-content {
-    width: 1200px;
+    width: $content-width;
     margin: auto;
-    padding: 39px 0 32px;
+    padding: 24px;
 
     .footer-nav {
       float: left;
@@ -67,7 +67,7 @@ footer {
       float: right;
       .code-content {
         float: left;
-        margin-left: 50px;
+        margin-left: 48px;
 
         dt {
           text-align: center;
