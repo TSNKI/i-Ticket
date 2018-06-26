@@ -13,11 +13,11 @@ export class VenNavbarComponent implements OnInit {
   constructor(
     private cookieService: CookiesService
   ) {
+    this.username = '';
   }
 
   ngOnInit() {
     this.username = this.cookieService.getCookie('username');
-    // this.username = '0000001';
   }
 
 }

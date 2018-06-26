@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VipProfileComponent } from './vip-profile.component';
+import { VipSettingComponent } from './vip-setting.component';
 
-describe('VipProfileComponent', () => {
-  let component: VipProfileComponent;
-  let fixture: ComponentFixture<VipProfileComponent>;
+describe('VipSettingComponent', () => {
+  let component: VipSettingComponent;
+  let fixture: ComponentFixture<VipSettingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VipProfileComponent ]
+      declarations: [ VipSettingComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VipProfileComponent);
+    fixture = TestBed.createComponent(VipSettingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

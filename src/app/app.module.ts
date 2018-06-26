@@ -17,7 +17,7 @@ import { VenNavbarComponent } from './ven/ven-navbar/ven-navbar.component';
 import { MgrHomeComponent } from './mgr/mgr-home/mgr-home.component';
 import { VenHomeComponent } from './ven/ven-home/ven-home.component';
 import { VipHomeComponent } from './vip/vip-home/vip-home.component';
-import { VipProfileComponent } from './vip/vip-profile/vip-profile.component';
+import { VipSettingComponent } from './vip/vip-setting/vip-setting.component';
 import { VipLoginComponent } from './vip/vip-login/vip-login.component';
 import { VipOrdersComponent } from './vip/vip-orders/vip-orders.component';
 import { VenProfileComponent } from './ven/ven-profile/ven-profile.component';
@@ -44,7 +44,7 @@ registerLocaleData(zh);
     VenHomeComponent,
     VipHomeComponent,
     SignupComponent,
-    VipProfileComponent,
+    VipSettingComponent,
     VipLoginComponent,
     VipOrdersComponent,
     VenProfileComponent,

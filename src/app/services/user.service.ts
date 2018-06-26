@@ -32,7 +32,7 @@ export class UserService {
     return username === 'M0000001' && password === '123456';
   }
 
-  getUserInfo(username: string): { username: string, nickname: string } {
+  getUserInfo(username: string): { username: string, nickname: string } | null {
     if (this.vipCheck(username)) {
       const info = {
         username,

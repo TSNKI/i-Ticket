@@ -1,12 +1,12 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatStepper } from '@angular/material';
-import { MyErrorStateMatcher } from '../../user/login/login.component';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { MatDialogRef, MatStepper } from '@angular/material';
 import { UserService } from '../../services/user.service';
 import { CookiesService } from '../../services/cookies.service';
 import { ValidationService } from '../../services/validation.service';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-vip-login',
@@ -15,8 +15,6 @@ import { Location } from '@angular/common';
 })
 export class VipLoginComponent implements OnInit {
   isLinear = true;
-
-  userType: string;
 
   usernameForm = new FormControl('', [
     Validators.required,
@@ -27,15 +25,13 @@ export class VipLoginComponent implements OnInit {
     Validators.required,
   ]);
 
-  matcher = new MyErrorStateMatcher();
-
   constructor(
     private dialogRef: MatDialogRef<VipLoginComponent>,
     private location: Location,
     private router: Router,
     private validationService: ValidationService,
     private userService: UserService,
-    private cookieService: CookiesService
+    private cookieService: CookiesService,
   ) {
   }
 
@@ -48,16 +44,42 @@ export class VipLoginComponent implements OnInit {
       if (userNotExist) {
         this.usernameForm.setErrors({ 'userNotExist': true });
       } else {
+        this.usernameForm.disable();
         stepper.next();
+        this.setFocus('password-input');
       }
+    }
+  }
+
+  previous(stepper: MatStepper): void {
+    this.usernameForm.setValue('');
+    this.usernameForm.enable();
+    stepper.previous();
+    this.setFocus('username-input');
+  }
+
+  setFocus(id: string) {
+    const targetElem = document.getElementById(id);
+    if (targetElem) {
+      setTimeout(function waitTargetElem() {
+        if (document.body.contains(targetElem)) {
+          targetElem.focus();
+        } else {
+          setTimeout(waitTargetElem, 100);
+        }
+      }, 100);
     }
   }
 
   submit(): void {
     const username = this.usernameForm.value;
     const password = this.passwordForm.value;
-    this.cookieService.setCookie('username', this.usernameForm.value, 1);
-    this.close();
+    if (this.userService.vipLogin(username, password)) {
+      this.cookieService.setCookie('username', this.usernameForm.value, 1);
+      this.close();
+    } else {
+      this.passwordForm.setErrors({ 'passwordWrong': true });
+    }
   }
 
   close(): void {

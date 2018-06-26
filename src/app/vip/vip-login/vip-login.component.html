@@ -1,5 +1,5 @@
 <div class="login-form-card">
-  <mat-horizontal-stepper [linear]="isLinear" class="login-stepper" #stepper>
+  <mat-horizontal-stepper [linear]="isLinear" class="login-stepper" #stepper (selectionChange)="focusPwdInput(stepper)">
     <mat-step [stepControl]="usernameForm">
       <form>
         <div class="login-heading">
@@ -9,11 +9,10 @@
 
         <mat-form-field class="full-width" style="margin-top: 64px">
           <input matInput
+                 id="username-input"
                  name="username"
                  placeholder="用户名"
-                 [formControl]="usernameForm"
-                 [errorStateMatcher]="matcher"
-                 required>
+                 [formControl]="usernameForm">
           <mat-error *ngIf="usernameForm.hasError('userNotExist')
                         && !usernameForm.hasError('email')
                         && !usernameForm.hasError('required')">
@@ -49,20 +48,24 @@
               </button>
             </div>
             <div align="right">
-              <button mat-button color="primary" class="btn-link btn-primary" matStepperPrevious>更换账户</button>
+              <a mat-button color="primary" class="btn-link btn-primary" (click)="previous(stepper)">更换账户</a>
             </div>
           </div>
         </div>
 
         <mat-form-field class="full-width" style="margin-top: 64px">
           <input matInput
-                 #passwordInput
+                 id="password-input"
+                 name="password"
                  placeholder="密码"
                  type="password"
-                 [formControl]="passwordForm"
-                 required>
-          <mat-error *ngIf="usernameForm.hasError('required')">
+                 [formControl]="passwordForm">
+          <mat-error *ngIf="passwordForm.hasError('required')">
             密码 <strong>不能为空</strong>
+          </mat-error>
+          <mat-error *ngIf="passwordForm.hasError('passwordWrong')
+                        && !passwordForm.hasError('required')">
+            密码错误
           </mat-error>
         </mat-form-field>
 
@@ -71,7 +74,7 @@
             <a mat-button color="primary" class="btn-link btn-forget" routerLink="/user/signup">忘记了密码？</a>
           </div>
           <div align="right">
-            <button mat-raised-button color="primary" class="btn-primary" (click)="submit()">登陆</button>
+            <button type="submit" mat-raised-button color="primary" class="btn-primary" (click)="submit()">登陆</button>
           </div>
         </div>
       </form>

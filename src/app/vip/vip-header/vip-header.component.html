@@ -23,7 +23,7 @@
       <button *ngIf="!user" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
       <span *ngIf="user">
         <button mat-button disabled class="btn-navbar" style="color: black">{{ user.nickname }}</button>
-        <button mat-icon-button matTooltip="设置" routerLink="/profile">
+        <button mat-icon-button matTooltip="设置" routerLink="/setting">
           <mat-icon aria-label="设置" svgIcon="settings"></mat-icon>
         </button>
         <button mat-icon-button matTooltip="我的订单" routerLink="/orders">

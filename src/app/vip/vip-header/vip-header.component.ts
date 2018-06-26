@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { CookiesService } from '../../services/cookies.service';
 import { VipLoginComponent } from '../vip-login/vip-login.component';
 import { MatDialog, MatDialogConfig, MatDialogRef, MatIconRegistry } from '@angular/material';
@@ -6,6 +6,7 @@ import { EventService } from '../../services/event.service';
 import { UserService } from '../../services/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-vip-header',
@@ -39,8 +40,8 @@ export class VipHeadbarComponent implements OnInit {
     private eventService: EventService,
     private userService: UserService,
     private dialog: MatDialog,
-    iconRegistry: MatIconRegistry,
-    sanitizer: DomSanitizer
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
   ) {
     iconRegistry.addSvgIcon(
       'search',
@@ -67,7 +68,6 @@ export class VipHeadbarComponent implements OnInit {
   openLoginDialog(): void {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
     const dialogRef = this.dialog.open(VipLoginComponent, dialogConfig);
@@ -96,9 +96,5 @@ export class VipHeadbarComponent implements OnInit {
     } else {
       this.backTopState = 'invisible';
     }
-  }
-
-  backTop() {
-    window.scrollTo(0, 0);
   }
 }
