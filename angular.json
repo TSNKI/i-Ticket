@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "i-Ticket"
+  "defaultProject": "i-Ticket",
+  "cli": {
+    "packageManager": "yarn"
+  }
 }
