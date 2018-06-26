@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-vip-movie',
+  selector: 'it-vip-movie',
   templateUrl: './vip-movie.component.html',
   styleUrls: [ './vip-movie.component.scss' ]
 })

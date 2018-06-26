@@ -1,39 +1,23 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { CookiesService } from '../../services/cookies.service';
+import { CookiesService } from '../../shared/cookies.service';
 import { VipLoginComponent } from '../vip-login/vip-login.component';
 import { MatDialog, MatDialogConfig, MatDialogRef, MatIconRegistry } from '@angular/material';
-import { EventService } from '../../services/event.service';
-import { UserService } from '../../services/user.service';
+import { EventService } from '../../shared/event.service';
+import { UserService } from '../../shared/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-vip-header',
+  selector: 'it-vip-header',
   templateUrl: './vip-header.component.html',
-  styleUrls: [ './vip-header.component.scss' ],
-  animations: [
-    trigger('backTopState', [
-      state('invisible', style({
-        display: 'none',
-        opacity: 0,
-      })),
-      state('visible', style({
-        display: 'block',
-        opacity: 1,
-      })),
-      transition('invisible => visible', animate('100ms ease-in')),
-      transition('visible => invisible', animate('200ms ease-out'))
-    ])
-  ]
+  styleUrls: [ './vip-header.component.scss' ]
 })
 export class VipHeadbarComponent implements OnInit {
 
   user: { username: string, nickname: string };
 
   categories: { id: number, name: string, displayName: string }[];
-
-  backTopState = 'invisible';
 
   constructor(
     private cookieService: CookiesService,
@@ -86,15 +70,5 @@ export class VipHeadbarComponent implements OnInit {
   logout(): void {
     this.cookieService.setCookie('username', '', -1);
     this.user = null;
-  }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const threshold = window.innerHeight;
-    if (window.scrollY >= threshold) {
-      this.backTopState = 'visible';
-    } else {
-      this.backTopState = 'invisible';
-    }
   }
 }

@@ -39,12 +39,5 @@
 }
 
 #top-of-page {
-  @include hash-offset(65px);
-}
-
-.back-top {
-  position: fixed;
-  right: 22px;
-  bottom: 36px;
-  z-index: 2000;
+  //@include hash-offset(65px);
 }

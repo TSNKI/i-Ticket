@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CookiesService } from '../../services/cookies.service';
+import { CookiesService } from '../../shared/cookies.service';
 
 @Component({
-  selector: 'app-ven-navbar',
+  selector: 'it-ven-navbar',
   templateUrl: './ven-navbar.component.html',
   styleUrls: [ './ven-navbar.component.scss' ]
 })

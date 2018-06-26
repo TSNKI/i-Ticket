@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Location } from '@angular/common';
-import { ValidationService } from '../../services/validation.service';
-import { UserService } from '../../services/user.service';
-import { CookiesService } from '../../services/cookies.service';
+import { ValidationService } from '../../shared/validation.service';
+import { UserService } from '../../shared/user.service';
+import { CookiesService } from '../../shared/cookies.service';
 import { Router } from '@angular/router';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -16,7 +16,7 @@ class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-login',
+  selector: 'it-login',
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.scss' ]
 })

@@ -1,15 +1,14 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatDialogRef, MatStepper } from '@angular/material';
-import { UserService } from '../../services/user.service';
-import { CookiesService } from '../../services/cookies.service';
-import { ValidationService } from '../../services/validation.service';
+import { UserService } from '../../shared/user.service';
+import { CookiesService } from '../../shared/cookies.service';
+import { ValidationService } from '../../shared/validation.service';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
-  selector: 'app-vip-login',
+  selector: 'it-vip-login',
   templateUrl: './vip-login.component.html',
   styleUrls: [ './vip-login.component.scss' ]
 })

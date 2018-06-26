@@ -9,8 +9,8 @@ import { LoginComponent } from './user/login/login.component';
 import { SignupComponent } from './user/signup/signup.component';
 import { AppHomeComponent } from './app-home/app-home.component';
 import { MaterialModule } from './material.module';
-import { ValidationService } from './services/validation.service';
-import { UserService } from './services/user.service';
+import { ValidationService } from './shared/validation.service';
+import { UserService } from './shared/user.service';
 import { MgrNavbarComponent } from './mgr/mgr-navbar/mgr-navbar.component';
 import { VipHeadbarComponent } from './vip/vip-header/vip-header.component';
 import { VenNavbarComponent } from './ven/ven-navbar/ven-navbar.component';
@@ -29,6 +29,13 @@ import { VipFooterComponent } from './vip/vip-footer/vip-footer.component';
 import { VipSearchComponent } from './vip/vip-search/vip-search.component';
 import { VipMovieComponent } from './vip/categories/vip-movie/vip-movie.component';
 import { MaxLengthPipe } from './pipes/max-length.pipe';
+import { TocComponent } from './toc/toc.component';
+import { TocService } from './shared/toc.service';
+import { ScrollService } from './shared/scroll.service';
+import { ScrollSpyService } from './shared/scroll-spy.service';
+import { LocationService } from './shared/location.service';
+import { windowProvider, WindowToken } from './shared/window';
+import { BackTopComponent } from './back-top/back-top.component';
 
 registerLocaleData(zh);
 
@@ -52,6 +59,8 @@ registerLocaleData(zh);
     VipSearchComponent,
     VipMovieComponent,
     MaxLengthPipe,
+    TocComponent,
+    BackTopComponent,
   ],
   entryComponents: [
     VipLoginComponent,
@@ -69,8 +78,13 @@ registerLocaleData(zh);
   providers: [
     ValidationService,
     UserService,
+    TocService,
+    ScrollService,
+    ScrollSpyService,
+    LocationService,
     { provide: NZ_I18N, useValue: zh_CN },
-    { provide: LOCALE_ID, useValue: 'zh-Hans' }
+    { provide: LOCALE_ID, useValue: 'zh-Hans' },
+    { provide: WindowToken, useFactory: windowProvider },
   ],
   bootstrap: [ AppComponent ]
 })

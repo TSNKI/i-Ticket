@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-vip-search',
+  selector: 'it-vip-search',
   templateUrl: './vip-search.component.html',
   styleUrls: [ './vip-search.component.scss' ]
 })

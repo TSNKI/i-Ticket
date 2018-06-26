@@ -1,11 +1,12 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Inject, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
-import { EventService } from '../../services/event.service';
+import { EventService } from '../../shared/event.service';
 import { NzCarouselComponent } from 'ng-zorro-antd';
+import { FetchService } from '../../shared/fetch.service';
 
 @Component({
-  selector: 'app-vip-home',
+  selector: 'it-vip-home',
   templateUrl: './vip-home.component.html',
   styleUrls: [ './vip-home.component.scss' ],
   animations: [
@@ -23,7 +24,7 @@ import { NzCarouselComponent } from 'ng-zorro-antd';
     ])
   ]
 })
-export class VipHomeComponent implements OnInit {
+export class VipHomeComponent implements OnInit, AfterViewInit {
 
   hotSpotData = [
     {
@@ -93,6 +94,7 @@ export class VipHomeComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private doc: any,
     private eventService: EventService,
+    private fetchService: FetchService
   ) {
   }
 
@@ -108,6 +110,10 @@ export class VipHomeComponent implements OnInit {
         }
       );
     });
+  }
+
+  ngAfterViewInit() {
+    this.fetchService.setFetched();
   }
 
   setSelected(index: number) {

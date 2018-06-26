@@ -17,6 +17,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatGridListModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatDividerModule,
@@ -58,6 +60,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatGridListModule,
+    MatProgressBarModule,
   ]
 })
 export class MaterialModule {

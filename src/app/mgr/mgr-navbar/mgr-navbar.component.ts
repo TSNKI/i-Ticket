@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CookiesService } from '../../services/cookies.service';
+import { CookiesService } from '../../shared/cookies.service';
 
 @Component({
-  selector: 'app-mgr-navbar',
+  selector: 'it-mgr-navbar',
   templateUrl: './mgr-navbar.component.html',
   styleUrls: [ './mgr-navbar.component.scss' ]
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ven-home',
+  selector: 'it-ven-home',
   templateUrl: './ven-home.component.html',
   styleUrls: [ './ven-home.component.scss' ]
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-mgr-home',
+  selector: 'it-mgr-home',
   templateUrl: './mgr-home.component.html',
   styleUrls: [ './mgr-home.component.scss' ]
 })

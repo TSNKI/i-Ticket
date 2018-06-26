@@ -20,7 +20,6 @@ export class CookiesService {
     for (let i = 0; i < arr.length; i++) {
       const arr2 = arr[ i ].split('='); // ['abc','cba']
       if (arr2[ 0 ] === name) {
-        console.log(arr2[ 1 ]);
         return arr2[ 1 ];
       }
     }

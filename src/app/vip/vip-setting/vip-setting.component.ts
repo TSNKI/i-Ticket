@@ -1,10 +1,17 @@
-import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatAccordion } from '@angular/material';
-import { CdkAccordion } from '@angular/cdk/accordion';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FetchService } from '../../shared/fetch.service';
 
 @Component({
-  selector: 'app-vip-setting',
+  selector: 'it-vip-setting',
   templateUrl: './vip-setting.component.html',
   styleUrls: [ './vip-setting.component.scss' ],
   animations: [
@@ -24,24 +31,27 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ]
 })
-export class VipSettingComponent implements OnInit, AfterViewInit {
+export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   panelOpenState = false;
 
   toolBarState = 'invisible';
 
-  anchors: any;
-
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  constructor() {
+  constructor(
+    private fetchService: FetchService
+  ) {
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
+    this.fetchService.setFetched();
+  }
 
+  ngOnDestroy() {
   }
 
   @HostListener('window:scroll', [])
