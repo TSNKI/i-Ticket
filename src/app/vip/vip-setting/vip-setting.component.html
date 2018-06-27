@@ -24,15 +24,6 @@
       <div class="content">
         <form>
           <div class="content-item">
-            <label><i class="material-icons">person</i></label>
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>昵称</mat-label>
-              <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
-              <input matInput placeholder="昵称" [(value)]="person.nickname">
-            </mat-form-field>
-          </div>
-
-          <div class="content-item">
             <label><i class="material-icons">email</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>邮箱地址</mat-label>
@@ -43,16 +34,46 @@
           </div>
 
           <div class="content-item">
-            <!--<label><i class="material-icons">person</i></label>-->
+            <label><i class="material-icons">person</i></label>
             <mat-form-field appearance="outline" class="item">
-              <mat-label>性别</mat-label>
-              <mat-select placeholder="性别" [value]="person.gender">
-                <mat-option>-保密-</mat-option>
-                <mat-option value="male">&#x2640;男生</mat-option>
-                <mat-option value="female">&#x2642;女生</mat-option>
-              </mat-select>
+              <mat-label>昵称</mat-label>
+              <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+              <input #nickname matInput placeholder="昵称" maxlength="24" [(value)]="person.nickname">
+              <mat-hint align="end">{{nickname.value.length}} / 24</mat-hint>
             </mat-form-field>
           </div>
+
+          <div class="content-item">
+            <label><i class="material-icons">phone</i></label>
+            <div class="item">
+              <mat-form-field appearance="outline" style="width: 120px">
+                <mat-label>地区</mat-label>
+                <mat-select placeholder="地区" [value]="country" #phoneCountry
+                            (selectionChange)="resetCountry(phoneCountry.value)">
+                  <mat-option value="CN">中国 (+{{getPhonePrefix("CN")}})</mat-option>
+                  <mat-option value="US">USA (+{{getPhonePrefix("US")}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" style="margin-left: 8px;width: 322px">
+                <mat-label>手机号码</mat-label>
+                <input matInput placeholder="手机号码" type="tel"
+                       [value]="phoneNumber"
+                       (input)="onPhoneInput($event.target.value)">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!--<div class="content-item">-->
+            <!--<label><i class="material-icons">person</i></label>-->
+          <!--<mat-form-field appearance="outline" class="item" style="width: 140px">-->
+          <!--<mat-label>性别</mat-label>-->
+          <!--<mat-select placeholder="性别" [value]="person.gender">-->
+          <!--<mat-option>&#45;&#45;&nbsp;保密&nbsp;&#45;&#45;</mat-option>-->
+          <!--<mat-option value="male">&#x2642;&nbsp;男</mat-option>-->
+          <!--<mat-option value="female">&#x2640;&nbsp;女</mat-option>-->
+          <!--</mat-select>-->
+          <!--</mat-form-field>-->
+          <!--</div>-->
 
           <div class="content-item">
             <label><i class="material-icons">cake</i></label>
@@ -65,35 +86,18 @@
           </div>
 
           <div class="content-item">
-            <label><i class="material-icons">phone</i></label>
-            <div class="item">
-              <mat-form-field appearance="outline">
-                <mat-label>地区</mat-label>
-                <mat-select placeholder="地区">
-                  <mat-option value="ZH">中国</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>手机号码</mat-label>
-                <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
-                <input matInput placeholder="手机号码" [value]="person.phone | phone">
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="content-item">
             <label><i class="material-icons">edit</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>个性签名</mat-label>
               <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
               <textarea
                 matInput
-                #message
+                #motto
                 placeholder="个性签名"
                 rows="6"
                 maxlength="140"
                 [(value)]="person.motto"></textarea>
-              <mat-hint align="end">{{message.value.length}} / 140</mat-hint>
+              <mat-hint align="end">{{motto.value.length}} / 140</mat-hint>
             </mat-form-field>
           </div>
         </form>

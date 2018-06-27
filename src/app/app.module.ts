@@ -38,7 +38,6 @@ import { windowProvider, WindowToken } from './shared/window';
 import { BackTopComponent } from './back-top/back-top.component';
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { PhonePipe } from './pipes/phone.pipe';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -76,7 +75,6 @@ registerLocaleData(zh);
     MaxLengthPipe,
     TocComponent,
     BackTopComponent,
-    PhonePipe,
   ],
   entryComponents: [
     VipLoginComponent,

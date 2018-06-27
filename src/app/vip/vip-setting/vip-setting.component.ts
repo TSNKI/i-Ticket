@@ -15,6 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 
 @Component({
   selector: 'it-vip-setting',
@@ -53,9 +54,14 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     motto: '解走点切思效导转决亲，律新5华变克。 构设质族员子住向志，北么每头使性五，' +
     '传角J许实位园。由南志前议毛需界证决，合思十世又由叫快时，声二K音般X变坟。战定度全那队第，头且真中术，群C际维奋。式道据线众，新M。',
     gender: 'male',
-    phone: '13771104099',
+    phone: '+86 137 7110 4099',
     birth: '1989-03-09'
   };
+
+  asYouType = new AsYouType();
+
+  country: CountryCode;
+  phoneNumber: string;
 
   birthDate = new FormControl(moment(this.person.birth));
 
@@ -81,6 +87,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   ngOnInit() {
     this.contentHeight = (window.innerHeight - 65 - 12) + 'px';
+    this.asYouType.input(this.person.phone);
+    this.country = this.asYouType.country;
+    const nationalNumber = this.asYouType.getNationalNumber();
+    this.resetCountry(this.country);
+    this.phoneNumber = this.asYouType.input(nationalNumber);
+    this.asYouType.reset();
   }
 
   ngAfterViewInit() {
@@ -93,6 +105,19 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
 
   ngOnDestroy() {
+  }
+
+  resetCountry(country: CountryCode) {
+    this.asYouType = new AsYouType(country);
+  }
+
+  getPhonePrefix(country: CountryCode) {
+    return getCountryCallingCode(country);
+  }
+
+  onPhoneInput(phoneNumber: string) {
+    this.asYouType.reset();
+    this.phoneNumber = this.asYouType.input(phoneNumber);
   }
 
   @HostListener('window:scroll', [])
