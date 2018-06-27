@@ -16,13 +16,13 @@
 
 .focus-list {
   position: absolute;
-  left: 100px;
+  left: 120px;
   top: 0;
   width: 240px;
   height: 100%;
-  color: $secondary-text-color;
+  color: white;
   @include default-blur-effect(5px);
-  background-color: rgba(white, .6);
+  background-color: rgba(black, .6);
 
   ul {
     width: 240px;

@@ -24,7 +24,7 @@ export class BackTopComponent implements OnInit {
 
   backTopState = 'invisible';
 
-  @Input() href: string;
+  @Input() hrefBase: string;
 
   constructor() {
   }

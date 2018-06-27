@@ -27,19 +27,19 @@ export class TocService {
     private scrollSpyService: ScrollSpyService) {
   }
 
-  genToc(docElement?: Element, docId = '') {
+  genToc(el?: Element, hrefBase = '') {
     this.resetScrollSpyInfo();
 
-    if (!docElement) {
+    if (!el) {
       this.tocList.next([]);
       return;
     }
 
-    const headings = this.findTocHeadings(docElement);
+    const headings = this.findTocHeadings(el);
     const idMap = new Map<string, number>();
     const tocList = headings.map(heading => ({
       content: this.extractHeadingSafeHtml(heading),
-      href: `${docId}#${this.getId(heading, idMap)}`,
+      href: `${hrefBase}#${this.getId(heading, idMap)}`,
       level: heading.tagName.toLowerCase(),
       title: (heading.textContent || '').trim(),
     }));
