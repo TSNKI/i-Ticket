@@ -53,6 +53,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     motto: '解走点切思效导转决亲，律新5华变克。 构设质族员子住向志，北么每头使性五，' +
     '传角J许实位园。由南志前议毛需界证决，合思十世又由叫快时，声二K音般X变坟。战定度全那队第，头且真中术，群C际维奋。式道据线众，新M。',
     gender: 'male',
+    phone: '13771104099',
     birth: '1989-03-09'
   };
 
