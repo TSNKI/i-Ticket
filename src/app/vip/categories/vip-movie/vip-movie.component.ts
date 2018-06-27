@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {VipHeadbarComponent} from "../../vip-header/vip-header.component";
+import {VipFooterComponent} from "../../vip-footer/vip-footer.component";
 
 @Component({
   selector: 'it-vip-movie',
