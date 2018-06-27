@@ -1,6 +1,7 @@
 import {
+  AfterContentInit,
   AfterViewInit,
-  Component,
+  Component, ElementRef,
   HostListener,
   OnDestroy,
   OnInit,
@@ -9,6 +10,7 @@ import {
 import { MatAccordion } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FetchService } from '../../shared/fetch.service';
+import { TocService } from '../../shared/toc.service';
 
 @Component({
   selector: 'it-vip-setting',
@@ -31,25 +33,38 @@ import { FetchService } from '../../shared/fetch.service';
     ])
   ]
 })
-export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
+
+  private hostElement: HTMLElement;
 
   panelOpenState = false;
+
+  contentHeight: string;
 
   toolBarState = 'invisible';
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   constructor(
-    private fetchService: FetchService
+    elementRef: ElementRef,
+    private fetchService: FetchService,
+    private tocService: TocService,
   ) {
+    this.hostElement = elementRef.nativeElement;
   }
 
   ngOnInit() {
+    this.contentHeight = (window.innerHeight - 65 - 12) + 'px';
   }
 
   ngAfterViewInit() {
-    this.fetchService.setFetched();
   }
+
+  ngAfterContentInit() {
+    const el = this.hostElement.querySelector('#setting-list');
+    this.tocService.genToc(el, 'setting');
+  }
+
 
   ngOnDestroy() {
   }
@@ -62,5 +77,10 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.toolBarState = 'invisible';
     }
+  }
+
+  @HostListener('window:resize', [ '$event.target.innerHeight' ])
+  onResize(height: number) {
+    this.contentHeight = (height - 65 - 12) + 'px';
   }
 }

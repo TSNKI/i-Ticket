@@ -99,6 +99,16 @@
   }
 }
 
+@mixin rotate($degrees) {
+  -moz-transform: rotate($degrees);
+  -webkit-transform: rotate($degrees);
+  -o-transform: rotate($degrees);
+  -ms-transform: rotate($degrees);
+  transform: rotate($degrees);
+  transition: transform 150ms;
+  transition-timing-function: ease-in-out;
+}
+
 $primary-text-color: rgba(black, .87);
 
 $secondary-text-color: rgba(black, .6);
@@ -131,7 +141,8 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 }
 
 .container {
-  margin: 65px auto 24px;
+  position: relative;
+  margin: 65px auto 120px;
   padding: 0 12px;
   //padding: 12px 88px 24px;
   width: $content-width;
@@ -155,3 +166,22 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 .progress-bar-container .mat-progress-bar {
   height: 3px;
 }
+
+it-toc.embedded {
+  @media (min-width: 801px) {
+    display: none;
+  }
+
+  .toc-inner {
+    padding: 12px 0 0 0;
+
+    .toc-heading {
+      margin: 0 0 8px;
+    }
+  }
+}
+
+it-toc.embedded > div.collapsed li.secondary {
+  display: none;
+}
+
