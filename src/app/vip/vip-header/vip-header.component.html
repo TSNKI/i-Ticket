@@ -11,7 +11,11 @@
       <!--<a mat-button color="primary" class="btn-navbar" href="#">虚位</a>-->
       <!--<a mat-button color="primary" class="btn-navbar" href="#">虚位</a>-->
     </span>
-    <button mat-button color="primary" class="btn-navbar" *ngFor="let category of categories">
+    <button
+      *ngFor="let category of categories"
+      mat-button color="primary" class="btn-navbar"
+      routerLink="/{{category.name}}"
+      routerLinkActive="active">
       {{category.displayName}}
     </button>
     <!--<input placeholder="搜索场馆、演出" class="search-box">-->

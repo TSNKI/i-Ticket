@@ -134,10 +134,14 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
 
 .btn-navbar.mat-button.mat-primary {
   color: black;
-}
 
-.btn-navbar.mat-button.mat-primary .mat-button-focus-overlay {
-  background-color: $black-12-opacity;
+  &.active {
+    color: map_get($default-app-primary, 400);
+  }
+
+  .mat-button-focus-overlay {
+    background-color: $black-12-opacity;
+  }
 }
 
 .container {

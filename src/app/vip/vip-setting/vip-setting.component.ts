@@ -7,10 +7,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatAccordion } from '@angular/material';
+import { MatAccordion, MatIconRegistry } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'it-vip-setting',
@@ -43,14 +47,35 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   toolBarState = 'invisible';
 
+  person = {
+    nickname: 'CBBAmazing',
+    email: 'mock@sample.com',
+    motto: '解走点切思效导转决亲，律新5华变克。 构设质族员子住向志，北么每头使性五，' +
+    '传角J许实位园。由南志前议毛需界证决，合思十世又由叫快时，声二K音般X变坟。战定度全那队第，头且真中术，群C际维奋。式道据线众，新M。',
+    gender: 'male',
+    birth: '1989-03-09'
+  };
+
+  birthDate = new FormControl(moment(this.person.birth));
+
   @ViewChild(MatAccordion) accordion: MatAccordion;
+
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     elementRef: ElementRef,
     private fetchService: FetchService,
     private tocService: TocService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
   ) {
     this.hostElement = elementRef.nativeElement;
+    iconRegistry.addSvgIcon(
+      'person',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_person_24px.svg'));
+    iconRegistry.addSvgIcon(
+      'email',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_email_24px.svg'));
   }
 
   ngOnInit() {

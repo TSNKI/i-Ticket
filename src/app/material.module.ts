@@ -18,6 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -40,6 +42,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressSpinnerModule,
     MatGridListModule,
     MatProgressBarModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
   ],
   exports: [
     MatDividerModule,
@@ -61,6 +65,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressSpinnerModule,
     MatGridListModule,
     MatProgressBarModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
   ]
 })
 export class MaterialModule {

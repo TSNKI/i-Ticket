@@ -36,6 +36,20 @@ import { ScrollSpyService } from './shared/scroll-spy.service';
 import { LocationService } from './shared/location.service';
 import { windowProvider, WindowToken } from './shared/window';
 import { BackTopComponent } from './back-top/back-top.component';
+import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'L',
+  },
+  display: {
+    dateInput: 'L',
+    monthYearLabel: 'MM YYYY',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'MM YYYY',
+  },
+};
 
 registerLocaleData(zh);
 
@@ -84,7 +98,10 @@ registerLocaleData(zh);
     LocationService,
     { provide: NZ_I18N, useValue: zh_CN },
     { provide: LOCALE_ID, useValue: 'zh-Hans' },
+    { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
     { provide: WindowToken, useFactory: windowProvider },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
   bootstrap: [ AppComponent ]
 })

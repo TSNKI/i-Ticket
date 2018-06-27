@@ -172,12 +172,35 @@
     }
 
     .content {
-      margin-left: auto;
-      margin-right: auto;
-      min-width: 240px;
-      max-width: 360px;
+      margin-left: 128px;
       display: flex;
       flex-direction: column;
+
+      .prefix-icon {
+        color: $secondary-text-color;
+      }
+
+      .content-item + .content-item {
+        margin-top: 8px;
+      }
+
+      .content-item {
+        width: 490px;
+        position: relative;
+
+        label {
+          position: absolute;
+          top: 20px;
+          left: 0;
+          color: $secondary-text-color;
+        }
+
+        .item {
+          top: 0;
+          left: 40px;
+          width: 450px;
+        }
+      }
     }
   }
 }
