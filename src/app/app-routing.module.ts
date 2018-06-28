@@ -6,13 +6,13 @@ import { VenHomeComponent } from './ven/ven-home/ven-home.component';
 import { VipHomeComponent } from './vip/vip-home/vip-home.component';
 import { VipSettingComponent } from './vip/vip-setting/vip-setting.component';
 import { VipOrdersComponent } from './vip/vip-orders/vip-orders.component';
-import { VipMovieComponent } from './vip/categories/vip-movie/vip-movie.component';
 import { VipSearchComponent } from './vip/vip-search/vip-search.component';
+import {VipConcertComponent} from "./vip/categories/vip-concert/vip-concert.component";
 
 const routes: Routes = [
   { path: '', component: VipHomeComponent },
   { path: 'search', component: VipSearchComponent },
-  { path: 'movie', component: VipMovieComponent },
+  {path: 'concert', component: VipConcertComponent},
   { path: 'setting', component: VipSettingComponent },
   { path: 'orders', component: VipOrdersComponent },
   { path: 'user/login', component: LoginComponent },

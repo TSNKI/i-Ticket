@@ -12,8 +12,8 @@ export class EventService {
     const categories = [
       {
         id: 0,
-        name: 'movie',
-        displayName: '电影',
+        name: 'concert',
+        displayName: '演唱会',
         items: []
       },
       {
@@ -24,8 +24,8 @@ export class EventService {
       },
       {
         id: 2,
-        name: 'concert',
-        displayName: '演唱会',
+        name: 'movie',
+        displayName: '电影',
         items: []
       },
       {
