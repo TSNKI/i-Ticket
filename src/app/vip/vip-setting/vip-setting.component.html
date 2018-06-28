@@ -108,55 +108,15 @@
       </div>
       <h3>社交</h3>
       <div class="content">
-        <!--<div class="content-item">-->
-        <!--<div class="social-info">-->
-        <!--<div class="social-title">备用邮箱</div>-->
-        <!--<div class="social-status">151250007@smail.nju.edu.cn</div>-->
-        <!--<div class="social-action" (click)="isBackupEmailVisible = !isBackupEmailVisible">解除绑定</div>-->
-        <!--<div class="divider"></div>-->
-        <!--</div>-->
-        <!--<div class="social-expansion" [class.active]="isBackupEmailVisible">-->
-        <!--<div class="social-expansion-container">-->
-        <!--Expanded-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="content-item">-->
-        <!--<div class="social-info">-->
-        <!--<div class="social-title">QQ</div>-->
-        <!--<div class="social-status">929509707</div>-->
-        <!--<div class="social-action">解除绑定</div>-->
-        <!--<div class="divider"></div>-->
-        <!--</div>-->
-        <!--<div class="social-expansion">解除绑定</div>-->
-        <!--</div>-->
-        <!--<div class="content-item">-->
-        <!--<div class="social-info">-->
-        <!--<div class="social-title">新浪微博</div>-->
-        <!--<div class="social-status">已绑定</div>-->
-        <!--<div class="social-action">解除绑定</div>-->
-        <!--<div class="divider"></div>-->
-        <!--</div>-->
-        <!--<div class="social-expansion">解除绑定</div>-->
-        <!--</div>-->
-        <!--<div class="content-item">-->
-        <!--<div class="social-info">-->
-        <!--<div class="social-title">腾讯微博</div>-->
-        <!--<div class="social-status">已绑定</div>-->
-        <!--<div class="social-action">解除绑定</div>-->
-        <!--<div class="divider"></div>-->
-        <!--</div>-->
-        <!--<div class="social-expansion">解除绑定</div>-->
-        <!--</div>-->
         <mat-accordion class="it-accordion">
           <mat-expansion-panel [hideToggle]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Personal data
+                备用邮箱
               </mat-panel-title>
               <mat-panel-description>
-                Type your name and age
-                <mat-icon>account_circle</mat-icon>
+                151250007@smail.nju.edu.cn
+                <mat-icon>email</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -173,11 +133,46 @@
           <mat-expansion-panel [hideToggle]="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Destination
+                QQ
               </mat-panel-title>
               <mat-panel-description>
-                Type the country name
-                <mat-icon>map</mat-icon>
+                929509707
+                <!--<img src="assets/icons/ic_qq.svg" width="24">-->
+                <mat-icon svgIcon="qq" class="it-icon"></mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-form-field>
+              <input matInput placeholder="Country">
+            </mat-form-field>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [hideToggle]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                腾讯微博
+              </mat-panel-title>
+              <mat-panel-description>
+                已绑定
+                <mat-icon svgIcon="tencent_weibo" class="it-icon"></mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-form-field>
+              <input matInput placeholder="Country">
+            </mat-form-field>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [hideToggle]="true">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                新浪微博
+              </mat-panel-title>
+              <mat-panel-description>
+                已绑定
+                <mat-icon svgIcon="sina" class="it-icon"></mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 

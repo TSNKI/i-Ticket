@@ -83,6 +83,15 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     iconRegistry.addSvgIcon(
       'email',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_email_24px.svg'));
+    iconRegistry.addSvgIcon(
+      'qq',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_qq.svg'));
+    iconRegistry.addSvgIcon(
+      'sina',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_sina.svg'));
+    iconRegistry.addSvgIcon(
+      'tencent_weibo',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_tencent_weibo.svg'));
   }
 
   ngOnInit() {
