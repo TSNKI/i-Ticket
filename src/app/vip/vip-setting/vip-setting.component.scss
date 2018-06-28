@@ -233,7 +233,6 @@ mat-card.person-info {
     box-shadow: 2px 0 1px -1px map_get($default-app-primary, 50), 5px 0 3px -3px map_get($default-app-primary, 50), 8px 0 5px -5px map_get($default-app-primary, 50);
     background-color: $default-undercoat;
     border: none;
-    z-index: 3000;
   }
 
   &::after {
@@ -247,7 +246,6 @@ mat-card.person-info {
     box-shadow: -2px 0 1px -1px map_get($default-app-primary, 50), -5px 0 3px -3px map_get($default-app-primary, 50), -8px 0 5px -5px map_get($default-app-primary, 50);
     background-color: $default-undercoat;
     border: none;
-    z-index: 3000;
   }
 
   .list-container {
