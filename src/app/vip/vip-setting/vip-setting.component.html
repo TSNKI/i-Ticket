@@ -106,17 +106,17 @@
           </div>
         </form>
       </div>
-      <h3>社交</h3>
+      <h3>社交账号</h3>
       <div class="content">
         <mat-accordion class="it-accordion">
-          <mat-expansion-panel [hideToggle]="true">
+          <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
+                <mat-icon class="it-icon">email</mat-icon>
                 备用邮箱
               </mat-panel-title>
               <mat-panel-description>
                 151250007@smail.nju.edu.cn
-                <mat-icon>email</mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -130,15 +130,15 @@
 
           </mat-expansion-panel>
 
-          <mat-expansion-panel [hideToggle]="true">
+          <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
+                <mat-icon svgIcon="qq" class="it-icon"></mat-icon>
                 QQ
               </mat-panel-title>
               <mat-panel-description>
                 929509707
                 <!--<img src="assets/icons/ic_qq.svg" width="24">-->
-                <mat-icon svgIcon="qq" class="it-icon"></mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -148,14 +148,14 @@
 
           </mat-expansion-panel>
 
-          <mat-expansion-panel [hideToggle]="true">
+          <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
+                <mat-icon svgIcon="tencent_weibo" class="it-icon"></mat-icon>
                 腾讯微博
               </mat-panel-title>
               <mat-panel-description>
                 已绑定
-                <mat-icon svgIcon="tencent_weibo" class="it-icon"></mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -165,14 +165,14 @@
 
           </mat-expansion-panel>
 
-          <mat-expansion-panel [hideToggle]="true">
+          <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
+                <mat-icon svgIcon="sina" class="it-icon"></mat-icon>
                 新浪微博
               </mat-panel-title>
               <mat-panel-description>
                 已绑定
-                <mat-icon svgIcon="sina" class="it-icon"></mat-icon>
               </mat-panel-description>
             </mat-expansion-panel-header>
 
@@ -188,7 +188,55 @@
     <mat-card class="it-card no-border">
       <h2>支付信息</h2>
       <h3>账户余额</h3>
-      <h3>信用卡</h3>
+      <h3>银行卡</h3>
+      <div class="content">
+        <div class="bank-card-list">
+          <div class="list-container">
+            <div class="bank-card">
+              <div class="card-title">
+                <div class="card-type">储蓄卡</div>
+                <div class="bank-name">中国工商银行</div>
+                <div class="divider"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-id">6222***9999</div>
+                <div class="divider"></div>
+                <div class="expire-date">2028-06-18</div>
+                <div class="person-name">*步兵</div>
+                <div class="divider"></div>
+              </div>
+            </div>
+            <div class="bank-card">
+              <div class="card-title">
+                <div class="card-type">储蓄卡</div>
+                <div class="bank-name">中国工商银行</div>
+                <div class="divider"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-id">6222***9999</div>
+                <div class="divider"></div>
+                <div class="expire-date">2028-06-18</div>
+                <div class="person-name">*步兵</div>
+                <div class="divider"></div>
+              </div>
+            </div>
+            <div class="bank-card">
+              <div class="card-title credit">
+                <div class="card-type">信用卡</div>
+                <div class="bank-name">中国工商银行</div>
+                <div class="divider"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-id">6222***9999</div>
+                <div class="divider"></div>
+                <div class="expire-date">2028-06-18</div>
+                <div class="person-name">*步兵</div>
+                <div class="divider"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <h3>收货地址</h3>
     </mat-card>
     <mat-card class="it-card no-border">
