@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VipMovieComponent } from './vip-movie.component';
+import {VipConcertComponent} from './vip-concert.component';
 
-describe('VipMovieComponent', () => {
-  let component: VipMovieComponent;
-  let fixture: ComponentFixture<VipMovieComponent>;
+describe('VipConcertComponent', () => {
+  let component: VipConcertComponent;
+  let fixture: ComponentFixture<VipConcertComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VipMovieComponent ]
+      declarations: [VipConcertComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VipMovieComponent);
+    fixture = TestBed.createComponent(VipConcertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

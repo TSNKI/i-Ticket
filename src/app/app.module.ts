@@ -27,7 +27,6 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { VipFooterComponent } from './vip/vip-footer/vip-footer.component';
 import { VipSearchComponent } from './vip/vip-search/vip-search.component';
-import { VipMovieComponent } from './vip/categories/vip-movie/vip-movie.component';
 import { MaxLengthPipe } from './pipes/max-length.pipe';
 import { TocComponent } from './toc/toc.component';
 import { TocService } from './shared/toc.service';
@@ -38,6 +37,7 @@ import { windowProvider, WindowToken } from './shared/window';
 import { BackTopComponent } from './back-top/back-top.component';
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {VipConcertComponent} from './vip/categories/vip-concert/vip-concert.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -71,10 +71,10 @@ registerLocaleData(zh);
     VenProfileComponent,
     VipFooterComponent,
     VipSearchComponent,
-    VipMovieComponent,
     MaxLengthPipe,
     TocComponent,
     BackTopComponent,
+    VipConcertComponent,
   ],
   entryComponents: [
     VipLoginComponent,
