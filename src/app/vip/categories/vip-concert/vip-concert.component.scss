@@ -1,0 +1,38 @@
+.bg-l {
+  width: 154px;
+  height: 358px;
+  float: left;
+  outline: none;
+  background: url(../../../../assets/images/bg.jpg);
+}
+
+.bg-r {
+  width: 154px;
+  height: 358px;
+  float: right;
+  background: url(../../../../assets/images/bg2.jpg);
+}
+
+.main {
+  width: 956px;
+  //margin-right: 18px;
+  //margin-left: 18px;
+  min-height: 750px;
+  float: left;
+
+  .activities {
+    width: 240px;
+
+    &.act-card {
+      border: 1px solid;
+      box-shadow: none;
+      padding: 0px;
+      margin: 0px;
+    }
+  }
+}
+
+.clear-both {
+  clear: both;
+}
+
