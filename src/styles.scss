@@ -96,7 +96,14 @@ mat-card.it-card {
 
 }
 
-.it-icon svg {
-  fill: $secondary-text-color;
+.it-icon {
+  color: $secondary-text-color;
+
+  svg {
+    fill: $secondary-text-color;
+  }
 }
 
+.divider {
+  clear: both;
+}

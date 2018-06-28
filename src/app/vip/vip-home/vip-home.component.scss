@@ -118,10 +118,6 @@
   width: 100%;
   min-width: 1216px;
 
-  .divider {
-    clear: both;
-  }
-
   .cat-title-bar {
     border-bottom: 3px map_get($default-app-primary, 400) solid;
     padding: 6px 0 12px;

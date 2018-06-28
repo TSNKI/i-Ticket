@@ -1,13 +1,5 @@
 @import "../../../styles";
 
-//.side-container {
-//  position: fixed;
-//  top: 65px;
-//  bottom: 12px;
-//  width: $content-width - 24px;
-//  min-height: 720px;
-//  z-index: -1;
-
 mat-card.person-info {
   border-right: 1px solid map_get($default-app-primary, 50) !important;
 }
@@ -98,28 +90,6 @@ mat-card.person-info {
   overflow-x: hidden;
 }
 
-//}
-
-.it-accordion {
-  .mat-expansion-panel {
-    background-color: $default-undercoat;
-    box-shadow: none;
-  }
-
-  .mat-expansion-panel + .mat-expansion-panel {
-    border-top: 1px solid map_get($default-app-primary, 50);
-  }
-
-  .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
-    flex-basis: 0;
-  }
-
-  .mat-expansion-panel-header-description {
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
 #setting-list {
   float: left;
   margin-left: 26px;
@@ -160,16 +130,6 @@ mat-card.person-info {
         position: absolute;
         top: 8px;
       }
-
-      //&:after {
-      //  content: '';
-      //  display: block;
-      //  height: 2px;
-      //  width: 30%;
-      //  margin: 0 0 4px -24px;
-      //  background: map_get($default-app-primary, 400);
-      //  clear: both;
-      //}
     }
 
     h3 {
@@ -183,20 +143,10 @@ mat-card.person-info {
       color: $secondary-text-color;
 
       background: linear-gradient(to right, rgba(map_get($default-app-primary, 400), .1), rgba(map_get($default-app-primary, 400), .0));
-
-      //&:after {
-      //  content: '';
-      //  display: block;
-      //  height: 1px;
-      //  width: 85%;
-      //  margin: 0 0 4px 18px;
-      //  background: #DBDBDB;
-      //  clear: both;
-      //}
     }
 
     .content {
-      margin-left: 128px;
+      margin-left: 72px;
       display: flex;
       flex-direction: column;
 
@@ -241,8 +191,147 @@ mat-card.person-info {
   }
 }
 
-.divider {
-  clear: both;
+.it-accordion {
+  .mat-expansion-panel {
+    background-color: $default-undercoat;
+    box-shadow: none;
+  }
+
+  .mat-expansion-panel + .mat-expansion-panel {
+    border-top: 1px solid map_get($default-app-primary, 50);
+  }
+
+  .mat-expansion-panel-header {
+    padding-left: 0;
+
+    mat-icon.it-icon {
+      margin-right: 26.5px;
+    }
+  }
+
+  .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.bank-card-list {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: -16px;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    content: "";
+    display: block;
+    box-shadow: 2px 0 1px -1px map_get($default-app-primary, 50), 5px 0 3px -3px map_get($default-app-primary, 50), 8px 0 5px -5px map_get($default-app-primary, 50);
+    background-color: $default-undercoat;
+    border: none;
+    z-index: 3000;
+  }
+
+  &::after {
+    position: absolute;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    content: "";
+    display: block;
+    box-shadow: -2px 0 1px -1px map_get($default-app-primary, 50), -5px 0 3px -3px map_get($default-app-primary, 50), -8px 0 5px -5px map_get($default-app-primary, 50);
+    background-color: $default-undercoat;
+    border: none;
+    z-index: 3000;
+  }
+
+  .list-container {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+
+    //border-left: 1px solid map_get($default-app-primary, 50);
+    //border-right: 1px solid map_get($default-app-primary, 50);
+    //border-top: none;
+    //border-bottom: none;
+    border: none;
+    padding: 12px 18px;
+    //box-shadow: inset 1px 0 10px -8px map_get($default-app-primary, 100), inset -1px 0 10px -8px map_get($default-app-primary, 100);
+
+    .bank-card + .bank-card {
+      margin-left: 12px;
+    }
+
+    .bank-card {
+      z-index: -1;
+      display: inline-block;
+      box-sizing: border-box;
+      margin: 0;
+      width: 300px;
+      height: 200px;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      border-radius: 5px;
+
+      color: primary-text-color(black);
+      line-height: 1;
+
+      .card-title {
+        background-color: map_get($mat-green, 50);
+        height: 58px;
+
+        &.credit {
+          background-color: map_get($mat-orange, 50);
+        }
+
+        .card-type {
+          float: left;
+          font-size: 18px;
+          font-weight: 500;
+          margin-top: 20px;
+          margin-left: 18px;
+        }
+
+        .bank-name {
+          float: right;
+          font-size: 14px;
+          margin-top: 24px;
+          margin-right: 18px;
+          color: $secondary-text-color;
+        }
+      }
+
+      .card-content {
+
+        .card-id {
+          margin-top: 20px;
+          margin-left: 18px;
+          margin-bottom: 20px;
+          font-size: 24px;
+          font-weight: 400;
+        }
+
+        .expire-date {
+          float: left;
+          margin-left: 18px;
+          color: $secondary-text-color;
+        }
+
+        .person-name {
+          float: right;
+          margin-right: 18px;
+        }
+      }
+
+      .card-action {
+
+      }
+    }
+  }
 }
 
 .full-width {
