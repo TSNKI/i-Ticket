@@ -67,7 +67,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  isBackupEmailVisible = false;
 
   constructor(
     elementRef: ElementRef,

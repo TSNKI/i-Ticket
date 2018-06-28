@@ -1,127 +1,23 @@
 @import "theme/default-app-theme";
-
-@mixin material-icons {
-  @font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url(~material-design-icons/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
-    src: local('Material Icons'),
-    local('MaterialIcons-Regular'),
-    url(~material-design-icons/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
-    url(~material-design-icons/iconfont/MaterialIcons-Regular.woff) format('woff'),
-    url(~material-design-icons/iconfont/MaterialIcons-Regular.ttf) format('truetype');
-  }
-
-  .material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px; /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
-
-  /* Rules for sizing the icon. */
-  .material-icons.md-18 {
-    font-size: 18px;
-  }
-
-  .material-icons.md-24 {
-    font-size: 24px;
-  }
-
-  .material-icons.md-36 {
-    font-size: 36px;
-  }
-
-  .material-icons.md-48 {
-    font-size: 48px;
-  }
-
-  .material-icons.align-bottom {
-    vertical-align: text-bottom;
-  }
-
-  /* Rules for using icons as black on a light background. */
-  .material-icons.md-dark {
-    color: rgba(0, 0, 0, 0.54);
-  }
-
-  .material-icons.md-dark.md-inactive {
-    color: rgba(0, 0, 0, 0.26);
-  }
-
-  /* Rules for using icons as white on a dark background. */
-  .material-icons.md-light {
-    color: rgba(255, 255, 255, 1);
-  }
-
-  .material-icons.md-light.md-inactive {
-    color: rgba(255, 255, 255, 0.3);
-  }
-
-}
+@import "mixins/_mixins";
 
 @include material-icons;
 
-@mixin default-blur-effect($blur: 15px) {
-  /* Safari for macOS & iOS */
-  -webkit-backdrop-filter: blur($blur);
-  /* Google Chrome */
-  backdrop-filter: blur($blur);
-}
-
-@mixin hash-offset($offset) {
-  &::before {
-    display: block;
-    content: " ";
-    margin-top: -$offset;
-    height: $offset;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-
-@mixin rotate($degrees) {
-  -moz-transform: rotate($degrees);
-  -webkit-transform: rotate($degrees);
-  -o-transform: rotate($degrees);
-  -ms-transform: rotate($degrees);
-  transform: rotate($degrees);
-  transition: transform 150ms;
-  transition-timing-function: ease-in-out;
-}
-
 $primary-text-color: rgba(black, .87);
-
 $secondary-text-color: rgba(black, .6);
-
 $disabled-text-color: rgba(black, .38);
 
 $content-width: 1288px;
+
+@function primary-text-color($base-color) {
+  @return rgba($base-color, .87);
+}
 
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: $default-undercoat;
+  //background-color: $default-undercoat;
 }
 
 .btn-link.mat-button.mat-primary .mat-button-focus-overlay {
@@ -187,5 +83,14 @@ it-toc.embedded {
 
 it-toc.embedded > div.collapsed li.secondary {
   display: none;
+}
+
+mat-card.it-card {
+  border: 1px solid map_get($default-app-primary, 50);
+  box-shadow: none;
+
+  &.no-border {
+    border: none;
+  }
 }
 

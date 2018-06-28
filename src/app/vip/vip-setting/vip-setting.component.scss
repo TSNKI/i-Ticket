@@ -8,6 +8,10 @@
 //  min-height: 720px;
 //  z-index: -1;
 
+mat-card.person-info {
+  border-right: 1px solid map_get($default-app-primary, 50) !important;
+}
+
 .person-info {
   position: sticky;
   position: -webkit-sticky;
@@ -149,7 +153,7 @@
     }
 
     h3 {
-      margin: 18px 360px 18px 48px;
+      margin: 18px 180px 18px 48px;
       padding-left: 24px;
       font-size: 18px;
       font-weight: 400;
@@ -180,12 +184,12 @@
         color: $secondary-text-color;
       }
 
-      .content-item + .content-item {
+      .form-item + .form-item {
         margin-top: 8px;
       }
 
-      .content-item {
-        width: 490px;
+      .form-item {
+        width: 520px;
         position: relative;
 
         label {
@@ -198,8 +202,72 @@
         .item {
           top: 0;
           margin-left: 40px;
-          width: 450px;
+          width: 480px;
         }
+      }
+
+      .content-item + .content-item {
+        border-top: 1px solid map_get($default-app-primary, 50);
+      }
+
+      .content-item {
+        position: relative;
+        width: 550px;
+        min-height: 69px;
+        padding: 0;
+
+        .social-info {
+          width: 490px;
+          margin: 24px 30px 0 30px;
+
+          .social-title {
+            float: left;
+            width: 35%;
+            text-align: left;
+            vertical-align: center;
+            color: $primary-text-color;
+          }
+
+          .social-status {
+            float: left;
+            width: 35%;
+            text-align: left;
+            vertical-align: center;
+            color: $secondary-text-color;
+          }
+
+          .social-action {
+            float: left;
+            width: 30%;
+            text-align: right;
+            vertical-align: center;
+            color: map_get($default-app-primary, 400);
+            cursor: pointer;
+          }
+        }
+
+        .social-expansion {
+          overflow: hidden;
+          height: 0;
+          margin-top: 12px;
+          margin-bottom: 12px;
+          padding: 0 12px;
+
+          transition: height 100ms ease-in-out;
+
+          .social-expansion-container {
+            border-radius: 8px;
+            border: 1px solid map_get($default-app-primary, 100);
+
+            margin: 1px;
+            height: 119px;
+          }
+
+          &.active {
+            height: 120px;
+          }
+        }
+
       }
     }
   }

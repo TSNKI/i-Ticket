@@ -25,111 +25,109 @@
   <!--</div>-->
   <!--</div>-->
   <!--</div>-->
-  <div *ngFor="let category of categoryData" style="margin-top: 12px">
-    <mat-card>
-      <mat-card-content>
-        <div class="cat-container">
-          <div class="cat-exhibit-container">
-            <div class="cat-title-bar">
-              <div class="cat-title-bar-container">
-                <div class="cat-title">
-                  {{category.displayName}}
-                </div>
-                <span class="flex-spacer"></span>
-                <div class="cat-subtitle">
-                  <a routerLink="">更多&nbsp;>></a>
-                </div>
+  <mat-card class="" *ngFor="let category of categoryData" style="margin-top: 12px">
+    <mat-card-content>
+      <div class="cat-container">
+        <div class="cat-exhibit-container">
+          <div class="cat-title-bar">
+            <div class="cat-title-bar-container">
+              <div class="cat-title">
+                {{category.displayName}}
+              </div>
+              <span class="flex-spacer"></span>
+              <div class="cat-subtitle">
+                <a routerLink="">更多&nbsp;>></a>
               </div>
             </div>
-            <mat-grid-list cols="3" rowHeight="225px">
-              <mat-grid-tile [colspan]="'1'"
-                             [rowspan]="'2'">
-                <div class="cat-exhibit-top">
-                  <dl>
-                    <dt>
-                      <a>
-                        <img width="240" height="320"/>
-                      </a>
-                    </dt>
-                    <dd class="title">
-                      {{'[洛阳] 2018岳云鹏《爱岳之城》相声专场-洛阳站' | maxLength: 40}}
-                    </dd>
-                    <dd class="date">
-                      {{ '2018-05-09' | date }}
-                    </dd>
-                    <dd class="price">
-                      <span class="prefix">¥</span>128<span class="suffix">起</span>
-                    </dd>
-                    <dd class="address">
-                      {{'洛阳新区-体育场' | maxLength: 8}}
-                    </dd>
-                  </dl>
-                </div>
-              </mat-grid-tile>
-
-              <mat-grid-tile *ngFor="let i of [0,1,2,3,4] | slice:1"
-                             [colspan]="'1'"
-                             [rowspan]="'1'">
-                <div class="cat-exhibit-rest">
-                  <dl>
-                    <dt>
-                      <a>
-                        <img width="153" height="204"/>
-                      </a>
-                    </dt>
-                    <dd class="title">
-                      {{'[西安] 青曲社相声大会暑期专场' | maxLength: 20}}
-                    </dd>
-                    <dd class="date">
-                      {{ '2018-05-09' | date }}
-                    </dd>
-                    <dd class="address">
-                      {{'广西文化艺术中心音乐厅' | maxLength: 8}}
-                    </dd>
-                    <dd class="price">
-                      <span class="prefix">¥</span>128<span class="suffix">起</span>
-                    </dd>
-                  </dl>
-                </div>
-              </mat-grid-tile>
-            </mat-grid-list>
           </div>
-
-          <div class="cat-rank-container">
-            <div class="cat-title-bar">
-              <div class="cat-title-bar-container">
-                <div class="cat-title">
-                  {{category.displayName + '排行'}}
-                </div>
-                <span class="flex-spacer"></span>
-                <div class="cat-subtitle">
-                  <span>Top 5</span>
-                </div>
+          <mat-grid-list cols="3" rowHeight="225px">
+            <mat-grid-tile [colspan]="'1'"
+                           [rowspan]="'2'">
+              <div class="cat-exhibit-top">
+                <dl>
+                  <dt>
+                    <a>
+                      <img width="240" height="320"/>
+                    </a>
+                  </dt>
+                  <dd class="title">
+                    {{'[洛阳] 2018岳云鹏《爱岳之城》相声专场-洛阳站' | maxLength: 40}}
+                  </dd>
+                  <dd class="date">
+                    {{ '2018-05-09' | date }}
+                  </dd>
+                  <dd class="price">
+                    <span class="prefix">¥</span>128<span class="suffix">起</span>
+                  </dd>
+                  <dd class="address">
+                    {{'洛阳新区-体育场' | maxLength: 8}}
+                  </dd>
+                </dl>
               </div>
-            </div>
-            <dl class="cat-rank-top">
-              <dt>
-                <span class="top-rank-logo">No.1</span>
-                <img width="268" height="130"/>
-              </dt>
-              <dd>
-                {{'打开音乐之门•2018北京音乐厅暑期系列音乐会 经典昆曲剧目《牡丹亭》' | maxLength: 45}}
-              </dd>
-            </dl>
-            <dl *ngFor="let i of [0,1,2,3,4] | slice:1" class="cat-rank-rest">
-              <dt>
-                {{'0' + (i + 1)}}
-              </dt>
-              <dd>
-                {{'[北京] 太阳马戏《阿凡达前传：托鲁克-首次翱翔》全球巡演 北京站' | maxLength: 40}}
-              </dd>
-            </dl>
-          </div>
-          <div class="divider"></div>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngFor="let i of [0,1,2,3,4] | slice:1"
+                           [colspan]="'1'"
+                           [rowspan]="'1'">
+              <div class="cat-exhibit-rest">
+                <dl>
+                  <dt>
+                    <a>
+                      <img width="153" height="204"/>
+                    </a>
+                  </dt>
+                  <dd class="title">
+                    {{'[西安] 青曲社相声大会暑期专场' | maxLength: 20}}
+                  </dd>
+                  <dd class="date">
+                    {{ '2018-05-09' | date }}
+                  </dd>
+                  <dd class="address">
+                    {{'广西文化艺术中心音乐厅' | maxLength: 8}}
+                  </dd>
+                  <dd class="price">
+                    <span class="prefix">¥</span>128<span class="suffix">起</span>
+                  </dd>
+                </dl>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+
+        <div class="cat-rank-container">
+          <div class="cat-title-bar">
+            <div class="cat-title-bar-container">
+              <div class="cat-title">
+                {{category.displayName + '排行'}}
+              </div>
+              <span class="flex-spacer"></span>
+              <div class="cat-subtitle">
+                <span>Top 5</span>
+              </div>
+            </div>
+          </div>
+          <dl class="cat-rank-top">
+            <dt>
+              <span class="top-rank-logo">No.1</span>
+              <img width="268" height="130"/>
+            </dt>
+            <dd>
+              {{'打开音乐之门•2018北京音乐厅暑期系列音乐会 经典昆曲剧目《牡丹亭》' | maxLength: 45}}
+            </dd>
+          </dl>
+          <dl *ngFor="let i of [0,1,2,3,4] | slice:1" class="cat-rank-rest">
+            <dt>
+              {{'0' + (i + 1)}}
+            </dt>
+            <dd>
+              {{'[北京] 太阳马戏《阿凡达前传：托鲁克-首次翱翔》全球巡演 北京站' | maxLength: 40}}
+            </dd>
+          </dl>
+        </div>
+        <div class="divider"></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 <it-back-top hrefBase="/"></it-back-top>
 <it-vip-footer></it-vip-footer>

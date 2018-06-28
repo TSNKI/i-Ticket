@@ -1,0 +1,29 @@
+@import "material-icons";
+
+@mixin default-blur-effect($blur: 15px) {
+  /* Safari for macOS & iOS */
+  -webkit-backdrop-filter: blur($blur);
+  /* Google Chrome */
+  backdrop-filter: blur($blur);
+}
+
+@mixin hash-offset($offset) {
+  &::before {
+    display: block;
+    content: " ";
+    margin-top: -$offset;
+    height: $offset;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@mixin rotate($degrees) {
+  -moz-transform: rotate($degrees);
+  -webkit-transform: rotate($degrees);
+  -o-transform: rotate($degrees);
+  -ms-transform: rotate($degrees);
+  transform: rotate($degrees);
+  transition: transform 150ms;
+  transition-timing-function: ease-in-out;
+}

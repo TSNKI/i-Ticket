@@ -1,6 +1,6 @@
 <it-vip-header></it-vip-header>
 <div class="container">
-  <mat-card class="person-info" [style.height]="contentHeight">
+  <mat-card class="person-info it-card no-border" [style.height]="contentHeight">
     <div align="middle">
       <div class="avatar">
         <img width="160" height="160"
@@ -18,12 +18,12 @@
 
   <div id="setting-list">
     <h1>设置</h1>
-    <mat-card>
+    <mat-card class="it-card no-border">
       <h2>个人资料</h2>
       <h3>我的信息</h3>
       <div class="content">
         <form>
-          <div class="content-item">
+          <div class="form-item">
             <label><i class="material-icons">email</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>邮箱地址</mat-label>
@@ -33,7 +33,7 @@
             </mat-form-field>
           </div>
 
-          <div class="content-item">
+          <div class="form-item">
             <label><i class="material-icons">person</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>昵称</mat-label>
@@ -43,7 +43,7 @@
             </mat-form-field>
           </div>
 
-          <div class="content-item">
+          <div class="form-item">
             <label><i class="material-icons">phone</i></label>
             <div class="item">
               <mat-form-field appearance="outline" style="width: 120px">
@@ -54,7 +54,7 @@
                   <mat-option value="US">USA (+{{getPhonePrefix("US")}}</mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field appearance="outline" style="margin-left: 8px;width: 322px">
+              <mat-form-field appearance="outline" style="margin-left: 8px;width: 352px">
                 <mat-label>手机号码</mat-label>
                 <input matInput placeholder="手机号码" type="tel"
                        [value]="phoneNumber"
@@ -64,7 +64,7 @@
           </div>
 
           <!--<div class="content-item">-->
-            <!--<label><i class="material-icons">person</i></label>-->
+          <!--<label><i class="material-icons">person</i></label>-->
           <!--<mat-form-field appearance="outline" class="item" style="width: 140px">-->
           <!--<mat-label>性别</mat-label>-->
           <!--<mat-select placeholder="性别" [value]="person.gender">-->
@@ -75,7 +75,7 @@
           <!--</mat-form-field>-->
           <!--</div>-->
 
-          <div class="content-item">
+          <div class="form-item">
             <label><i class="material-icons">cake</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>出生日期</mat-label>
@@ -85,7 +85,7 @@
             </mat-form-field>
           </div>
 
-          <div class="content-item">
+          <div class="form-item">
             <label><i class="material-icons">edit</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>个性签名</mat-label>
@@ -100,16 +100,63 @@
               <mat-hint align="end">{{motto.value.length}} / 140</mat-hint>
             </mat-form-field>
           </div>
+
+          <div class="form-item">
+            <button mat-raised-button color="primary" type="submit" style="float: right">修改</button>
+          </div>
         </form>
       </div>
       <h3>社交</h3>
+      <div class="content">
+        <div class="content-item">
+          <div class="social-info">
+            <div class="social-title">备用邮箱</div>
+            <div class="social-status">151250007@smail.nju.edu.cn</div>
+            <div class="social-action" (click)="isBackupEmailVisible = !isBackupEmailVisible">解除绑定</div>
+            <div class="divider"></div>
+          </div>
+          <div class="social-expansion" [class.active]="isBackupEmailVisible">
+            <div class="social-expansion-container">
+              Expanded
+            </div>
+          </div>
+        </div>
+        <div class="content-item">
+          <div class="social-info">
+            <div class="social-title">QQ</div>
+            <div class="social-status">929509707</div>
+            <div class="social-action">解除绑定</div>
+            <div class="divider"></div>
+          </div>
+          <div class="social-expansion">解除绑定</div>
+        </div>
+        <div class="content-item">
+          <div class="social-info">
+            <div class="social-title">新浪微博</div>
+            <div class="social-status">已绑定</div>
+            <div class="social-action">解除绑定</div>
+            <div class="divider"></div>
+          </div>
+          <div class="social-expansion">解除绑定</div>
+        </div>
+        <div class="content-item">
+          <div class="social-info">
+            <div class="social-title">腾讯微博</div>
+            <div class="social-status">已绑定</div>
+            <div class="social-action">解除绑定</div>
+            <div class="divider"></div>
+          </div>
+          <div class="social-expansion">解除绑定</div>
+        </div>
+      </div>
     </mat-card>
-    <mat-card>
+    <mat-card class="it-card no-border">
       <h2>支付信息</h2>
-      <h3>付款方式</h3>
+      <h3>账户余额</h3>
+      <h3>信用卡</h3>
       <h3>收货地址</h3>
     </mat-card>
-    <mat-card>
+    <mat-card class="it-card no-border">
       <h2>账户安全</h2>
       <h3>修改密码</h3>
       <h3>密保问题</h3>
