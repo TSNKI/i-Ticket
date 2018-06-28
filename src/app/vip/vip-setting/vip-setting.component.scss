@@ -100,6 +100,27 @@ mat-card.person-info {
 
 //}
 
+.it-accordion {
+  .mat-expansion-panel {
+    background-color: $default-undercoat;
+    box-shadow: none;
+  }
+
+  .mat-expansion-panel + .mat-expansion-panel {
+    border-top: 1px solid map_get($default-app-primary, 50);
+  }
+
+  .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+
 #setting-list {
   float: left;
   margin-left: 26px;

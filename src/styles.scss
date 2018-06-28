@@ -17,7 +17,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  //background-color: $default-undercoat;
+  background-color: $default-undercoat;
 }
 
 .btn-link.mat-button.mat-primary .mat-button-focus-overlay {
@@ -88,9 +88,11 @@ it-toc.embedded > div.collapsed li.secondary {
 mat-card.it-card {
   border: 1px solid map_get($default-app-primary, 50);
   box-shadow: none;
+  background-color: $default-undercoat;
 
   &.no-border {
     border: none;
   }
+
 }
 
