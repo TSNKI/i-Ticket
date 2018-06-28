@@ -291,43 +291,54 @@ mat-card.person-info {
           font-size: 18px;
           font-weight: 500;
           margin-top: 20px;
-          margin-left: 18px;
+          margin-left: 30px;
         }
 
         .bank-name {
           float: right;
           font-size: 14px;
           margin-top: 24px;
-          margin-right: 18px;
+          margin-right: 30px;
           color: $secondary-text-color;
         }
       }
 
       .card-content {
+        line-height: 1;
 
         .card-id {
-          margin-top: 20px;
-          margin-left: 18px;
-          margin-bottom: 20px;
+          float: left;
+          margin-top: 30px;
+          margin-left: 30px;
+          margin-bottom: 30px;
           font-size: 24px;
           font-weight: 400;
         }
 
         .expire-date {
-          float: left;
-          margin-left: 18px;
-          color: $secondary-text-color;
+          float: right;
+          margin-top: 38px;
+          margin-right: 30px;
+          margin-bottom: 32px;
+          font-size: 14px;
+          font-weight: 400;
+          color: $disabled-text-color;
         }
 
         .person-name {
+          float: left;
+          margin-left: 30px;
+          margin-top: 10px;
+          color: $secondary-text-color;
+        }
+
+        .card-action {
           float: right;
-          margin-right: 18px;
+          margin-right: 0;
         }
       }
 
-      .card-action {
 
-      }
     }
   }
 }
