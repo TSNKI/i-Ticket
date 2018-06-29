@@ -22,7 +22,7 @@
       <h2>个人资料</h2>
       <h3>我的信息</h3>
       <div class="content">
-        <form>
+        <form style="width: 556px;" class="margin-8">
           <div class="form-item">
             <label><i class="material-icons">email</i></label>
             <mat-form-field appearance="outline" class="item">
@@ -46,7 +46,7 @@
           <div class="form-item">
             <label><i class="material-icons">phone</i></label>
             <div class="item">
-              <mat-form-field appearance="outline" style="width: 120px">
+              <mat-form-field appearance="outline" style="width: 30%">
                 <mat-label>地区</mat-label>
                 <mat-select placeholder="地区" [value]="country" #phoneCountry
                             (selectionChange)="resetCountry(phoneCountry.value)">
@@ -54,7 +54,7 @@
                   <mat-option value="US">USA (+{{getPhonePrefix("US")}}</mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field appearance="outline" style="margin-left: 8px;width: 352px">
+              <mat-form-field appearance="outline" style="margin-left: 2%;width: 68%">
                 <mat-label>手机号码</mat-label>
                 <input matInput placeholder="手机号码" type="tel"
                        [value]="phoneNumber"
@@ -89,7 +89,6 @@
             <label><i class="material-icons">edit</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>个性签名</mat-label>
-              <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
               <textarea
                 matInput
                 #motto
@@ -101,8 +100,16 @@
             </mat-form-field>
           </div>
 
-          <div class="form-item">
-            <button mat-raised-button color="primary" type="submit" style="float: right">修改</button>
+          <div class="form-item" style="margin-top: 12px">
+            <div class="item">
+              <button mat-raised-button color="primary" type="submit" class="primary-action">
+                修改
+              </button>
+              <button mat-button color="primary" type="submit" class="secondary-action">
+                复原
+              </button>
+              <div class="divider"></div>
+            </div>
           </div>
         </form>
       </div>
@@ -191,66 +198,265 @@
       <h3>银行卡</h3>
       <div class="content">
         <div class="bank-card-list">
+          <div class="divider"></div>
           <div class="list-container">
-            <div class="bank-card">
-              <div class="card-title">
-                <div class="card-type">储蓄卡</div>
-                <div class="bank-name">中国工商银行</div>
+            <div class="bank-card" *ngFor="let card of cards">
+              <div class="card-title" [class.credit]="card.type==='信用卡'">
+                <div class="divider"></div>
+                <div class="card-type">{{card.type}}</div>
+                <div class="bank-name">{{card.bank}}</div>
                 <div class="divider"></div>
               </div>
               <div class="card-content">
-                <div class="card-id">6222***9999</div>
-                <div class="expire-date">2028-06-18</div>
+                <div class="card-id">{{card.id}}</div>
+                <div class="expire-date">{{card.expire}}</div>
                 <div class="divider"></div>
-                <div class="person-name">*步兵</div>
+                <div class="person-name">{{card.person}}</div>
                 <div class="card-action">
                   <button mat-button color="primary" class="btn-link">删除</button>
                 </div>
                 <div class="divider"></div>
               </div>
             </div>
+
             <div class="bank-card">
-              <div class="card-title">
-                <div class="card-type">储蓄卡</div>
-                <div class="bank-name">中国工商银行</div>
-                <div class="divider"></div>
-              </div>
-              <div class="card-content">
-                <div class="card-id">6222***9999</div>
-                <div class="divider"></div>
-                <div class="person-name">*步兵</div>
-                <div class="expire-date">2028-06-18</div>
-                <div class="divider"></div>
-              </div>
-              <div class="card-action">
-                <button mat-button color="primary" class="btn-link">删除</button>
-              </div>
+              <a class="add-card" (click)="addCardPanel.open()">
+                <mat-icon>add</mat-icon>
+              </a>
             </div>
-            <div class="bank-card">
-              <div class="card-title credit">
-                <div class="card-type">信用卡</div>
-                <div class="bank-name">中国工商银行</div>
-                <div class="divider"></div>
-              </div>
-              <div class="card-content">
-                <div class="card-id">6222***9999</div>
-                <div class="divider"></div>
-                <div class="person-name">*步兵</div>
-                <div class="expire-date">2028-06-18</div>
-                <div class="divider"></div>
-              </div>
-              <div class="card-action">
-                <button mat-button color="primary" class="btn-link">删除</button>
-              </div>
-            </div>
+
           </div>
         </div>
+        <mat-accordion class="it-accordion" style="margin: 0 -24px">
+          <mat-expansion-panel [hideToggle]="true" #addCardPanel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="it-icon">add</mat-icon>
+                添加银行卡
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-tab-group mat-stretch-tabs style="margin: 12px 0">
+              <mat-tab label="信用卡">
+                <form style="width: 556px;margin-top: 12px;margin-left: 20px" class="margin-4">
+                  <div class="form-item">
+                    <label><i class="material-icons">person</i></label>
+                    <mat-form-field appearance="outline" class="item">
+                      <mat-label>姓名</mat-label>
+                      <input matInput placeholder="姓名">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-item">
+                    <label><i class="material-icons">place</i></label>
+                    <div class="item">
+                      <mat-form-field appearance="outline" style="width: 32%">
+                        <mat-label>国家</mat-label>
+                        <mat-select placeholder="国家" value="CN">
+                          <mat-option value="CN">中国</mat-option>
+                          <mat-option value="US">USA</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 32%;margin-left: 2%">
+                        <mat-label>省份</mat-label>
+                        <mat-select placeholder="省份" value="江苏">
+                          <mat-option value="江苏">江苏</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 32%;margin-left: 2%">
+                        <mat-label>市</mat-label>
+                        <mat-select placeholder="市" value="南京">
+                          <mat-option value="南京">南京</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="form-item">
+                    <mat-form-field appearance="outline" class="item">
+                      <mat-label>地址</mat-label>
+                      <input matInput placeholder="地址">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-item">
+                    <label><i class="material-icons">credit_card</i></label>
+                    <div class="item">
+                      <mat-form-field appearance="outline" style="width: 50%">
+                        <mat-label>银行卡号</mat-label>
+                        <input matInput #bankCardNumber
+                               placeholder="1234 - 5678 - 9098 - 7654 - 321"
+                               [textMask]="{mask: bankCardMask, guide: false}"
+                               [(ngModel)]="newBankCardNumber">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
+                        <mat-label>有效期</mat-label>
+                        <input matInput placeholder="有效期">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
+                        <mat-label>校验码</mat-label>
+                        <input matInput placeholder="校验码" maxlength="4">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="form-item" style="margin-top: 8px">
+                    <div class="item">
+                      <button mat-raised-button color="primary" type="submit" class="primary-action">
+                        添加
+                      </button>
+                      <button mat-button color="primary" type="submit" class="secondary-action"
+                              (click)="addCardPanel.close()">
+                        放弃
+                      </button>
+                      <div class="divider"></div>
+                    </div>
+                  </div>
+                </form>
+              </mat-tab>
+              <mat-tab label="储蓄卡">
+                <form style="width: 556px;margin-top: 12px;margin-left: 20px" class="margin-4">
+                  <div class="form-item">
+                    <label><i class="material-icons">person</i></label>
+                    <mat-form-field appearance="outline" class="item">
+                      <mat-label>姓名</mat-label>
+                      <input matInput placeholder="姓名">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-item">
+                    <label><i class="material-icons">credit_card</i></label>
+                    <div class="item">
+                      <mat-form-field appearance="outline" style="width: 50%">
+                        <mat-label>银行卡号</mat-label>
+                        <input matInput #bankCardNumber
+                               placeholder="1234 - 5678 - 9098 - 7654 - 321"
+                               [textMask]="{mask: bankCardMask, guide: false}"
+                               [(ngModel)]="newBankCardNumber">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
+                        <mat-label>有效期</mat-label>
+                        <input matInput placeholder="有效期">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
+                        <mat-label>校验码</mat-label>
+                        <input matInput placeholder="校验码" maxlength="4">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="form-item" style="margin-top: 8px">
+                    <div class="item">
+                      <button mat-raised-button color="primary" type="submit" class="primary-action">
+                        添加
+                      </button>
+                      <button mat-button color="primary" type="submit" class="secondary-action"
+                              (click)="addCardPanel.close()">
+                        放弃
+                      </button>
+                      <div class="divider"></div>
+                    </div>
+                  </div>
+                </form>
+              </mat-tab>
+            </mat-tab-group>
+
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
       <h3>收货地址</h3>
+      <div class="content">
+        <div class="bank-card-list">
+          <div class="divider"></div>
+          <div class="list-container">
+            <div class="bank-card" *ngFor="let card of cards">
+              <div class="card-title" [class.credit]="card.type==='信用卡'">
+                <div class="divider"></div>
+                <div class="card-type">{{card.type}}</div>
+                <div class="bank-name">{{card.bank}}</div>
+                <div class="divider"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-id">{{card.id}}</div>
+                <div class="expire-date">{{card.expire}}</div>
+                <div class="divider"></div>
+                <div class="person-name">{{card.person}}</div>
+                <div class="card-action">
+                  <button mat-button color="primary" class="btn-link">删除</button>
+                </div>
+                <div class="divider"></div>
+              </div>
+            </div>
+
+            <div class="bank-card">
+              <a class="add-card" (click)="addAddress.open()">
+                <mat-icon>add</mat-icon>
+              </a>
+            </div>
+
+          </div>
+        </div>
+        <mat-accordion class="it-accordion" style="margin: 0 -24px">
+          <mat-expansion-panel [hideToggle]="true" #addAddress>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="it-icon">add</mat-icon>
+                添加地址
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-form-field>
+              <input matInput placeholder="First name">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="number" min="1" placeholder="Age">
+            </mat-form-field>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
     </mat-card>
     <mat-card class="it-card no-border">
       <h2>账户安全</h2>
       <h3>修改密码</h3>
+      <div class="content">
+        <form class="" style="width: 520px">
+          <div class="form-item">
+            <label><i class="material-icons">key</i></label>
+            <mat-form-field appearance="outline" class="item">
+              <mat-label>原密码</mat-label>
+              <input matInput type="password" placeholder="原密码">
+            </mat-form-field>
+          </div>
+
+          <div class="form-item">
+            <label><i class="material-icons">key</i></label>
+            <mat-form-field appearance="outline" class="item">
+              <mat-label>新密码</mat-label>
+              <input matInput type="password" placeholder="原密码">
+            </mat-form-field>
+          </div>
+
+          <div class="form-item">
+            <label><i class="material-icons">key</i></label>
+            <mat-form-field appearance="outline" class="item">
+              <mat-label>确认密码</mat-label>
+              <input matInput type="password" placeholder="原密码">
+            </mat-form-field>
+          </div>
+
+          <div class="form-item">
+            <button mat-raised-button color="primary" type="submit" style="margin-top: 8px" class="item">
+              修改
+            </button>
+          </div>
+        </form>
+      </div>
       <h3>密保问题</h3>
       <h3>实名认证</h3>
     </mat-card>

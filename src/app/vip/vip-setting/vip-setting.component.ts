@@ -12,7 +12,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
@@ -57,6 +56,43 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     phone: '+86 137 7110 4099',
     birth: '1989-03-09'
   };
+
+  cards: BankCard[] = [
+    {
+      type: '储蓄卡',
+      bank: '中国工商银行',
+      id: '6222****1919',
+      expire: '2028-08-01',
+      person: '*步兵'
+    },
+    {
+      type: '储蓄卡',
+      bank: '广东发展银行',
+      id: '6222****1919',
+      expire: '2022-03-04',
+      person: '*步兵'
+    },
+    {
+      type: '信用卡',
+      bank: '中国农业银行',
+      id: '6222****1919',
+      expire: '2024-07-06',
+      person: '*步兵'
+    }
+  ];
+  bankCardMask = [
+    /[1-9]/, /\d/, /\d/, /\d/,
+    ' ', '-', ' ',
+    /\d/, /\d/, /\d/, /\d/,
+    ' ', '-', ' ',
+    /\d/, /\d/, /\d/, /\d/,
+    ' ', '-', ' ',
+    /\d/, /\d/, /\d/, /\d/,
+    ' ', '-', ' ',
+    /\d/, /\d/, /\d/
+  ];
+  newBankCardNumber = '';
+  newBankCard: BankCard;
 
   asYouType = new AsYouType();
 
@@ -129,6 +165,46 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.phoneNumber = this.asYouType.input(phoneNumber);
   }
 
+  // updateBankCardMask(cardNumber: string) {
+  //   this.bankCardMask = this.getBankCardMask(this.getBankCardType(cardNumber));
+  // }
+  //
+  // getBankCardType(creditCardNumber: string) {
+  //   // start without knowing the credit card type
+  //   let result = 'unknown';
+  //
+  //   if (/^5[1-5]/.test(creditCardNumber)) {
+  //     // first check for MasterCard
+  //     result = 'mastercard';
+  //   } else if (/^4/.test(creditCardNumber)) {
+  //     // then check for Visa
+  //     result = 'visa';
+  //   } else if (/^3[47]/.test(creditCardNumber)) {
+  //     // then check for AmEx
+  //     result = 'amex';
+  //   } else if (/3(?:0[0-5]|[68][0-9])[0-9]{11}/.test(creditCardNumber)) {
+  //     // then check for Diners
+  //     result = 'diners';
+  //   } else if (/6(?:011|5[0-9]{2})[0-9]{12}/.test(creditCardNumber)) {
+  //     // then check for Discover
+  //     result = 'discover';
+  //   }
+  //
+  //   return result;
+  // }
+  //
+  // getBankCardMask(cardType: string) {
+  //   const masks = {
+  //     'mastercard': '9999 9999 9999 9999',
+  //     'visa': '9999 9999 9999 9999',
+  //     'amex': '9999 999999 99999',
+  //     'diners': '9999 9999 9999 99',
+  //     'discover': '9999 9999 9999 9999',
+  //     'unknown': '9999 9999 9999 9999'
+  //   };
+  //   return masks[ cardType ];
+  // }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const threshold = 12;
@@ -143,4 +219,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   onResize(height: number) {
     this.contentHeight = (height - 65 - 12) + 'px';
   }
+}
+
+export interface BankCard {
+  type: string;
+  bank: string;
+  id: string;
+  expire: string;
+  person: string;
 }
