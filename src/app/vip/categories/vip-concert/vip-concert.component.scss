@@ -1,22 +1,23 @@
 @import "../../../../styles";
 
 .bg-l {
-  width: 154px;
+  width: 156px;
   height: 358px;
   float: left;
   outline: none;
-  background: url(../../../../assets/images/bg.jpg);
+  background: url(/assets/images/bg.jpg);
 }
 
 .bg-r {
-  width: 154px;
+  width: 156px;
   height: 358px;
   float: right;
-  background: url(../../../../assets/images/bg2.jpg);
+  background: url(/assets/images/bg2.jpg);
+
 }
 
 .main {
-  width: 956px;
+  width: 952px;
   //margin-right: 18px;
   //margin-left: 18px;
   min-height: 750px;
@@ -24,6 +25,9 @@
 
   .activities {
     width: 240px;
+    padding: 0px 14px;
+    height: 358px;
+    overflow: hidden;
 
     &.act-card {
       border: 1px solid;
