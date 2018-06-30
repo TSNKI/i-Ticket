@@ -271,6 +271,7 @@ mat-card.person-info {
 
   &::before {
     position: absolute;
+    z-index: 500;
     left: -16px;
     top: 0;
     bottom: 0;
@@ -284,6 +285,7 @@ mat-card.person-info {
 
   &::after {
     position: absolute;
+    z-index: 500;
     right: -16px;
     top: 0;
     bottom: 0;
@@ -321,11 +323,13 @@ mat-card.person-info {
       line-height: 1;
 
       .card-title {
-        background-color: map_get($mat-green, 50);
         height: 58px;
 
+        border-bottom: 1px solid map_get($default-app-primary, 50);
+        color: map_get($mat-indigo, 900);
+
         &.credit {
-          background-color: map_get($mat-orange, 50);
+          color: map_get($mat-pink, 900);
         }
 
         .card-type {
@@ -418,6 +422,187 @@ mat-card.person-info {
           //&.mat-expanded {
           //  background: linear-gradient(to bottom, rgba(map_get($default-app-primary, 400), .05), rgba(map_get($default-app-primary, 400), .0));
           //}
+        }
+
+        .mat-expansion-panel-header mat-icon.it-icon {
+          -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+        }
+
+      }
+    }
+
+  }
+}
+
+.shipping-address-list {
+  position: relative;
+  margin-left: -48px;
+  margin-right: -48px;
+  margin-bottom: 12px;
+
+  &::before {
+    position: absolute;
+    z-index: 500;
+    left: -16px;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    content: "";
+    display: block;
+    box-shadow: 2px 0 1px -1px map_get($default-app-primary, 50), 5px 0 3px -3px map_get($default-app-primary, 50), 8px 0 5px -5px map_get($default-app-primary, 50);
+    background-color: $default-undercoat;
+    border: none;
+  }
+
+  &::after {
+    position: absolute;
+    z-index: 500;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    content: "";
+    display: block;
+    box-shadow: -2px 0 1px -1px map_get($default-app-primary, 50), -5px 0 3px -3px map_get($default-app-primary, 50), -8px 0 5px -5px map_get($default-app-primary, 50);
+    background-color: $default-undercoat;
+    border: none;
+  }
+
+  .list-container {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+
+    border: none;
+    padding: 12px 18px;
+
+    .address-card + .address-card {
+      margin-left: 12px;
+    }
+
+    .address-card {
+      position: relative;
+      display: inline-block;
+      box-sizing: border-box;
+      margin: 0;
+      width: 300px;
+      height: 200px;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+      border-radius: 5px;
+
+      color: primary-text-color(black);
+      line-height: 1;
+
+      .card-title {
+        position: absolute;
+        width: 300px;
+        height: 58px;
+        left: 0;
+        top: 0;
+
+        border-bottom: 1px solid map_get($default-app-primary, 50);
+
+        .name {
+          //position: absolute;
+          margin-left: 30px;
+          margin-top: 20px;
+
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .phone {
+          position: absolute;
+          right: 30px;
+          top: 24px;
+          color: $secondary-text-color;
+        }
+      }
+
+      .card-content {
+        position: absolute;
+        width: 300px;
+        height: 84px;
+        left: 0;
+        top: 82px;
+
+        line-height: 1.5;
+        font-weight: 400;
+
+        .area {
+          margin-left: 30px;
+          font-size: 14px;
+          color: $primary-text-color;
+        }
+
+        .address {
+          margin-left: 30px;
+          font-size: 14px;
+          color: $primary-text-color;
+        }
+
+        .zip-code {
+          margin-left: 30px;
+          font-size: 12px;
+          color: $secondary-text-color;
+        }
+
+      }
+
+      .card-action {
+        position: absolute;
+        width: 300px;
+        height: 47px;
+        bottom: 0;
+        left: 0;
+
+        .modify {
+          float: left;
+        }
+
+        .delete {
+          float: right;
+        }
+      }
+
+      .add-card {
+        float: left;
+        width: 300px;
+        height: 200px;
+        padding: 10px 60px;
+        cursor: pointer;
+        background-color: rgba(map_get($default-app-primary, 400), .05);
+
+        .mat-icon {
+          font-size: 180px;
+          color: white;
+        }
+      }
+
+    }
+  }
+}
+
+.bank-card-list, .shipping-address-list {
+  & + .it-accordion {
+    .mat-expansion-panel {
+      border: 1px solid transparent;
+
+      .mat-expansion-panel-header {
+        padding-left: 24px;
+
+        mat-icon.it-icon {
+          margin-right: 12px;
+          -webkit-transition: -webkit-transform .15s ease-in-out;
+          transition: transform .15s ease-in-out;
+        }
+      }
+
+      &.mat-expanded {
+        border: 1px solid rgba(map_get($default-app-primary, 400), .05);
+        .mat-expansion-panel-header, .mat-expansion-panel-header:hover {
+          background: rgba(map_get($default-app-primary, 400), .05);
         }
 
         .mat-expansion-panel-header mat-icon.it-icon {

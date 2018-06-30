@@ -28,8 +28,8 @@ mat-horizontal-stepper.login-stepper .mat-horizontal-stepper-header-container {
   display: none;
 }
 
-.btn-navbar.mat-button.mat-primary {
-  color: black;
+.btn-navbar.mat-button.mat-primary, .btn-navbar.mat-icon-button {
+  color: $primary-text-color;
 
   &.active {
     color: map_get($default-app-primary, 400);

@@ -368,29 +368,26 @@
       </div>
       <h3>收货地址</h3>
       <div class="content">
-        <div class="bank-card-list">
+        <div class="shipping-address-list">
           <div class="divider"></div>
           <div class="list-container">
-            <div class="bank-card" *ngFor="let card of cards">
+            <div class="address-card" *ngFor="let card of cards">
               <div class="card-title" [class.credit]="card.type==='信用卡'">
-                <div class="divider"></div>
-                <div class="card-type">{{card.type}}</div>
-                <div class="bank-name">{{card.bank}}</div>
-                <div class="divider"></div>
+                <div class="name">陈步兵</div>
+                <div class="phone">13771104099</div>
               </div>
               <div class="card-content">
-                <div class="card-id">{{card.id}}</div>
-                <div class="expire-date">{{card.expire}}</div>
-                <div class="divider"></div>
-                <div class="person-name">{{card.person}}</div>
-                <div class="card-action">
-                  <button mat-button color="primary" class="btn-link">删除</button>
-                </div>
-                <div class="divider"></div>
+                <div class="area">江苏省 南京市 鼓楼区 湖南路街道</div>
+                <div class="address">南京大学（鼓楼校区）</div>
+                <div class="zip-code">210009</div>
+              </div>
+              <div class="card-action">
+                <button mat-button color="primary" class="btn-link modify">修改</button>
+                <button mat-button color="primary" class="btn-link delete">删除</button>
               </div>
             </div>
 
-            <div class="bank-card">
+            <div class="address-card">
               <a class="add-card" (click)="addAddress.open()">
                 <mat-icon>add</mat-icon>
               </a>
@@ -450,10 +447,13 @@
             </mat-form-field>
           </div>
 
-          <div class="form-item">
-            <button mat-raised-button color="primary" type="submit" style="margin-top: 8px" class="item">
-              修改
-            </button>
+          <div class="form-item" style="margin-top: 8px">
+            <div class="item">
+              <button mat-raised-button color="primary" type="submit" class="primary-action">
+                更换
+              </button>
+              <div class="divider"></div>
+            </div>
           </div>
         </form>
       </div>
