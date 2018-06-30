@@ -101,6 +101,16 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   birthDate = new FormControl(moment(this.person.birth));
 
+  securityQuestionOptions = [
+    '你最喜欢的格言是什么？',
+    '你家乡的名称是什么？',
+    '你读的小学叫什么？',
+    '你的父亲叫什么名字？',
+    '你的母亲叫什么名字？',
+    '你最喜欢的偶像是谁？',
+    '你最喜欢的歌曲是什么？',
+  ];
+
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   isBackupEmailVisible = false;

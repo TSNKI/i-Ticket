@@ -20,6 +20,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatProgressBarModule,
     MatButtonToggleModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatDividerModule,
@@ -67,6 +69,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatProgressBarModule,
     MatButtonToggleModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
   ]
 })
 export class MaterialModule {

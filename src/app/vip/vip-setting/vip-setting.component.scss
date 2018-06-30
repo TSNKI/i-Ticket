@@ -383,18 +383,23 @@ mat-card.person-info {
           margin-right: 0;
         }
       }
+    }
 
-      .add-card {
+    .bank-card.add-card {
+      border: 1px dashed map_get($default-app-primary, 100);
+      box-shadow: none !important;
+
+      a {
         float: left;
-        width: 300px;
-        height: 200px;
-        padding: 10px 60px;
+        width: 298px;
+        height: 198px;
+        padding: 9px 59px;
         cursor: pointer;
-        background-color: rgba(map_get($default-app-primary, 400), .05);
+        background-color: $default-undercoat;
 
         .mat-icon {
           font-size: 180px;
-          color: white;
+          color: map_get($default-app-primary, 100);
         }
       }
     }
@@ -565,21 +570,27 @@ mat-card.person-info {
           float: right;
         }
       }
+    }
 
-      .add-card {
-        float: left;
-        width: 300px;
-        height: 200px;
-        padding: 10px 60px;
+    .address-card.add-card {
+      border: 1px dashed map_get($default-app-primary, 100);
+      box-shadow: none !important;
+
+      a {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 298px;
+        height: 198px;
+        padding: 9px 59px;
         cursor: pointer;
-        background-color: rgba(map_get($default-app-primary, 400), .05);
+        background-color: $default-undercoat;
 
         .mat-icon {
           font-size: 180px;
-          color: white;
+          color: map_get($default-app-primary, 100);
         }
       }
-
     }
   }
 }
@@ -609,11 +620,10 @@ mat-card.person-info {
           -webkit-transform: rotate(135deg);
           transform: rotate(135deg);
         }
-
       }
     }
-
   }
+
 }
 
 .full-width {
