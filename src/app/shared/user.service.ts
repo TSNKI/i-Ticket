@@ -20,8 +20,12 @@ export class UserService {
     return username === 'M0000001';
   }
 
-  vipLogin(username: string, password: string): boolean {
-    return username === 'mock@sample.com' && password === '123456';
+  vipLogin(username: string, password: string): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(username === 'mock@sample.com' && password === '123456');
+      }, 500);
+    });
   }
 
   venLogin(username: string, password: string): boolean {

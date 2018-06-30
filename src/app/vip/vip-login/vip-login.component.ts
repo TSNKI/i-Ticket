@@ -6,6 +6,7 @@ import { ValidationService } from '../../shared/validation.service';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { FetchService } from '../../shared/fetch.service';
 
 @Component({
   selector: 'it-vip-login',
@@ -31,6 +32,7 @@ export class VipLoginComponent implements OnInit {
     private validationService: ValidationService,
     private userService: UserService,
     private cookieService: CookiesService,
+    private fetchService: FetchService
   ) {
   }
 
@@ -73,12 +75,17 @@ export class VipLoginComponent implements OnInit {
   submit(): void {
     const username = this.usernameForm.value;
     const password = this.passwordForm.value;
-    if (this.userService.vipLogin(username, password)) {
-      this.cookieService.setCookie('username', this.usernameForm.value, 1);
-      this.close();
-    } else {
-      this.passwordForm.setErrors({ 'passwordWrong': true });
-    }
+    this.fetchService.setFetching();
+    this.userService.vipLogin(username, password)
+      .then(res => {
+        this.fetchService.setFetched();
+        if (res) {
+          this.cookieService.setCookie('username', this.usernameForm.value, 1);
+          this.close();
+        } else {
+          this.passwordForm.setErrors({ 'passwordWrong': true });
+        }
+      });
   }
 
   close(): void {
