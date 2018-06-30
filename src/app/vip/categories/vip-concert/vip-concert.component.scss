@@ -23,22 +23,158 @@
   min-height: 750px;
   float: left;
 
-  .activities {
-    width: 240px;
-    padding: 0px 14px;
-    height: 358px;
-    overflow: hidden;
+  .main-left {
 
-    &.act-card {
-      border: 1px solid;
-      box-shadow: none;
-      padding: 0px;
-      margin: 0px;
+    float: left;
+    width: 240px;
+    margin-left: 8px;
+
+    /*
+    *  专题活动
+    **/
+    .activities {
+      padding: 0px 14px;
+      height: 320px;
+      overflow: hidden;
+
+      .act-content {
+        margin: 0px;
+        padding: 0px;
+        outline: none;
+
+        [nz-carousel-content] {
+          text-align: center;
+          width: 300px;
+          height: 270px;
+          //line-height: 160px;
+          background: map_get($default-app-primary, 100);
+          overflow: hidden;
+          cursor: pointer;
+        }
+      }
     }
+
+    /*
+    *  乐闻先知
+    **/
+    .news {
+      padding: 0px 14px;
+      height: 370px;
+      overflow: hidden;
+      margin-top: 20px;
+
+      .first-news {
+        margin-top: 2px;
+        margin-bottom: 5px;
+        text-align: center;
+        line-height: 21px;
+        cursor: pointer;
+        //color: ;
+
+        &:hover {
+          color: map_get($default-app-primary, 400);
+        }
+      }
+
+      .news-list {
+        padding: 5px 0px 10px;
+        text-align: left;
+        line-height: 21px;
+        background: left top url(/assets/images/concert/lineHd.gif) repeat-x;
+        list-style-type: none;
+
+        li {
+          height: 46px;
+          padding-left: 14px;
+          outline: none;
+
+          display: list-item;
+          text-align: -webkit-match-parent;
+
+          a {
+            display: block;
+            text-decoration: none;
+            color: #4c4c4c;
+
+            &:hover {
+              color: map_get($default-app-primary, 400);
+
+              i {
+                //background: ;
+              }
+            }
+
+            i {
+              display: inline-block;
+              width: 14px;
+              height: 20px;
+              float: left;
+              margin-left: -14px;
+              background: -2px -1360px url(/assets/images/concert/newx-mini.png);
+            }
+          }
+        }
+      }
+
+      .news-font {
+        font: normal 12px/1.5 'arial', 'Tahoma', 'simsun', '宋体';
+        color: #4c4c4c;
+      }
+
+    }
+
+    /*
+    *  热卖
+     */
+    .hot-sell {
+      padding: 0px 14px;
+      height: 370px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
   }
+
+  .main-right {
+    float: left;
+    width: 687px;
+    min-height: 320px;
+    //background-color: #364d79;
+    margin-left: 10px;
+
+    .carousel {
+      height: 320px;
+      background: url(/assets/images/concert/tour/zsh.jpg);
+      background-size: cover;
+    }
+
+    .qwer {
+      margin-top: 20px;
+      height: 370px;
+      background: url(/assets/images/concert/tour/dzq.jpg);
+    }
+    .zxcs {
+      margin-top: 20px;
+      height: 370px;
+      background: url(/assets/images/concert/tour/jwq.jpg);
+    }
+
+  }
+
 }
 
 .clear-both {
   clear: both;
 }
 
+.act-title {
+  padding: 13px 0px 10px;
+  height: 44px;
+  //color: $mat-indigo;
+  font-size: 16px;
+
+  .tl {
+    font-style: normal;
+    float: left;
+  }
+}

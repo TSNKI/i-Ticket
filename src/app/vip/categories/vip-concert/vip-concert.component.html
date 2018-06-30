@@ -5,10 +5,64 @@
   <div class="bg-r"></div>
   <!--content start-->
   <div class="main">
-    <mat-card class="it-card activities">
-      专题活动
-    </mat-card>
+    <div class="main-left">
+      <mat-card class="it-card activities">
+        <div class="act-title">
+          <span class="tl">演唱会专题/活动</span>
+        </div>
+        <div class="act-content">
+          <nz-carousel nzAutoPlay>
+            <a nz-carousel-content *ngFor="let special of specials" [routerLink]=special.link target="_blank">
+              <div><img [src]="special.img" width="100%" height="100%"></div>
+              <div style="margin-top: 10px;">{{special.name}}</div>
+              <div>{{special.sub_name}}</div>
+              <p style="color: #7c818e; margin:3px 10px; text-align: left; font-size: small;">{{special.describe}}</p>
+            </a>
+          </nz-carousel>
+        </div>
+      </mat-card>
+      <!--end-->
+      <mat-card class="it-card news">
+        <div class="act-title">
+          <span class="tl">乐文先知</span>
+        </div>
+        <div>
+          <a routerLink="/" target="_blank">
+            <img src="assets/images/concert/eason.jpg" alt="" width="210" height="120"
+                 target="_blank" style="cursor: pointer">
+            <!--TODO-->
+            <div class="first-news news-font" target="_blank">陈奕迅将为新专辑《C’mon in~》展开世界性演出</div>
+          </a>
+          <ul class="news-list news-font">
+            <li *ngFor="let new of news">
+              <a [routerLink]=new.link target="_blank">
+                <i></i>
+                {{new.describe}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </mat-card>
+      <!--end-->
+      <mat-card class="it-card hot-sell">
+        演唱会热销
+      </mat-card>
+      <!--end-->
+    </div>
+
+    <div class="main-right">
+
+      <div class="carousel">123</div>
+
+      <div class="qwer">123</div>
+
+      <div class="zxcs">123</div>
+
+    </div>
+
+    <div class="clear-both"></div>
   </div>
+
   <!--content end-->
   <div class="clear-both"></div>
 </div>
@@ -16,3 +70,6 @@
 <it-back-top hrefBase="/concert"></it-back-top>
 
 <it-vip-footer></it-vip-footer>
+<!--<nz-carousel nzAutoPlay>-->
+<!--<div nz-carousel-content *ngFor="let index of array"><h3>{{index}}</h3></div>-->
+<!--</nz-carousel>-->
