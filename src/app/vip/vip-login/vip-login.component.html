@@ -1,5 +1,5 @@
 <div class="login-form-card">
-  <mat-horizontal-stepper [linear]="isLinear" class="login-stepper" #stepper (selectionChange)="focusPwdInput(stepper)">
+  <mat-horizontal-stepper [linear]="isLinear" class="login-stepper" #stepper>
     <mat-step [stepControl]="usernameForm">
       <form>
         <div class="login-heading">
@@ -8,11 +8,9 @@
         </div>
 
         <mat-form-field class="full-width" style="margin-top: 64px">
-          <input matInput
-                 id="username-input"
-                 name="username"
-                 placeholder="用户名"
-                 [formControl]="usernameForm">
+          <input matInput id="username-input" type="text" placeholder="用户名" name="username"
+                 [formControl]="usernameForm"
+                 [errorStateMatcher]="formErrorStateMatcher">
           <mat-error *ngIf="usernameForm.hasError('userNotExist')
                         && !usernameForm.hasError('email')
                         && !usernameForm.hasError('required')">
@@ -54,12 +52,9 @@
         </div>
 
         <mat-form-field class="full-width" style="margin-top: 64px">
-          <input matInput
-                 id="password-input"
-                 name="password"
-                 placeholder="密码"
-                 type="password"
-                 [formControl]="passwordForm">
+          <input matInput id="password-input" type="password" placeholder="密码" name="password"
+                 [formControl]="passwordForm"
+                 [errorStateMatcher]="formErrorStateMatcher">
           <mat-error *ngIf="passwordForm.hasError('required')">
             密码 <strong>不能为空</strong>
           </mat-error>

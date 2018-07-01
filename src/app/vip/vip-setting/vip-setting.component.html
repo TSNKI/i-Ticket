@@ -27,7 +27,9 @@
             <label><i class="material-icons">email</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>邮箱地址</mat-label>
-              <input matInput placeholder="邮箱地址" [readonly]="true" formControlName="email">
+              <input matInput placeholder="邮箱地址" [readonly]="true"
+                     formControlName="email"
+                     [errorStateMatcher]="formErrorStateMatcher">
               <mat-hint align="end">不可修改</mat-hint>
             </mat-form-field>
           </div>
@@ -36,7 +38,9 @@
             <label><i class="material-icons">person</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>昵称</mat-label>
-              <input #nickname matInput placeholder="昵称" maxlength="24" formControlName="nickname">
+              <input #nickname matInput placeholder="昵称" maxlength="24"
+                     formControlName="nickname"
+                     [errorStateMatcher]="formErrorStateMatcher">
               <mat-hint align="end">{{nickname.value.length}} / 24</mat-hint>
             </mat-form-field>
           </div>
@@ -48,8 +52,9 @@
                 <mat-label>地区</mat-label>
                 <mat-select placeholder="地区" formControlName="prefix" #phoneCountry
                             (selectionChange)="resetCountry(phoneCountry.value)">
-                  <mat-option value="CN">中国 (+{{getPhonePrefix("CN")}})</mat-option>
-                  <mat-option value="US">USA (+{{getPhonePrefix("US")}}</mat-option>
+                  <mat-option *ngFor="let country of countries" [value]="country.code">
+                    <img [src]="country.flag" aria-hidden width="35"><span> {{country.name}} ({{country.prefix}})</span>
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-form-field appearance="outline" style="margin-left: 2%;width: 68%">
@@ -63,18 +68,6 @@
               </mat-form-field>
             </div>
           </div>
-
-          <!--<div class="content-item">-->
-          <!--<label><i class="material-icons">person</i></label>-->
-          <!--<mat-form-field appearance="outline" class="item" style="width: 140px">-->
-          <!--<mat-label>性别</mat-label>-->
-          <!--<mat-select placeholder="性别" [value]="person.gender">-->
-          <!--<mat-option>&#45;&#45;&nbsp;保密&nbsp;&#45;&#45;</mat-option>-->
-          <!--<mat-option value="male">&#x2642;&nbsp;男</mat-option>-->
-          <!--<mat-option value="female">&#x2640;&nbsp;女</mat-option>-->
-          <!--</mat-select>-->
-          <!--</mat-form-field>-->
-          <!--</div>-->
 
           <div class="form-item">
             <label><i class="material-icons">cake</i></label>
@@ -90,13 +83,9 @@
             <label><i class="material-icons">edit</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>个性签名</mat-label>
-              <textarea
-                matInput
-                #motto
-                placeholder="个性签名"
-                rows="6"
-                maxlength="140"
-                formControlName="motto"></textarea>
+              <textarea #motto matInput placeholder="个性签名"
+                        rows="6" maxlength="140"
+                        formControlName="motto"></textarea>
               <mat-hint align="end">{{motto.value.length}} / 140</mat-hint>
             </mat-form-field>
           </div>
@@ -355,7 +344,7 @@
                       <button mat-raised-button color="primary" type="submit" class="primary-action">
                         添加
                       </button>
-                      <button mat-button color="primary" type="submit" class="secondary-action"
+                      <button mat-button color="primary" type="button" class="secondary-action"
                               (click)="addCardPanel.close()">
                         放弃
                       </button>
@@ -498,32 +487,39 @@
       <h2>账户安全</h2>
       <h3>修改密码</h3>
       <div class="content">
-        <form style="width: 556px">
+        <form [formGroup]="passwordForm" style="width: 556px" class="margin-4">
           <div class="form-item">
             <label><i class="material-icons">vpn_key</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>原密码</mat-label>
-              <input matInput type="password" placeholder="原密码">
+              <input matInput type="password" placeholder="请输入正在使用的密码"
+                     formControlName="oldPassword" [errorStateMatcher]="formErrorStateMatcher">
+              <mat-error *ngIf="passwordForm.get('oldPassword').hasError('required')">请输入原密码</mat-error>
             </mat-form-field>
           </div>
 
           <div class="form-item">
             <mat-form-field appearance="outline" class="item">
               <mat-label>新密码</mat-label>
-              <input matInput type="password" placeholder="原密码">
+              <input matInput type="password" placeholder="请输入新密码"
+                     formControlName="newPassword" [errorStateMatcher]="formErrorStateMatcher">
+              <mat-error *ngIf="passwordForm.get('newPassword').hasError('required')">请输入新密码</mat-error>
             </mat-form-field>
           </div>
 
           <div class="form-item">
             <mat-form-field appearance="outline" class="item">
               <mat-label>确认密码</mat-label>
-              <input matInput type="password" placeholder="原密码">
+              <input matInput type="password" placeholder="请再次输入新密码"
+                     formControlName="repPassword" [errorStateMatcher]="formErrorStateMatcher">
+              <mat-error *ngIf="passwordForm.get('repPassword').hasError('required')">请确认新密码</mat-error>
             </mat-form-field>
           </div>
 
           <div class="form-item" style="margin-top: 8px">
             <div class="item">
-              <button mat-raised-button color="primary" type="submit" class="primary-action">
+              <button mat-raised-button color="primary" type="submit" class="primary-action"
+                      [disabled]="passwordForm.pristine">
                 更换
               </button>
               <div class="divider"></div>

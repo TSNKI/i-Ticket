@@ -20,6 +20,7 @@ import { CookiesService } from '../../shared/cookies.service';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { Moment } from 'moment';
+import { MyErrorStateMatcher } from '../../shared/validation.service';
 
 @Component({
   selector: 'it-vip-setting',
@@ -59,6 +60,23 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   addAddressForm: FormGroup;
   passwordForm: FormGroup;
   questionForm: FormGroup;
+
+  formErrorStateMatcher = new MyErrorStateMatcher();
+
+  countries = [
+    {
+      code: 'CN',
+      name: '中国',
+      prefix: '+86',
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg'
+    },
+    {
+      code: 'US',
+      name: 'USA',
+      prefix: '+1',
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg'
+    }
+  ];
 
   person = {
     nickname: 'CBBAmazing',
@@ -210,8 +228,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.addCardForm.disable();
     this.addAddressForm = this.fb.group({});
     this.addAddressForm.disable();
-    this.passwordForm = this.fb.group({});
-    this.passwordForm.disable();
+    this.passwordForm = this.fb.group({
+      oldPassword: [ '', Validators.required ],
+      newPassword: [ '', Validators.required ],
+      repPassword: [ '', [ Validators.required ] ],
+    });
+    // this.passwordForm.disable();
     this.questionForm = this.fb.group({});
     this.questionForm.disable();
   }

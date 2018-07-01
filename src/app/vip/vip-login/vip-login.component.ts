@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatDialogRef, MatStepper } from '@angular/material';
 import { UserService } from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
-import { ValidationService } from '../../shared/validation.service';
+import { MyErrorStateMatcher, ValidationService } from '../../shared/validation.service';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -24,6 +24,8 @@ export class VipLoginComponent implements OnInit {
   passwordForm = new FormControl('', [
     Validators.required,
   ]);
+
+  formErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private dialogRef: MatDialogRef<VipLoginComponent>,
