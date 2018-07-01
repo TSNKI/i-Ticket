@@ -3,7 +3,7 @@
 .focus-panel {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: 600px;
 }
 
 .focus-carousel {
@@ -67,7 +67,7 @@
 }
 
 [nz-carousel-content] {
-  height: 480px;
+  height: 600px;
   text-align: center;
   line-height: 160px;
   background: map_get($mat-grey, 300);

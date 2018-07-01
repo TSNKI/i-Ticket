@@ -12,9 +12,14 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
+import { BankCard, User, UserService } from '../../shared/user.service';
+import { CookiesService } from '../../shared/cookies.service';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'it-vip-setting',
@@ -47,6 +52,14 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   toolBarState = 'invisible';
 
+  user: User;
+
+  infoForm: FormGroup;
+  addCardForm: FormGroup;
+  addAddressForm: FormGroup;
+  passwordForm: FormGroup;
+  questionForm: FormGroup;
+
   person = {
     nickname: 'CBBAmazing',
     email: 'mock@sample.com',
@@ -63,22 +76,29 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       bank: '中国工商银行',
       id: '6222****1919',
       expire: '2028-08-01',
-      person: '*步兵'
+      personName: '*步兵'
     },
     {
       type: '储蓄卡',
       bank: '广东发展银行',
       id: '6222****1919',
       expire: '2022-03-04',
-      person: '*步兵'
+      personName: '*步兵'
     },
     {
       type: '信用卡',
       bank: '中国农业银行',
       id: '6222****1919',
       expire: '2024-07-06',
-      person: '*步兵'
+      personName: '*步兵'
     }
+  ];
+  phoneMask = [
+    /[1-9]/, /\d/, /\d/,
+    ' ', '-', ' ',
+    /\d/, /\d/, /\d/, /\d/,
+    ' ', '-', ' ',
+    /\d/, /\d/, /\d/, /\d/,
   ];
   bankCardMask = [
     /[1-9]/, /\d/, /\d/, /\d/,
@@ -113,31 +133,18 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  isBackupEmailVisible = false;
-
   constructor(
     elementRef: ElementRef,
+    private userService: UserService,
+    private cookiesService: CookiesService,
     private fetchService: FetchService,
     private tocService: TocService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
+    private fb: FormBuilder
   ) {
     this.hostElement = elementRef.nativeElement;
-    iconRegistry.addSvgIcon(
-      'person',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_person_24px.svg'));
-    iconRegistry.addSvgIcon(
-      'email',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_email_24px.svg'));
-    iconRegistry.addSvgIcon(
-      'qq',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_qq.svg'));
-    iconRegistry.addSvgIcon(
-      'sina',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_sina.svg'));
-    iconRegistry.addSvgIcon(
-      'tencent_weibo',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_tencent_weibo.svg'));
+    this.registerIcons();
   }
 
   ngOnInit() {
@@ -148,9 +155,18 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.resetCountry(this.country);
     this.phoneNumber = this.asYouType.input(nationalNumber);
     this.asYouType.reset();
+    this.createForms();
   }
 
   ngAfterViewInit() {
+    this.fetchService.setFetching();
+    this.userService.getUserDetail()
+      .subscribe((user) => {
+        this.fetchService.setFetched();
+        this.user = user;
+
+        this.resetInfoForm();
+      });
   }
 
   ngAfterContentInit() {
@@ -160,6 +176,89 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
 
   ngOnDestroy() {
+  }
+
+  registerIcons() {
+    this.iconRegistry.addSvgIcon(
+      'person',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_person_24px.svg'));
+    this.iconRegistry.addSvgIcon(
+      'email',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_email_24px.svg'));
+    this.iconRegistry.addSvgIcon(
+      'qq',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_qq.svg'));
+    this.iconRegistry.addSvgIcon(
+      'sina',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_sina.svg'));
+    this.iconRegistry.addSvgIcon(
+      'tencent_weibo',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_tencent_weibo.svg'));
+  }
+
+  createForms() {
+    this.infoForm = this.fb.group({
+      email: [ '', [ Validators.required, Validators.email ] ],
+      nickname: [ '', Validators.required ],
+      prefix: 'CN',
+      phone: '',
+      birth: '',
+      motto: ''
+    });
+    this.infoForm.disable();
+    this.addCardForm = this.fb.group({});
+    this.addCardForm.disable();
+    this.addAddressForm = this.fb.group({});
+    this.addAddressForm.disable();
+    this.passwordForm = this.fb.group({});
+    this.passwordForm.disable();
+    this.questionForm = this.fb.group({});
+    this.questionForm.disable();
+  }
+
+  resetInfoForm() {
+    this.infoForm.disable();
+
+    const phoneNumber = this.user.info.phone;
+    this.asYouType.input(phoneNumber);
+    const country = this.asYouType.country;
+    const phone = this.asYouType.getNationalNumber();
+    this.resetCountry(country);
+
+    this.infoForm.reset({
+      email: this.user.info.email,
+      nickname: this.user.info.nickname,
+      prefix: country,
+      phone,
+      birth: moment(this.user.info.birth),
+      motto: this.user.info.motto
+    });
+
+    this.infoForm.enable();
+  }
+
+  submitInfoForm() {
+    const formModel = this.infoForm.value;
+
+    const saveInfo: User['info'] = {
+      email: this.user.info.email,
+      password: this.user.info.password,
+      nickname: formModel.nickname as string,
+      phone: '+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string),
+      birth: (formModel.birth as Moment).toISOString(),
+      motto: formModel.motto as string
+    };
+
+    console.log(saveInfo);
+
+    this.infoForm.disable();
+    this.fetchService.setFetching();
+    this.userService.updateUserInfo(saveInfo)
+      .subscribe(newUserInfo => {
+        this.fetchService.setFetched();
+        this.user.info = newUserInfo;
+        this.resetInfoForm();
+      });
   }
 
   resetCountry(country: CountryCode) {
@@ -175,46 +274,6 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.phoneNumber = this.asYouType.input(phoneNumber);
   }
 
-  // updateBankCardMask(cardNumber: string) {
-  //   this.bankCardMask = this.getBankCardMask(this.getBankCardType(cardNumber));
-  // }
-  //
-  // getBankCardType(creditCardNumber: string) {
-  //   // start without knowing the credit card type
-  //   let result = 'unknown';
-  //
-  //   if (/^5[1-5]/.test(creditCardNumber)) {
-  //     // first check for MasterCard
-  //     result = 'mastercard';
-  //   } else if (/^4/.test(creditCardNumber)) {
-  //     // then check for Visa
-  //     result = 'visa';
-  //   } else if (/^3[47]/.test(creditCardNumber)) {
-  //     // then check for AmEx
-  //     result = 'amex';
-  //   } else if (/3(?:0[0-5]|[68][0-9])[0-9]{11}/.test(creditCardNumber)) {
-  //     // then check for Diners
-  //     result = 'diners';
-  //   } else if (/6(?:011|5[0-9]{2})[0-9]{12}/.test(creditCardNumber)) {
-  //     // then check for Discover
-  //     result = 'discover';
-  //   }
-  //
-  //   return result;
-  // }
-  //
-  // getBankCardMask(cardType: string) {
-  //   const masks = {
-  //     'mastercard': '9999 9999 9999 9999',
-  //     'visa': '9999 9999 9999 9999',
-  //     'amex': '9999 999999 99999',
-  //     'diners': '9999 9999 9999 99',
-  //     'discover': '9999 9999 9999 9999',
-  //     'unknown': '9999 9999 9999 9999'
-  //   };
-  //   return masks[ cardType ];
-  // }
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const threshold = 12;
@@ -229,12 +288,4 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   onResize(height: number) {
     this.contentHeight = (height - 65 - 12) + 'px';
   }
-}
-
-export interface BankCard {
-  type: string;
-  bank: string;
-  id: string;
-  expire: string;
-  person: string;
 }

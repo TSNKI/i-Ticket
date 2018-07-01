@@ -22,13 +22,12 @@
       <h2>个人资料</h2>
       <h3>我的信息</h3>
       <div class="content">
-        <form style="width: 556px;" class="margin-8">
+        <form [formGroup]="infoForm" style="width: 556px;" class="margin-8">
           <div class="form-item">
             <label><i class="material-icons">email</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>邮箱地址</mat-label>
-              <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
-              <input matInput placeholder="邮箱地址" [readonly]="true" [value]="person.email">
+              <input matInput placeholder="邮箱地址" [readonly]="true" formControlName="email">
               <mat-hint align="end">不可修改</mat-hint>
             </mat-form-field>
           </div>
@@ -37,8 +36,7 @@
             <label><i class="material-icons">person</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>昵称</mat-label>
-              <!--<span matPrefix>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
-              <input #nickname matInput placeholder="昵称" maxlength="24" [(value)]="person.nickname">
+              <input #nickname matInput placeholder="昵称" maxlength="24" formControlName="nickname">
               <mat-hint align="end">{{nickname.value.length}} / 24</mat-hint>
             </mat-form-field>
           </div>
@@ -48,7 +46,7 @@
             <div class="item">
               <mat-form-field appearance="outline" style="width: 30%">
                 <mat-label>地区</mat-label>
-                <mat-select placeholder="地区" [value]="country" #phoneCountry
+                <mat-select placeholder="地区" formControlName="prefix" #phoneCountry
                             (selectionChange)="resetCountry(phoneCountry.value)">
                   <mat-option value="CN">中国 (+{{getPhonePrefix("CN")}})</mat-option>
                   <mat-option value="US">USA (+{{getPhonePrefix("US")}}</mat-option>
@@ -56,9 +54,12 @@
               </mat-form-field>
               <mat-form-field appearance="outline" style="margin-left: 2%;width: 68%">
                 <mat-label>手机号码</mat-label>
+                <!--<input matInput placeholder="手机号码" type="tel"-->
+                <!--[value]="phoneNumber"-->
+                <!--(input)="onPhoneInput($event.target.value)">-->
                 <input matInput placeholder="手机号码" type="tel"
-                       [value]="phoneNumber"
-                       (input)="onPhoneInput($event.target.value)">
+                       formControlName="phone"
+                       [textMask]="{mask: phoneMask, guide: false}">
               </mat-form-field>
             </div>
           </div>
@@ -79,7 +80,7 @@
             <label><i class="material-icons">cake</i></label>
             <mat-form-field appearance="outline" class="item">
               <mat-label>出生日期</mat-label>
-              <input matInput [matDatepicker]="picker" placeholder="出生日期" [value]="birthDate.value">
+              <input matInput [matDatepicker]="picker" placeholder="出生日期" formControlName="birth">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -95,17 +96,21 @@
                 placeholder="个性签名"
                 rows="6"
                 maxlength="140"
-                [(value)]="person.motto"></textarea>
+                formControlName="motto"></textarea>
               <mat-hint align="end">{{motto.value.length}} / 140</mat-hint>
             </mat-form-field>
           </div>
 
           <div class="form-item" style="margin-top: 12px">
             <div class="item">
-              <button mat-raised-button color="primary" type="submit" class="primary-action">
+              <button mat-raised-button color="primary" type="button" class="primary-action"
+                      [disabled]="infoForm.pristine"
+                      (click)="submitInfoForm()">
                 修改
               </button>
-              <button mat-button color="primary" type="submit" class="secondary-action">
+              <button mat-button color="primary" type="submit" class="secondary-action"
+                      [disabled]="infoForm.pristine"
+                      (click)="resetInfoForm()">
                 复原
               </button>
               <div class="divider"></div>
@@ -211,7 +216,7 @@
                 <div class="card-id">{{card.id}}</div>
                 <div class="expire-date">{{card.expire}}</div>
                 <div class="divider"></div>
-                <div class="person-name">{{card.person}}</div>
+                <div class="person-name">{{card.personName}}</div>
                 <div class="card-action">
                   <button mat-button color="primary" class="btn-link">删除</button>
                 </div>
