@@ -21,19 +21,27 @@
     <!--<input placeholder="搜索场馆、演出" class="search-box">-->
     <span class="flex-spacer"></span>
     <div>
-      <button mat-icon-button class="btn-navbar" matTooltip="搜索" routerLink="/search" routerLinkActive="active">
+      <button mat-icon-button class="btn-navbar"
+              matTooltip="搜索" [matTooltipShowDelay]="500" [matTooltipHideDelay]="400"
+              routerLink="/search" routerLinkActive="active">
         <mat-icon aria-label="Search" svgIcon="search"></mat-icon>
       </button>
       <button *ngIf="!user" mat-button color="primary" class="btn-navbar" (click)="openLoginDialog()">登陆</button>
       <span *ngIf="user">
         <button mat-button disabled class="btn-navbar" style="color: black">{{ user.nickname }}</button>
-        <button mat-icon-button class="btn-navbar" matTooltip="设置" routerLink="/setting" routerLinkActive="active">
+        <button mat-icon-button class="btn-navbar"
+                matTooltip="设置" [matTooltipShowDelay]="500" [matTooltipHideDelay]="400"
+                routerLink="/setting" routerLinkActive="active">
           <mat-icon aria-label="设置" svgIcon="settings"></mat-icon>
         </button>
-        <button mat-icon-button class="btn-navbar" matTooltip="我的订单" routerLink="/orders" routerLinkActive="active">
+        <button mat-icon-button class="btn-navbar"
+                matTooltip="我的订单" [matTooltipShowDelay]="500" [matTooltipHideDelay]="400"
+                routerLink="/orders" routerLinkActive="active">
           <mat-icon aria-label="我的订单" svgIcon="orders"></mat-icon>
         </button>
-        <button mat-icon-button class="btn-navbar" matTooltip="登出" (click)="logout()">
+        <button mat-icon-button class="btn-navbar"
+                matTooltip="登出" [matTooltipShowDelay]="500" [matTooltipHideDelay]="400"
+                (click)="logout()">
           <mat-icon aria-label="登出" svgIcon="logout"></mat-icon>
         </button>
       </span>
