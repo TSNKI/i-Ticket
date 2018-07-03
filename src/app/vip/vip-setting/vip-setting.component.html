@@ -592,25 +592,78 @@
       </div>
       <h3>实名认证</h3>
       <div class="content">
-        <mat-accordion class="it-accordion">
-          <mat-expansion-panel>
+        <mat-accordion class="it-accordion" style="margin: 0 -24px">
+          <mat-expansion-panel *ngIf="user && user.security.realName.name!==''">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <mat-icon class="it-icon">person</mat-icon>
-                陈步兵
+                {{user.security.realName.name}}
               </mat-panel-title>
               <mat-panel-description>
-                320***********3518
+                {{user.security.realName.id | privacy}}
               </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <mat-form-field>
-              <input matInput placeholder="First name">
-            </mat-form-field>
+            <div class="real-name bound">
+              <mat-icon class="it-icon">verified_user</mat-icon>
+              <span>已实名认证</span>
+            </div>
 
-            <mat-form-field>
-              <input matInput type="number" min="1" placeholder="Age">
-            </mat-form-field>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="!user || user.security.realName.name===''" #realNameAuthPanel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="it-icon">error_outline</mat-icon>
+                未实名认证
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <form [formGroup]="realNameForm" style="width: 556px;margin-top: 12px;" class="margin-4">
+              <div class="form-item">
+                <!--<label><mat-icon>person</mat-icon></label>-->
+                <mat-form-field appearance="outline" class="item">
+                  <mat-label>真实姓名</mat-label>
+                  <input matInput placeholder="真实姓名"
+                         formControlName="name"
+                         [errorStateMatcher]="formErrorStateMatcher">
+                  <mat-error *ngIf="realNameForm.get('name').hasError('required')">
+                    请输入真实姓名
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-item">
+                <!--<label><mat-icon>person</mat-icon></label>-->
+                <mat-form-field appearance="outline" class="item">
+                  <mat-label>身份证号</mat-label>
+                  <input matInput placeholder="身份证号"
+                         formControlName="id"
+                         [errorStateMatcher]="formErrorStateMatcher">
+                  <mat-error *ngIf="realNameForm.get('id').hasError('required')">
+                    请输入身份证号
+                  </mat-error>
+                  <mat-error *ngIf="realNameForm.get('id').hasError('pattern')
+                                && !realNameForm.get('id').hasError('required')">
+                    身份证号不正确
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="form-item" style="margin-top: 8px">
+                <div class="item">
+                  <button mat-raised-button color="primary" type="submit" class="primary-action"
+                          (click)="submitRealNameForm()">
+                    认证
+                  </button>
+                  <button mat-button color="primary" type="button" class="secondary-action"
+                          (click)="resetRealNameForm();realNameAuthPanel.close()">
+                    放弃
+                  </button>
+                  <div class="divider"></div>
+                </div>
+              </div>
+            </form>
 
           </mat-expansion-panel>
         </mat-accordion>

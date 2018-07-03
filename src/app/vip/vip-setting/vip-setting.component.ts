@@ -1,12 +1,4 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component, ElementRef,
-  HostListener,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion, MatIconRegistry } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FetchService } from '../../shared/fetch.service';
@@ -17,8 +9,6 @@ import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 import { BankCard, SecurityQuestion, SecurityQuestions, User, UserService } from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 import { Moment } from 'moment';
 import { MyErrorStateMatcher } from '../../shared/validation.service';
 
@@ -26,22 +16,22 @@ import { MyErrorStateMatcher } from '../../shared/validation.service';
   selector: 'it-vip-setting',
   templateUrl: './vip-setting.component.html',
   styleUrls: [ './vip-setting.component.scss' ],
-  animations: [
-    trigger('toolBarState', [
-      state('invisible', style({
-        left: '446px',
-        right: '88px',
-        paddingRight: 0
-      })),
-      state('visible', style({
-        left: '430px',
-        right: '80px',
-        paddingRight: '8px'
-      })),
-      transition('invisible => visible', animate('150ms ease-in')),
-      transition('visible => invisible', animate('150ms ease-out'))
-    ])
-  ]
+  // animations: [
+  //   trigger('toolBarState', [
+  //     state('invisible', style({
+  //       left: '446px',
+  //       right: '88px',
+  //       paddingRight: 0
+  //     })),
+  //     state('visible', style({
+  //       left: '430px',
+  //       right: '80px',
+  //       paddingRight: '8px'
+  //     })),
+  //     transition('invisible => visible', animate('150ms ease-in')),
+  //     transition('visible => invisible', animate('150ms ease-out'))
+  //   ])
+  // ]
 })
 export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
 
@@ -51,7 +41,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   contentHeight: string;
 
-  toolBarState = 'invisible';
+  // toolBarState = 'invisible';
 
   user: User;
 
@@ -60,6 +50,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   addAddressForm: FormGroup;
   passwordForm: FormGroup;
   questionForm: FormGroup;
+  realNameForm: FormGroup;
 
   formErrorStateMatcher = new MyErrorStateMatcher();
 
@@ -225,10 +216,13 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       motto: ''
     });
     this.infoForm.disable();
+
     this.addCardForm = this.fb.group({});
     // this.addCardForm.disable();
+
     this.addAddressForm = this.fb.group({});
     // this.addAddressForm.disable();
+
     this.passwordForm = this.fb.group({
       oldPassword: [ '', Validators.required ],
       newPassword: [ '', Validators.required ],
@@ -244,6 +238,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       questions: this.fb.array(questionFGs)
     });
     this.questionForm.disable();
+
+    this.realNameForm = this.fb.group({
+      name: [ '', Validators.required ],
+      id: [ '', [ Validators.required, Validators.pattern(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/) ] ]
+    });
   }
 
 
@@ -386,6 +385,42 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       });
   }
 
+
+  /***************************************************
+   *                                                 *
+   *  Real-name Auth form                            *
+   *                                                 *
+   ***************************************************/
+  resetRealNameForm() {
+    this.realNameForm.disable();
+
+    this.realNameForm.reset({
+      name: '',
+      id: ''
+    });
+
+    this.realNameForm.enable();
+  }
+
+  submitRealNameForm() {
+    this.realNameForm.disable();
+
+    const formModel = this.realNameForm.value;
+
+    const saveRealName = {
+      name: formModel.name,
+      id: formModel.id
+    };
+
+    this.fetchService.setFetching();
+    this.userService.updateUserRealName(saveRealName)
+      .subscribe(newRealName => {
+        this.fetchService.setFetched();
+        this.user.security.realName = newRealName;
+        this.resetRealNameForm();
+      });
+  }
+
   resetCountry(country: CountryCode) {
     this.asYouType = new AsYouType(country);
   }
@@ -399,15 +434,15 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.phoneNumber = this.asYouType.input(phoneNumber);
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const threshold = 12;
-    if (window.scrollY > threshold) {
-      this.toolBarState = 'visible';
-    } else {
-      this.toolBarState = 'invisible';
-    }
-  }
+  // @HostListener('window:scroll', [])
+  // onWindowScroll() {
+  //   const threshold = 12;
+  //   if (window.scrollY > threshold) {
+  //     this.toolBarState = 'visible';
+  //   } else {
+  //     this.toolBarState = 'invisible';
+  //   }
+  // }
 
   @HostListener('window:resize', [ '$event.target.innerHeight' ])
   onResize(height: number) {

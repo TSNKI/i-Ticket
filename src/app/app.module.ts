@@ -41,6 +41,7 @@ import { VipConcertComponent } from './vip/categories/vip-concert/vip-concert.co
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { AuthGuard } from './shared/auth-guard.service';
+import { PrivacyPipe } from './pipes/privacy.pipe';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -75,6 +76,7 @@ registerLocaleData(zh);
     VipFooterComponent,
     VipSearchComponent,
     MaxLengthPipe,
+    PrivacyPipe,
     TocComponent,
     BackTopComponent,
     VipConcertComponent,

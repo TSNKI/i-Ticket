@@ -242,6 +242,27 @@ mat-card.person-info {
   .mat-expansion-panel {
     background-color: $default-undercoat;
     box-shadow: none;
+
+    .real-name {
+      &.bound {
+        width: 550px;
+        height: 48px;
+        position: relative;
+
+        mat-icon {
+          position: absolute;
+          top: 12px;
+          left: 48px;
+        }
+
+        span {
+          position: absolute;
+          top: 17px;
+          left: 96px;
+          line-height: 1;
+        }
+      }
+    }
   }
 
   .mat-expansion-panel + .mat-expansion-panel {

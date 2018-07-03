@@ -82,6 +82,13 @@ export class UserService {
 
     return of(newQuestions).pipe(delay(this.delay));
   }
+
+  updateUserRealName(realName: RealName): Observable<RealName> {
+    const oldRealName = user.security.realName;
+    const newRealName = Object.assign(oldRealName, realName);
+
+    return of(newRealName).pipe(delay(this.delay));
+  }
 }
 
 const user: User = {
@@ -172,8 +179,10 @@ const user: User = {
     ],
     realName:
       {
-        name: '',
-        id: ''
+        name: '陈步兵',
+        id: '320***********3518'
+        // name: '',
+        // id: ''
       },
   },
 };
