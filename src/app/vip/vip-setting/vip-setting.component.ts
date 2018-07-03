@@ -12,10 +12,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
-import { BankCard, User, UserService } from '../../shared/user.service';
+import { BankCard, SecurityQuestion, SecurityQuestions, User, UserService } from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -184,6 +184,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
         this.user = user;
 
         this.resetInfoForm();
+        this.resetQuestionForm();
       });
   }
 
@@ -234,7 +235,14 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       repPassword: [ '', [ Validators.required ] ],
     });
     // this.passwordForm.disable();
-    this.questionForm = this.fb.group({});
+
+    const questionFGs: FormGroup[] = [];
+    questionFGs.push(this.fb.group({ question: '', answer: '' }));
+    questionFGs.push(this.fb.group({ question: '', answer: '' }));
+    questionFGs.push(this.fb.group({ question: '', answer: '' }));
+    this.questionForm = this.fb.group({
+      questions: this.fb.array(questionFGs)
+    });
     this.questionForm.disable();
   }
 
@@ -260,6 +268,8 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
   submitInfoForm() {
+    this.infoForm.disable();
+
     const formModel = this.infoForm.value;
 
     const saveInfo: User['info'] = {
@@ -271,15 +281,57 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       motto: formModel.motto as string
     };
 
-    console.log(saveInfo);
-
-    this.infoForm.disable();
     this.fetchService.setFetching();
     this.userService.updateUserInfo(saveInfo)
       .subscribe(newUserInfo => {
         this.fetchService.setFetched();
         this.user.info = newUserInfo;
         this.resetInfoForm();
+      });
+  }
+
+  get questions(): FormArray {
+    return this.questionForm.get('questions') as FormArray;
+  }
+
+  resetQuestionForm() {
+    this.questionForm.disable();
+
+    const questionFGs = this.user.security.securityQuestions.map(question => this.fb.group(question));
+
+    this.questionForm.setControl(
+      'questions', this.fb.array(questionFGs)
+    );
+
+    this.questionForm.enable();
+  }
+
+  submitQuestionForm() {
+    this.questionForm.disable();
+
+    const formModel = this.questionForm.value;
+
+    const saveQuestions: SecurityQuestions = [
+      {
+        question: formModel.question1 as string,
+        answer: formModel.answer1 as string
+      },
+      {
+        question: formModel.question2 as string,
+        answer: formModel.answer2 as string
+      },
+      {
+        question: formModel.question3 as string,
+        answer: formModel.answer3 as string
+      }
+    ];
+
+    this.fetchService.setFetching();
+    this.userService.updateUserQuestions(saveQuestions)
+      .subscribe(newUserQuestions => {
+        this.fetchService.setFetched();
+        this.user.security.securityQuestions = newUserQuestions;
+        this.resetQuestionForm();
       });
   }
 

@@ -9,13 +9,14 @@ import { VipOrdersComponent } from './vip/vip-orders/vip-orders.component';
 import { VipSearchComponent } from './vip/vip-search/vip-search.component';
 import { VipConcertComponent } from './vip/categories/vip-concert/vip-concert.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './shared/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: VipHomeComponent },
   { path: 'search', component: VipSearchComponent },
   { path: 'concert', component: VipConcertComponent },
-  { path: 'setting', component: VipSettingComponent },
-  { path: 'orders', component: VipOrdersComponent },
+  { path: 'setting', canActivate: [ AuthGuard ], component: VipSettingComponent },
+  { path: 'orders', canActivate: [ AuthGuard ], component: VipOrdersComponent },
   { path: 'user/login', component: LoginComponent },
   { path: 'mgr', component: MgrHomeComponent },
   { path: 'ven', component: VenHomeComponent },

@@ -529,62 +529,46 @@
       </div>
       <h3>密保问题</h3>
       <div class="content">
-        <form style="width: 556px">
-          <div class="form-item">
-            <label><i class="material-icons">question_answer</i></label>
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>安全问题 1</mat-label>
-              <input type="text" placeholder="请 输入 / 选择 一个问题" matInput [matAutocomplete]="question1">
-              <mat-autocomplete #question1="matAutocomplete">
-                <mat-option *ngFor="let option of securityQuestionOptions" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+        <form style="width: 556px" [formGroup]="questionForm">
+          <div formArrayName="questions">
+            <div *ngFor="let question of questions.controls; let i=index" [formGroupName]="i" class="security-question">
+              <div class="form-item">
+                <label><i class="material-icons">question_answer</i></label>
+                <mat-form-field appearance="outline" class="item">
+                  <mat-label>安全问题 {{i+1}}</mat-label>
+                  <input type="text" placeholder="请 输入 / 选择 一个问题" matInput
+                         [matAutocomplete]="questionAutoComplete"
+                         formControlName="question">
+                  <mat-autocomplete #questionAutoComplete="matAutocomplete">
+                    <mat-option *ngFor="let option of securityQuestionOptions" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="form-item">
+                <mat-form-field appearance="outline" class="item">
+                  <mat-label>答案</mat-label>
+                  <input matInput type="text" placeholder="请输入 安全问题 {{i+1}} 的答案"
+                         formControlName="answer">
+                </mat-form-field>
+              </div>
+            </div>
           </div>
-          <div class="form-item">
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>答案</mat-label>
-              <input matInput type="text" placeholder="请输入 安全问题 1 的答案">
-            </mat-form-field>
-          </div>
-
-          <div class="form-item">
-            <label><i class="material-icons">question_answer</i></label>
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>安全问题 2</mat-label>
-              <input type="text" placeholder="请 输入 / 选择 一个问题" matInput [matAutocomplete]="question2">
-              <mat-autocomplete #question2="matAutocomplete">
-                <mat-option *ngFor="let option of securityQuestionOptions" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
-          <div class="form-item">
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>答案</mat-label>
-              <input matInput type="text" placeholder="请输入 安全问题 1 的答案">
-            </mat-form-field>
-          </div>
-
-          <div class="form-item">
-            <label><i class="material-icons">question_answer</i></label>
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>安全问题 3</mat-label>
-              <input type="text" placeholder="请 输入 / 选择 一个问题" matInput [matAutocomplete]="question3">
-              <mat-autocomplete #question3="matAutocomplete">
-                <mat-option *ngFor="let option of securityQuestionOptions" [value]="option">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
-          <div class="form-item">
-            <mat-form-field appearance="outline" class="item">
-              <mat-label>答案</mat-label>
-              <input matInput type="text" placeholder="请输入 安全问题 1 的答案">
-            </mat-form-field>
+          <div class="form-item" style="margin-top: 8px">
+            <div class="item">
+              <button mat-raised-button color="primary" type="submit" class="primary-action"
+                      [disabled]="questionForm.pristine"
+                      (click)="submitQuestionForm()">
+                更新
+              </button>
+              <button mat-button color="primary" type="submit" class="secondary-action"
+                      [disabled]="questionForm.pristine"
+                      (click)="resetQuestionForm()">
+                重置
+              </button>
+              <div class="divider"></div>
+            </div>
           </div>
         </form>
       </div>

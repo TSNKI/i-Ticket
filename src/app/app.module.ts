@@ -40,6 +40,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { VipConcertComponent } from './vip/categories/vip-concert/vip-concert.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { AuthGuard } from './shared/auth-guard.service';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -95,6 +96,7 @@ registerLocaleData(zh);
   ],
   providers: [
     ValidationService,
+    AuthGuard,
     UserService,
     TocService,
     ScrollService,

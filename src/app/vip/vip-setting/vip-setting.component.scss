@@ -218,6 +218,10 @@ mat-card.person-info {
         }
       }
 
+      .security-question + .security-question {
+        margin-top: 8px;
+      }
+
       .content-item + .content-item {
         border-top: 1px solid map_get($default-app-primary, 50);
       }

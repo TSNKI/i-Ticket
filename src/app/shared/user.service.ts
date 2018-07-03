@@ -68,6 +68,13 @@ export class UserService {
     //   setTimeout(() => resolve(newUserInfo), this.delay);
     // });
   }
+
+  updateUserQuestions(questions: SecurityQuestions): Observable<SecurityQuestions> {
+    const oldQuestions = user.security.securityQuestions;
+    const newQuestions = Object.assign(oldQuestions, questions);
+
+    return of(newQuestions).pipe(delay(this.delay));
+  }
 }
 
 const user: User = {
@@ -142,8 +149,25 @@ const user: User = {
     ],
   },
   security: {
-    securityQuestions: null,
-    realName: null,
+    securityQuestions: [
+      {
+        question: '你的父亲叫什么名字？',
+        answer: '曹利航'
+      },
+      {
+        question: '你家乡的名称是什么？',
+        answer: '白蒲'
+      },
+      {
+        question: '你最喜欢的格言是什么？',
+        answer: '哦好的'
+      }
+    ],
+    realName:
+      {
+        name: '',
+        id: ''
+      },
   },
 };
 
@@ -174,7 +198,7 @@ export interface User {
 
   // Security
   security: {
-    securityQuestions: [ SecurityQuestion, SecurityQuestion, SecurityQuestion ] | null | undefined,
+    securityQuestions: SecurityQuestions,
     realName: RealName | null | undefined,
   };
 }
@@ -201,6 +225,8 @@ export interface SecurityQuestion {
   question: string;
   answer: string;
 }
+
+export type SecurityQuestions = [ SecurityQuestion, SecurityQuestion, SecurityQuestion ] | null | undefined;
 
 export interface RealName {
   name: string;
