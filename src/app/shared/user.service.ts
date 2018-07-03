@@ -59,6 +59,13 @@ export class UserService {
     return of(user).pipe(delay(this.delay));
   }
 
+  updateUserPassowrd(password: string): Observable<string> {
+    const oldPassword = user.info.password;
+    const newPassword = Object.assign(oldPassword, password);
+
+    return of(newPassword).pipe(delay(this.delay));
+  }
+
   updateUserInfo(info: User['info']): Observable<User['info']> {
     const oldUserInfo = user.info;
     const newUserInfo = Object.assign(oldUserInfo, info);

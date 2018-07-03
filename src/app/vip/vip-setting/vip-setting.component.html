@@ -494,7 +494,13 @@
               <mat-label>原密码</mat-label>
               <input matInput type="password" placeholder="请输入正在使用的密码"
                      formControlName="oldPassword" [errorStateMatcher]="formErrorStateMatcher">
-              <mat-error *ngIf="passwordForm.get('oldPassword').hasError('required')">请输入原密码</mat-error>
+              <mat-error *ngIf="passwordForm.get('oldPassword').hasError('required')">
+                请输入原密码
+              </mat-error>
+              <mat-error *ngIf="passwordForm.get('oldPassword').hasError('wrongPassword')
+                            && !passwordForm.get('oldPassword').hasError('required')">
+                密码错误
+              </mat-error>
             </mat-form-field>
           </div>
 
@@ -512,15 +518,27 @@
               <mat-label>确认密码</mat-label>
               <input matInput type="password" placeholder="请再次输入新密码"
                      formControlName="repPassword" [errorStateMatcher]="formErrorStateMatcher">
-              <mat-error *ngIf="passwordForm.get('repPassword').hasError('required')">请确认新密码</mat-error>
+              <mat-error *ngIf="passwordForm.get('repPassword').hasError('required')">
+                请确认新密码
+              </mat-error>
+              <mat-error *ngIf="passwordForm.get('repPassword').hasError('notMatch')
+                            && !passwordForm.get('repPassword').hasError('required')">
+                两次密码不一致
+              </mat-error>
             </mat-form-field>
           </div>
 
           <div class="form-item" style="margin-top: 8px">
             <div class="item">
               <button mat-raised-button color="primary" type="submit" class="primary-action"
-                      [disabled]="passwordForm.pristine">
-                更换
+                      [disabled]="passwordForm.pristine"
+                      (click)="submitPasswordForm()">
+                更换密码
+              </button>
+              <button mat-button color="primary" type="button" class="secondary-action"
+                      [disabled]="passwordForm.pristine"
+                      (click)="resetPasswordForm()">
+                清空
               </button>
               <div class="divider"></div>
             </div>

@@ -226,9 +226,9 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
     this.addCardForm = this.fb.group({});
-    this.addCardForm.disable();
+    // this.addCardForm.disable();
     this.addAddressForm = this.fb.group({});
-    this.addAddressForm.disable();
+    // this.addAddressForm.disable();
     this.passwordForm = this.fb.group({
       oldPassword: [ '', Validators.required ],
       newPassword: [ '', Validators.required ],
@@ -246,6 +246,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.questionForm.disable();
   }
 
+
+  /***************************************************
+   *                                                 *
+   *  Personal information form                      *
+   *                                                 *
+   ***************************************************/
   resetInfoForm() {
     this.infoForm.disable();
 
@@ -290,6 +296,64 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       });
   }
 
+
+  /***************************************************
+   *                                                 *
+   *  Change Password form                           *
+   *                                                 *
+   ***************************************************/
+  resetPasswordForm() {
+    this.passwordForm.disable();
+
+    this.passwordForm.reset({
+      oldPassword: '',
+      newPassword: '',
+      repPassword: ''
+    });
+
+    this.passwordForm.enable();
+  }
+
+  submitPasswordForm() {
+    this.passwordForm.disable();
+
+    if (this.checkPasswordForm()) {
+      const formModel = this.passwordForm.value;
+
+      const savePassword = formModel.newPassword;
+
+      this.fetchService.setFetching();
+      this.userService.updateUserPassowrd(savePassword)
+        .subscribe(newPassword => {
+          this.fetchService.setFetched();
+          this.user.info.password = newPassword;
+          this.resetPasswordForm();
+        });
+    }
+  }
+
+  checkPasswordForm(): boolean {
+    const formModel = this.passwordForm.value;
+
+    if (this.user.info.password !== formModel.oldPassword) { // Wrong password.
+      this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
+      this.passwordForm.enable();
+      return false;
+    } else if (formModel.newPassword !== formModel.repPassword) { // Repeated password not matching new password.
+      this.passwordForm.get('repPassword').setErrors({ 'notMatch': true });
+      this.passwordForm.enable();
+      return false;
+    } else {  // Everything is checked true.
+      return true;
+    }
+  }
+
+
+  /***************************************************
+   *                                                 *
+   *  Security Question form                         *
+   *                                                 *
+   ***************************************************/
   get questions(): FormArray {
     return this.questionForm.get('questions') as FormArray;
   }
@@ -311,20 +375,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     const formModel = this.questionForm.value;
 
-    const saveQuestions: SecurityQuestions = [
-      {
-        question: formModel.question1 as string,
-        answer: formModel.answer1 as string
-      },
-      {
-        question: formModel.question2 as string,
-        answer: formModel.answer2 as string
-      },
-      {
-        question: formModel.question3 as string,
-        answer: formModel.answer3 as string
-      }
-    ];
+    const saveQuestions: SecurityQuestions = formModel.questions.map((question: SecurityQuestion) => Object.assign({}, question));
 
     this.fetchService.setFetching();
     this.userService.updateUserQuestions(saveQuestions)
