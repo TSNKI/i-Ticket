@@ -1,3 +1,220 @@
-<p>
-  vip-search works!
-</p>
+<it-vip-header></it-vip-header>
+<div class="container">
+  <div>
+    <mat-card>
+      <mat-card-content>
+        <div class="search">
+
+          <div>
+            <span>城市：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <button mat-button *ngFor="let city of cities" (click)="updateCity(city.displayName)"
+                    [color]="selectedCity==city.displayName ? 'warn':'primary'">{{city.displayName}}
+            </button>
+
+          </div>
+
+          <div>
+            <span>分类：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <button mat-button (click)="updateCate('全部')" [color]="selectedCategory=='全部' ? 'warn':'primary'">全部
+            </button>
+            <button mat-button *ngFor="let category of categories" (click)="updateCate(category.displayName)"
+                    [color]="selectedCategory==category.displayName ? 'warn':'primary'">{{category.displayName}}
+            </button>
+          </div>
+
+          <div>
+            <span>日期：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            <div class="search-time" style="display:inline;">
+              <button mat-button (click)="updateTime('all')" [color]="selectedTime=='all' ? 'warn':'primary'">全部
+              </button>
+              <button mat-button (click)="updateTime('today')" [color]="selectedTime=='today' ? 'warn':'primary'">今日
+              </button>
+              <button mat-button (click)="updateTime('3days')" [color]="selectedTime=='3days' ? 'warn':'primary'">未来三日
+              </button>
+              <button mat-button (click)="updateTime('week')" [color]="selectedTime=='week' ? 'warn':'primary'">未来一周
+              </button>
+
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按范围：&nbsp;</span>
+              <mat-form-field color="accent">
+                <mat-label>起始时间</mat-label>
+                <input matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              <span>&nbsp;&nbsp;至&nbsp;&nbsp;</span>
+              <mat-form-field color="accent">
+                <mat-label>结束时间</mat-label>
+                <input matInput [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+              </mat-form-field>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <button mat-raised-button color="primary" (click)="updateSearchList()">搜索</button>
+            </div>
+          </div>
+
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+
+  <div style="margin-top: 12px"></div>
+  <div>
+
+    <mat-card>
+      <!--<mat-card class="it-card no-border">-->
+      <mat-card-content>
+        <mat-grid-list cols="5" rowHeight="40px">
+          <mat-grid-tile [colspan]="3"
+                         [rowspan]="1">
+            <dd>
+              排序方式:
+
+              <button mat-button (click)="updateRank('default')" [color]="selectedRank=='default' ? 'warn':'primary'">
+                默认
+              </button>
+              <button mat-button (click)="updateRank('updatetime')"
+                      [color]="selectedRank=='updatetime' ? 'warn':'primary'">最近更新
+              </button>
+              <button mat-button (click)="updateRank('showtime')" [color]="selectedRank=='showtime' ? 'warn':'primary'">
+                最新演出时间
+              </button>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索结果筛选:
+              <mat-form-field>
+
+                <mat-select placeholder="分类选择" [(value)]="selected">
+                  <!--<mat-option>所有分类</mat-option>-->
+                  <mat-option *ngFor="let state of toppings" (click)="updateType(state.name)" [value]="state.name">
+                    {{state.displayName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!--<p>You selected: {{selected}}</p>-->
+            </dd>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1"
+                         [rowspan]="1">
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1"
+                         [rowspan]="1">
+            共为你搜索到<span class="bigNumber">{{searchReasults.length}}</span>个商品
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+    <div class="divider"></div>
+    <mat-card *ngFor="let perform of searchReasults; let i = index;" class="it-card">
+      <mat-card-content>
+
+        <mat-grid-list cols="16" rowHeight="50px">
+
+          <mat-grid-tile [colspan]="3"
+                         [rowspan]="4">
+            <div class="cat-exhibit-top">
+              <dl>
+                <dt style="margin-left: 10px;">
+
+                  <a>
+                    <img width="135" height="180"/>
+                  </a>
+                </dt>
+
+              </dl>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="9"
+                         [rowspan]="4">
+            <div class="cat-exhibit-rest">
+              <div>
+                <dl style="margin-bottom: 5px;margin-left: 10px;">
+
+                  <dd class="title">
+                    {{perform.displayName | maxLength: 40}}
+                    <span class="prefix" style="color:#CD950C;" *ngIf="perform.state === 0">[预定中]</span>
+                    <span class="prefix" style="color:red;" *ngIf="perform.state === 1">[售票中]</span>
+                    <span class="prefix" style="color:#636363;" *ngIf="perform.state === 2">[已售罄]</span>
+                  </dd>
+                  <dd class="description">
+                    {{perform.description | maxLength: 80}}
+                  </dd>
+                  <dd class="date">
+                    时间:{{perform.begintime | date}}
+                  </dd>
+                  <dd class="vuene">
+                    场馆:<a>{{perform.vuenename | maxLength: 15}} </a> ({{perform.location | maxLength: 25}})
+                  </dd>
+                  <dd class="price">
+                    价格:<span class="prefix" style="color: #CD950C">{{perform.price | maxLength: 40}}</span>
+                  </dd>
+
+                  <dd>
+                    <!--<i class="material-icons">-->
+                    <!--bookmarks-->
+                    <!--</i>-->
+                    <!--<mat-icon>bookmarks</mat-icon>-->
+                    <span *ngIf="perform.hascode === true">
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="code"></mat-icon>
+                    电子票
+                    </span>
+                    <span *ngIf="perform.hassafety === true">
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="safety"></mat-icon>
+                    退票保险
+                    </span>
+                    <span *ngIf="perform.hasseats === true">
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="seats"></mat-icon>
+                    在线选座
+                    </span>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </mat-grid-tile>
+
+
+          <mat-grid-tile [colspan]="2"
+                         [rowspan]="1">
+
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2"
+                         [rowspan]="1">
+            <button mat-mini-fab color="warn">NO.{{i+1| maxLength: 5}}</button>
+
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="4"
+                         [rowspan]="2">
+            <!--<p>test here</p>-->
+
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2"
+                         [rowspan]="1">
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2"
+                         [rowspan]="1">
+            <!--<p>test here</p>-->
+
+            <dd class="buy">
+              <span class="prefix" style="color: #CD950C" *ngIf="perform.state === 0"><button mat-raised-button
+                                                                                              color="accent">立即预定</button></span>
+              <span class="prefix" style="color:red;" *ngIf="perform.state === 1"><button mat-raised-button
+                                                                                          color="accent">立即购买</button></span>
+              <span class="prefix" style="color:red;" *ngIf="perform.state === 2"><button mat-raised-button
+                                                                                          color="accent">缺货登记</button></span>
+
+            </dd>
+
+          </mat-grid-tile>
+        </mat-grid-list>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<it-back-top hrefBase="/search"></it-back-top>
+<it-vip-footer></it-vip-footer>
+
+

@@ -42,6 +42,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TextMaskModule } from 'angular2-text-mask';
 import { AuthGuard } from './shared/auth-guard.service';
 import { PrivacyPipe } from './pipes/privacy.pipe';
+import { CityService } from './shared/city.service';
+import { SearchlistService } from './shared/searchlist.service';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -104,6 +106,8 @@ registerLocaleData(zh);
     ScrollService,
     ScrollSpyService,
     LocationService,
+    CityService,
+    SearchlistService,
     { provide: NZ_I18N, useValue: zh_CN },
     { provide: LOCALE_ID, useValue: 'zh-Hans' },
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
