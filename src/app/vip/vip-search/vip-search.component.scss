@@ -1,0 +1,22 @@
+@import "../../../styles";
+
+.bigNumber {
+  color: map_get($mat-deep-orange, 900);
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.title {
+  font-size: 140%;
+  font-weight: bold;
+}
+
+.description {
+  color: #616161;
+  font-size: 90%;
+}
+
+//.price{
+//  color: map_get($mat-deep-orange,900);
+//  font-size: 110%;
+//}
