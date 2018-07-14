@@ -137,7 +137,7 @@ export class VipSearchComponent implements OnInit {
     this.searchReasults = [];
     this.fetchService.setFetching();
     this.searchService.getsearchlist(this.selectedCity, this.selectedCategory, this.selectedType)
-      .then(res => {
+      .subscribe(res => {
         this.searchReasults = res;
         this.fetchService.setFetched();
       });
