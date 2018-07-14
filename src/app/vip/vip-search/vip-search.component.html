@@ -5,20 +5,9 @@
       <mat-card-content>
         <div class="search">
           <div>
-            <mat-form-field>
-              <mat-chip-list #chipList>
-                <mat-chip>Chip 1</mat-chip>
-                <mat-chip>Chip 2</mat-chip>
-              </mat-chip-list>
-              <input [matChipInputFor]="chipList">
-            </mat-form-field>
-          </div>
-
-
-          <div>
-            <span>城市：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <button mat-button *ngFor="let city of cities" (click)="updateCity(city.displayName)" class="btn-link"
-                    [color]="selectedCity==city.displayName ? 'warn':'primary'">{{city.displayName}}
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;城市：&nbsp;&nbsp;</span>
+            <button mat-button *ngFor="let city of cities" (click)="updateCity(city.displayName)"
+                    [color]="selectedCity==city.displayName ? 'accent':'primary'">{{city.displayName}}
             </button>
 
           </div>
@@ -26,31 +15,29 @@
           <div style="margin-top: 10px;"></div>
 
           <div>
-            <span>分类：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <button mat-button (click)="updateCate('全部')" [color]="selectedCategory=='全部' ? 'warn':'primary'"
-                    class="btn-link">全部
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;分类：&nbsp;&nbsp;</span>
+            <button mat-button (click)="updateCate('全部')" [color]="selectedCategory=='全部' ? 'accent':'primary'">全部
             </button>
             <button mat-button *ngFor="let category of categories" (click)="updateCate(category.displayName)"
-                    class="btn-link"
-                    [color]="selectedCategory==category.displayName ? 'warn':'primary'">{{category.displayName}}
+                    [color]="selectedCategory==category.displayName ? 'accent':'primary'">{{category.displayName}}
             </button>
           </div>
 
           <div>
-            <span>日期：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;日期：&nbsp;&nbsp;</span>
 
             <div class="search-time" style="display:inline;">
-              <button mat-button (click)="updateTime('all')" [color]="selectedTime=='all' ? 'warn':'primary'"
-                      class="btn-link">全部
+              <button mat-button (click)="updateTime('all')" [color]="selectedTime=='all' ? 'accent':'primary'"
+              >全部
               </button>
-              <button mat-button (click)="updateTime('today')" [color]="selectedTime=='today' ? 'warn':'primary'"
-                      class="btn-link">今日
+              <button mat-button (click)="updateTime('today')" [color]="selectedTime=='today' ? 'accent':'primary'"
+              >今日
               </button>
-              <button mat-button (click)="updateTime('3days')" [color]="selectedTime=='3days' ? 'warn':'primary'"
-                      class="btn-link">未来三日
+              <button mat-button (click)="updateTime('3days')" [color]="selectedTime=='3days' ? 'accent':'primary'"
+              >未来三日
               </button>
-              <button mat-button (click)="updateTime('week')" [color]="selectedTime=='week' ? 'warn':'primary'"
-                      class="btn-link">未来一周
+              <button mat-button (click)="updateTime('week')" [color]="selectedTime=='week' ? 'accent':'primary'"
+              >未来一周
               </button>
 
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按范围：&nbsp;</span>
@@ -68,7 +55,41 @@
                 <mat-datepicker #picker2 color="primary"></mat-datepicker>
               </mat-form-field>
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <button mat-raised-button color="primary" (click)="updateSearchList()">搜索</button>
+
+            </div>
+
+            <div>
+
+              <mat-grid-list cols="16" rowHeight="80px">
+                <mat-grid-tile [colspan]="1"
+                               [rowspan]="1" style="alignment: left">
+                  <span style="display:inline;">关键词:&nbsp;&nbsp;&nbsp;</span>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="13"
+                               [rowspan]="1">
+
+                  <mat-form-field class="example-chip-list">
+                    <mat-chip-list #chipList>
+                      <mat-chip *ngFor="let keyword of keywords" [selectable]="selectable"
+                                [removable]="removable" (removed)="remove(keyword)">
+                        {{keyword}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                      </mat-chip>
+                      <input placeholder="关键词键入(ENTER键确认)"
+                             [matChipInputFor]="chipList"
+                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                             [matChipInputAddOnBlur]="addOnBlur"
+                             (matChipInputTokenEnd)="add($event)">
+                    </mat-chip-list>
+
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="2"
+                               [rowspan]="1">
+                  <button mat-raised-button color="primary" (click)="updateSearchList()">搜索</button>
+                </mat-grid-tile>
+              </mat-grid-list>
+
             </div>
           </div>
 
@@ -93,19 +114,20 @@
             <dd>
               排序方式:
 
-              <button mat-button (click)="updateRank('default')" [color]="selectedRank=='default' ? 'warn':'primary'">
+              <button mat-button (click)="updateRank('default')" [color]="selectedRank=='default' ? 'accent':'primary'">
                 默认
               </button>
               <button mat-button (click)="updateRank('updatetime')"
-                      [color]="selectedRank=='updatetime' ? 'warn':'primary'">最近更新
+                      [color]="selectedRank=='updatetime' ? 'accent':'primary'">最近更新
               </button>
-              <button mat-button (click)="updateRank('showtime')" [color]="selectedRank=='showtime' ? 'warn':'primary'">
+              <button mat-button (click)="updateRank('showtime')"
+                      [color]="selectedRank=='showtime' ? 'accent':'primary'">
                 最新演出时间
               </button>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索结果筛选:
               <mat-form-field>
 
-                <mat-select placeholder="分类选择" [(value)]="selected">
+                <mat-select placeholder="分类选择">
                   <!--<mat-option>所有分类</mat-option>-->
                   <mat-option *ngFor="let state of toppings" (click)="updateType(state.name)" [value]="state.name">
                     {{state.displayName}}
@@ -126,7 +148,7 @@
       </mat-card-content>
     </mat-card>
     <div class="divider"></div>
-    <mat-card *ngFor="let perform of searchReasults; let i = index;" class="it-card">
+    <mat-card *ngFor="let perform of searchReasults; let i = index;" class="it-card" style="margin-bottom: 5px;">
       <mat-card-content>
 
         <mat-grid-list cols="16" rowHeight="50px">
@@ -200,8 +222,8 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2"
                          [rowspan]="1">
-            <button mat-mini-fab color="warn">NO.{{i+1| maxLength: 5}}</button>
-
+            <button mat-mini-fab color="warn" *ngIf="i<=4">NO.{{i+1| maxLength: 5}}</button>
+            <span color="#cc3399" *ngIf="i>4">NO.{{i+1| maxLength: 5}}</span>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="4"
                          [rowspan]="2">
