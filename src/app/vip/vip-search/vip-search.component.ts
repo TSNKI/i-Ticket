@@ -3,11 +3,12 @@ import { EventService } from '../../shared/event.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from '../../shared/user.service';
-import { MatIconRegistry } from '@angular/material';
+import { MatChipInputEvent, MatIconRegistry } from '@angular/material';
 import { CityService } from '../../shared/city.service';
 import { SearchlistService } from '../../shared/searchlist.service';
 import { ActivatedRoute } from '@angular/router';
 import { FetchService } from '../../shared/fetch.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 @Component({
   selector: 'it-vip-search',
   templateUrl: './vip-search.component.html',
@@ -24,6 +25,13 @@ export class VipSearchComponent implements OnInit {
   selectedCategory: string;
   selectedTime: string;
   selectedRank: string;
+  keywords: string[];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   searchReasults: {
     id: number,
     name: string,
@@ -76,6 +84,11 @@ export class VipSearchComponent implements OnInit {
     this.selectedRank = 'default';
     this.searchString = this.activatedRoute.snapshot.queryParams[ 'name' ];
     this.updateSearchList();
+    this.keywords = [
+      '关键词1',
+      '关键词2',
+      '关键词3',
+    ];
     // or shortcut Type Casting
     // (<any> this.activatedRoute.snapshot.params).id
     this.toppings = [
@@ -144,5 +157,31 @@ export class VipSearchComponent implements OnInit {
 
   }
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.keywords.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+    // console.log(this.keywords);
+    this.updateSearchList();
+  }
+
+  remove(key: string): void {
+    const index = this.keywords.indexOf(key);
+
+    if (index >= 0) {
+      this.keywords.splice(index, 1);
+    }
+    // console.log(this.keywords);
+    this.updateSearchList();
+  }
 
 }

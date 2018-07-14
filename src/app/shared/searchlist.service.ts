@@ -35,7 +35,7 @@ export class SearchlistService {
     {
       id: 1,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 1,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -55,7 +55,7 @@ export class SearchlistService {
     {
       id: 2,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)南京站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 1,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)南京站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)南京站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -75,7 +75,7 @@ export class SearchlistService {
     {
       id: 3,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)上海站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 1,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)上海站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)上海站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -95,7 +95,7 @@ export class SearchlistService {
     {
       id: 4,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)广州站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 1,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)广州站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)广州站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -114,16 +114,16 @@ export class SearchlistService {
     },
     {
       id: 5,
-      name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
-      displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
+      name: '百老汇原版音乐剧《芝加哥》(Chicago)南京站',
+      state: 1,   // 012 预定中,售票中,已售罄
+      displayName: '百老汇原版音乐剧《芝加哥》(Chicago)南京站',
       price: '198,298,398',
-      description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
+      description: '百老汇原版音乐剧《芝加哥》(Chicago)南京站演出将于2018-11-01在天桥艺术中心开场演出。',
       vuene: '天桥艺术中心',
       vuenename: '天桥艺术中心',
       location: '天桥南大街9号楼',
-      city: '北京',     // 排序之城市/类型/时间
-      types: '戏剧',
+      city: '南京',     // 排序之城市/类型/时间
+      types: '演唱会',
       begintime: '2018-11-01',
       endtime: '2018-11-18',
       hasseats: true, // 三种图标
@@ -135,7 +135,7 @@ export class SearchlistService {
     {
       id: 6,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 1,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -146,7 +146,7 @@ export class SearchlistService {
       types: '戏剧',
       begintime: '2018-11-01',
       endtime: '2018-11-18',
-      hasseats: true, // 三种图标
+      hasseats: false, // 三种图标
       hascode: true,
       hassafety: true,
       buytype: 1,   // 012 预定,订票,缺票登记
@@ -154,20 +154,20 @@ export class SearchlistService {
     },
     {
       id: 7,
-      name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
-      displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
+      name: '百老汇原版音乐剧《芝加哥》(Chicago)南京站',
+      state: 2,   // 012 预定中,售票中,已售罄
+      displayName: '百老汇原版音乐剧《芝加哥》(Chicago)南京站',
       price: '198,298,398',
-      description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
+      description: '百老汇原版音乐剧《芝加哥》(Chicago)南京站演出将于2018-11-01在天桥艺术中心开场演出。',
       vuene: '天桥艺术中心',
       vuenename: '天桥艺术中心',
       location: '天桥南大街9号楼',
-      city: '北京',     // 排序之城市/类型/时间
+      city: '南京',     // 排序之城市/类型/时间
       types: '戏剧',
       begintime: '2018-11-01',
       endtime: '2018-11-18',
       hasseats: true, // 三种图标
-      hascode: true,
+      hascode: false,
       hassafety: true,
       buytype: 1,   // 012 预定,订票,缺票登记
       items: []
@@ -186,8 +186,8 @@ export class SearchlistService {
       types: '戏剧',
       begintime: '2018-11-01',
       endtime: '2018-11-18',
-      hasseats: true, // 三种图标
-      hascode: true,
+      hasseats: false, // 三种图标
+      hascode: false,
       hassafety: true,
       buytype: 1,   // 012 预定,订票,缺票登记
       items: []
@@ -206,9 +206,9 @@ export class SearchlistService {
       types: '戏剧',
       begintime: '2018-11-01',
       endtime: '2018-11-18',
-      hasseats: true, // 三种图标
-      hascode: true,
-      hassafety: true,
+      hasseats: false, // 三种图标
+      hascode: false,
+      hassafety: false,
       buytype: 1,   // 012 预定,订票,缺票登记
       items: []
     },
@@ -255,7 +255,7 @@ export class SearchlistService {
     {
       id: 12,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 2,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -275,7 +275,7 @@ export class SearchlistService {
     {
       id: 13,
       name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
+      state: 2,   // 012 预定中,售票中,已售罄
       displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
       price: '198,298,398',
       description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
@@ -332,31 +332,9 @@ export class SearchlistService {
       buytype: 1,   // 012 预定,订票,缺票登记
       items: []
     },
-    {
-      id: 4,
-      name: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      state: 0,   // 012 预定中,售票中,已售罄
-      displayName: '百老汇原版音乐剧《芝加哥》(Chicago)北京站',
-      price: '198,298,398',
-      description: '百老汇原版音乐剧《芝加哥》(Chicago)北京站演出将于2018-11-01在天桥艺术中心开场演出。',
-      vuene: '天桥艺术中心',
-      vuenename: '天桥艺术中心',
-      location: '天桥南大街9号楼',
-      city: '北京',     // 排序之城市/类型/时间
-      types: '戏剧',
-      begintime: '2018-11-01',
-      endtime: '2018-11-18',
-      hasseats: true, // 三种图标
-      hascode: true,
-      hassafety: true,
-      buytype: 1,   // 012 预定,订票,缺票登记
-      items: []
-    },
   ];
 
   getsearchlist(selectedCity: string, selectedCategory: string, selectedType: string): Observable<any[]> {
-    if (selectedCity === '' && selectedCategory === '' && selectedType) {
-    }
     return of(this.searchlist).pipe(delay(this.delay));
   }
 
