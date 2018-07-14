@@ -42,8 +42,8 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   user: User;
 
   infoForm: FormGroup;
-  creditCardForm: FormGroup;
-  debitCardForm: FormGroup;
+  creditForm: FormGroup;
+  debitForm: FormGroup;
   addressForm: FormGroup;
   passwordForm: FormGroup;
   questionForm: FormGroup;
@@ -86,6 +86,8 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   ];
 
   asYouType = new AsYouType();
+
+  deletedCards: BankCard[] = [];
 
   isModifyingAddress = false;
   currentModifyingAddress: ShippingAddress | undefined;
@@ -175,11 +177,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
 
-    this.creditCardForm = this.fb.group({});
-    // this.creditCardForm.disable();
+    this.creditForm = this.fb.group({});
+    // this.creditForm.disable();
 
-    this.debitCardForm = this.fb.group({});
-    // this.debitCardForm.disable();
+    this.debitForm = this.fb.group({});
+    // this.debitForm.disable();
 
     this.addressForm = this.fb.group({
       country: [ 'CN', Validators.required ],
@@ -271,6 +273,52 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
    *  Bank Cards                                     *
    *                                                 *
    ***************************************************/
+  openCardPanel(panel: MatExpansionPanel) {
+
+  }
+
+  deleteCard(card: BankCard) {
+    const index = this.user.payment.bankCards.indexOf(card);
+    this.user.payment.bankCards.splice(index, 1);
+    this.deletedCards.push(card);
+
+    const saveCards: BankCard[] = this.user.payment.bankCards.map(
+      (bankCard: BankCard) => Object.assign({}, bankCard)
+    );
+
+    this.fetchService.setFetching();
+    this.userService.updateUserBankCards(saveCards)
+      .subscribe(nextCards => {
+        this.fetchService.setFetched();
+        this.user.payment.bankCards = nextCards;
+        const snackBarRef = this.snackBar.open('已删除银行卡', '撤销', { duration: 10000 });
+        snackBarRef.onAction().subscribe(() => this.undoDeleteCard());
+      });
+  }
+
+  undoDeleteCard() {
+
+  }
+
+  submitCards() {
+
+  }
+
+  resetCreditForm() {
+
+  }
+
+  resetDebitForm() {
+
+  }
+
+  submitCreditForm() {
+
+  }
+
+  submitDebitForm() {
+
+  }
 
 
   /***************************************************
@@ -297,36 +345,15 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
   }
 
-  submitAddresses() {
-    const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
-      (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
-    );
-
-    this.fetchService.setFetching();
-    this.userService.updateUserAddresses(saveAddresses)
-      .subscribe(nextAddresses => {
-        this.fetchService.setFetched();
-        this.user.payment.shippingAddresses = nextAddresses;
-      });
-  }
-
   deleteAddress(address: ShippingAddress) {
     const index = this.user.payment.shippingAddresses.indexOf(address);
-    this.deletedAddresses.push(address);
     this.user.payment.shippingAddresses.splice(index, 1);
+    this.deletedAddresses.push(address);
 
-    const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
-      (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
-    );
-
-    this.fetchService.setFetching();
-    this.userService.updateUserAddresses(saveAddresses)
-      .subscribe(nextAddresses => {
-        this.fetchService.setFetched();
-        this.user.payment.shippingAddresses = nextAddresses;
-        const snackBarRef = this.snackBar.open('已删除地址', '撤销', { duration: 10000 });
-        snackBarRef.onAction().subscribe(() => this.undoDeleteAddress());
-      });
+    this.submitAddresses(() => {
+      const snackBarRef = this.snackBar.open('已删除地址', '撤销', { duration: 10000 });
+      snackBarRef.onAction().subscribe(() => this.undoDeleteAddress());
+    });
   }
 
   undoDeleteAddress() {
@@ -368,38 +395,34 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
   submitAddressForm(panel: MatExpansionPanel) {
+    const formModel = this.addressForm.value;
+    this.asYouType.reset();
+    const phone = this.asYouType.input('+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string));
+    const saveAddress = {
+      name: formModel.name,
+      phone,
+      country: formModel.country,
+      province: formModel.province,
+      city: formModel.city,
+      address: formModel.address,
+      zipCode: formModel.zipCode
+    };
+    this.asYouType.reset();
+
     if (this.isModifyingAddress) {
-      const formModel = this.addressForm.value;
       const index = this.user.payment.shippingAddresses.indexOf(this.currentModifyingAddress);
-      this.asYouType.reset();
-      const phone = this.asYouType.input('+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string));
-      this.user.payment.shippingAddresses[ index ] = {
-        name: formModel.name,
-        phone,
-        country: formModel.country,
-        province: formModel.province,
-        city: formModel.city,
-        address: formModel.address,
-        zipCode: formModel.zipCode
-      };
-      this.asYouType.reset();
+      this.user.payment.shippingAddresses[ index ] = saveAddress;
     } else {
-      const formModel = this.addressForm.value;
-      this.asYouType.reset();
-      const phone = this.asYouType.input('+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string));
-      const saveAddress = {
-        name: formModel.name,
-        phone,
-        country: formModel.country,
-        province: formModel.province,
-        city: formModel.city,
-        address: formModel.address,
-        zipCode: formModel.zipCode
-      };
-      this.asYouType.reset();
       this.user.payment.shippingAddresses.push(saveAddress);
     }
 
+    this.submitAddresses(() => {
+      this.resetAddressForm();
+      panel.close();
+    });
+  }
+
+  submitAddresses(handle?: () => void) {
     const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
       (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
     );
@@ -408,8 +431,9 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.userService.updateUserAddresses(saveAddresses)
       .subscribe(nextAddresses => {
         this.fetchService.setFetched();
-        this.resetAddressForm();
-        panel.close();
+        if (handle) {
+          handle();
+        }
         this.user.payment.shippingAddresses = nextAddresses;
       });
   }
