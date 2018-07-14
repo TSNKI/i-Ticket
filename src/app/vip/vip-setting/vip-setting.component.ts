@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion, MatIconRegistry } from '@angular/material';
+import { MatAccordion, MatExpansionPanel, MatIconRegistry, MatSnackBar } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
@@ -7,7 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
-import { BankCard, SecurityQuestion, SecurityQuestions, User, UserService } from '../../shared/user.service';
+import { BankCard, SecurityQuestion, SecurityQuestions, ShippingAddress, User, UserService } from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { Moment } from 'moment';
 import { MyErrorStateMatcher } from '../../shared/validation.service';
@@ -37,17 +37,14 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   private hostElement: HTMLElement;
 
-  panelOpenState = false;
-
   contentHeight: string;
-
-  // toolBarState = 'invisible';
 
   user: User;
 
   infoForm: FormGroup;
-  addCardForm: FormGroup;
-  addAddressForm: FormGroup;
+  creditCardForm: FormGroup;
+  debitCardForm: FormGroup;
+  addressForm: FormGroup;
   passwordForm: FormGroup;
   questionForm: FormGroup;
   realNameForm: FormGroup;
@@ -69,39 +66,6 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     }
   ];
 
-  person = {
-    nickname: 'CBBAmazing',
-    email: 'mock@sample.com',
-    motto: '解走点切思效导转决亲，律新5华变克。 构设质族员子住向志，北么每头使性五，' +
-    '传角J许实位园。由南志前议毛需界证决，合思十世又由叫快时，声二K音般X变坟。战定度全那队第，头且真中术，群C际维奋。式道据线众，新M。',
-    gender: 'male',
-    phone: '+86 137 7110 4099',
-    birth: '1989-03-09'
-  };
-
-  cards: BankCard[] = [
-    {
-      type: '储蓄卡',
-      bank: '中国工商银行',
-      id: '6222****1919',
-      expire: '2028-08-01',
-      personName: '*步兵'
-    },
-    {
-      type: '储蓄卡',
-      bank: '广东发展银行',
-      id: '6222****1919',
-      expire: '2022-03-04',
-      personName: '*步兵'
-    },
-    {
-      type: '信用卡',
-      bank: '中国农业银行',
-      id: '6222****1919',
-      expire: '2024-07-06',
-      personName: '*步兵'
-    }
-  ];
   phoneMask = [
     /[1-9]/, /\d/, /\d/,
     ' ', '-', ' ',
@@ -120,15 +84,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     ' ', '-', ' ',
     /\d/, /\d/, /\d/
   ];
-  newBankCardNumber = '';
-  newBankCard: BankCard;
 
   asYouType = new AsYouType();
 
-  country: CountryCode;
-  phoneNumber: string;
-
-  birthDate = new FormControl(moment(this.person.birth));
+  isModifyingAddress = false;
+  currentModifyingAddress: ShippingAddress | undefined;
+  deletedAddresses: ShippingAddress[] = [];
 
   securityQuestionOptions = [
     '你最喜欢的格言是什么？',
@@ -150,20 +111,17 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     private tocService: TocService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public snackBar: MatSnackBar
   ) {
     this.hostElement = elementRef.nativeElement;
     this.registerIcons();
   }
 
   ngOnInit() {
+
     this.contentHeight = (window.innerHeight - 65 - 12) + 'px';
-    this.asYouType.input(this.person.phone);
-    this.country = this.asYouType.country;
-    const nationalNumber = this.asYouType.getNationalNumber();
-    this.resetCountry(this.country);
-    this.phoneNumber = this.asYouType.input(nationalNumber);
-    this.asYouType.reset();
+
     this.createForms();
   }
 
@@ -217,11 +175,23 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
 
-    this.addCardForm = this.fb.group({});
-    // this.addCardForm.disable();
+    this.creditCardForm = this.fb.group({});
+    // this.creditCardForm.disable();
 
-    this.addAddressForm = this.fb.group({});
-    // this.addAddressForm.disable();
+    this.debitCardForm = this.fb.group({});
+    // this.debitCardForm.disable();
+
+    this.addressForm = this.fb.group({
+      country: [ 'CN', Validators.required ],
+      province: [ '', Validators.required ],
+      city: [ '', Validators.required ],
+      address: [ '', Validators.required ],
+      zipCode: '',
+      name: [ '', Validators.required ],
+      prefix: 'CN',
+      phone: [ '', Validators.required ]
+    });
+    // this.addressForm.disable();
 
     this.passwordForm = this.fb.group({
       oldPassword: [ '', Validators.required ],
@@ -298,6 +268,155 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   /***************************************************
    *                                                 *
+   *  Bank Cards                                     *
+   *                                                 *
+   ***************************************************/
+
+
+  /***************************************************
+   *                                                 *
+   *  Shipping Addresses                             *
+   *                                                 *
+   ***************************************************/
+  openAddressPanel(panel: MatExpansionPanel, address?: ShippingAddress) {
+    if (address) {
+      this.isModifyingAddress = true;
+      this.currentModifyingAddress = address;
+      panel.open();
+      this.resetAddressForm(address);
+    } else {
+      this.isModifyingAddress = false;
+      this.currentModifyingAddress = undefined;
+      panel.open();
+      this.resetAddressForm();
+    }
+    panel.closed.subscribe(() => {
+      this.currentModifyingAddress = undefined;
+      this.isModifyingAddress = false;
+      this.resetAddressForm();
+    });
+  }
+
+  submitAddresses() {
+    const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
+      (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
+    );
+
+    this.fetchService.setFetching();
+    this.userService.updateUserAddresses(saveAddresses)
+      .subscribe(nextAddresses => {
+        this.fetchService.setFetched();
+        this.user.payment.shippingAddresses = nextAddresses;
+      });
+  }
+
+  deleteAddress(address: ShippingAddress) {
+    const index = this.user.payment.shippingAddresses.indexOf(address);
+    this.deletedAddresses.push(address);
+    this.user.payment.shippingAddresses.splice(index, 1);
+
+    const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
+      (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
+    );
+
+    this.fetchService.setFetching();
+    this.userService.updateUserAddresses(saveAddresses)
+      .subscribe(nextAddresses => {
+        this.fetchService.setFetched();
+        this.user.payment.shippingAddresses = nextAddresses;
+        const snackBarRef = this.snackBar.open('已删除地址', '撤销', { duration: 10000 });
+        snackBarRef.onAction().subscribe(() => this.undoDeleteAddress());
+      });
+  }
+
+  undoDeleteAddress() {
+    const address = this.deletedAddresses.pop();
+    this.user.payment.shippingAddresses.push(address);
+
+    this.submitAddresses();
+  }
+
+  resetAddressForm(address?: ShippingAddress) {
+    this.addressForm.disable();
+    if (!address) {
+      this.addressForm.reset({
+        country: 'CN',
+        province: '',
+        city: '',
+        address: '',
+        zipCode: '',
+        name: '',
+        prefix: 'CN',
+        phone: ''
+      });
+    } else {
+      this.asYouType.reset();
+      this.asYouType.input(address.phone);
+      this.addressForm.reset({
+        country: address.country,
+        province: address.province,
+        city: address.city,
+        address: address.address,
+        zipCode: address.zipCode,
+        name: address.name,
+        prefix: this.asYouType.country,
+        phone: this.asYouType.getNationalNumber()
+      });
+      this.asYouType.reset();
+    }
+    this.addressForm.enable();
+  }
+
+  submitAddressForm(panel: MatExpansionPanel) {
+    if (this.isModifyingAddress) {
+      const formModel = this.addressForm.value;
+      const index = this.user.payment.shippingAddresses.indexOf(this.currentModifyingAddress);
+      this.asYouType.reset();
+      const phone = this.asYouType.input('+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string));
+      this.user.payment.shippingAddresses[ index ] = {
+        name: formModel.name,
+        phone,
+        country: formModel.country,
+        province: formModel.province,
+        city: formModel.city,
+        address: formModel.address,
+        zipCode: formModel.zipCode
+      };
+      this.asYouType.reset();
+    } else {
+      const formModel = this.addressForm.value;
+      this.asYouType.reset();
+      const phone = this.asYouType.input('+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string));
+      const saveAddress = {
+        name: formModel.name,
+        phone,
+        country: formModel.country,
+        province: formModel.province,
+        city: formModel.city,
+        address: formModel.address,
+        zipCode: formModel.zipCode
+      };
+      this.asYouType.reset();
+      this.user.payment.shippingAddresses.push(saveAddress);
+    }
+
+    const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
+      (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
+    );
+
+    this.fetchService.setFetching();
+    this.userService.updateUserAddresses(saveAddresses)
+      .subscribe(nextAddresses => {
+        this.fetchService.setFetched();
+        this.resetAddressForm();
+        panel.close();
+        this.user.payment.shippingAddresses = nextAddresses;
+      });
+  }
+
+
+  /***************************************************
+   *                                                 *
    *  Change Password form                           *
    *                                                 *
    ***************************************************/
@@ -322,7 +441,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       const savePassword = formModel.newPassword;
 
       this.fetchService.setFetching();
-      this.userService.updateUserPassowrd(savePassword)
+      this.userService.updateUserPassword(savePassword)
         .subscribe(newPassword => {
           this.fetchService.setFetched();
           this.user.info.password = newPassword;
@@ -429,9 +548,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     return getCountryCallingCode(country);
   }
 
-  onPhoneInput(phoneNumber: string) {
-    this.asYouType.reset();
-    this.phoneNumber = this.asYouType.input(phoneNumber);
+  getCountryName(code: string): string {
+    return this.countries.find(country => country.code === code).name;
+  }
+
+  getCountryCode(name: string): string {
+    return this.countries.find(country => country.name === name).code;
   }
 
   // @HostListener('window:scroll', [])
@@ -443,6 +565,10 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   //     this.toolBarState = 'invisible';
   //   }
   // }
+
+  hasProp(obj: Object, key: string): boolean {
+    return obj.hasOwnProperty(key);
+  }
 
   @HostListener('window:resize', [ '$event.target.innerHeight' ])
   onResize(height: number) {

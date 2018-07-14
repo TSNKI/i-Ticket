@@ -30,6 +30,6 @@ export class ValidationService {
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && isSubmitted);
+    return !!(control && control.invalid && isSubmitted && (control.dirty || control.touched));
   }
 }

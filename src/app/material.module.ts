@@ -21,6 +21,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatButtonToggleModule,
     MatDatepickerModule,
     MatAutocompleteModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatDividerModule,
@@ -70,6 +72,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatButtonToggleModule,
     MatDatepickerModule,
     MatAutocompleteModule,
+    MatSnackBarModule,
   ]
 })
 export class MaterialModule {
