@@ -152,10 +152,10 @@
     <mat-card *ngFor="let perform of searchReasults; let i = index;" class="it-card" style="margin-bottom: 5px;">
       <mat-card-content>
 
-        <mat-grid-list cols="16" rowHeight="50px">
+        <mat-grid-list cols="16" rowHeight="5px">
 
           <mat-grid-tile [colspan]="3"
-                         [rowspan]="4">
+                         [rowspan]="35">
             <div class="cat-exhibit-top">
               <dl>
                 <dt style="margin-left: 10px;">
@@ -169,13 +169,13 @@
             </div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="9"
-                         [rowspan]="4">
+                         [rowspan]="35">
             <div class="cat-exhibit-rest">
               <div>
                 <dl style="margin-bottom: 5px;margin-left: 10px;">
 
                   <dd class="title">
-                    {{perform.displayName | maxLength: 40}}
+                    <a href="./ticket">{{perform.displayName | maxLength: 40}}</a>
                     <span class="prefix" style="color:#CD950C;" *ngIf="perform.state === 0">[预定中]</span>
                     <span class="prefix" style="color:red;" *ngIf="perform.state === 1">[售票中]</span>
                     <span class="prefix" style="color:#636363;" *ngIf="perform.state === 2">[已售罄]</span>
@@ -218,24 +218,24 @@
 
 
           <mat-grid-tile [colspan]="2"
-                         [rowspan]="1">
+                         [rowspan]="13">
 
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2"
-                         [rowspan]="1">
+                         [rowspan]="13">
             <button mat-mini-fab color="warn" *ngIf="i<=4">NO.{{i+1| maxLength: 5}}</button>
             <span color="#cc3399" *ngIf="i>4">NO.{{i+1| maxLength: 5}}</span>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="4"
-                         [rowspan]="2">
+                         [rowspan]="9">
             <!--<p>test here</p>-->
 
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2"
-                         [rowspan]="1">
+                         [rowspan]="13">
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2"
-                         [rowspan]="1">
+                         [rowspan]="13">
             <!--<p>test here</p>-->
 
             <dd class="buy">
