@@ -129,7 +129,8 @@
 
                 <mat-select placeholder="分类选择">
                   <!--<mat-option>所有分类</mat-option>-->
-                  <mat-option *ngFor="let state of toppings" (click)="updateType(state.name)" [value]="state.name">
+                  <mat-option *ngFor="let state of toppings" (click)="updateTicketType(state.name)"
+                              [value]="state.name">
                     {{state.displayName}}
                   </mat-option>
                 </mat-select>

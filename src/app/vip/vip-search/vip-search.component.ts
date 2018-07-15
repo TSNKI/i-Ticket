@@ -21,7 +21,7 @@ export class VipSearchComponent implements OnInit {
   categories: { id: number, name: string, displayName: string }[];
   cities: { id: number, name: string, displayName: string }[];
   selectedCity: string;
-  selectedType: string;
+  selectedTicketType: string;
   selectedCategory: string;
   selectedTime: string;
   selectedRank: string;
@@ -78,17 +78,28 @@ export class VipSearchComponent implements OnInit {
     this.categories = this.eventService.getCategories;
     this.cities = this.cityService.getCities;
     this.selectedCity = '全部';
-    this.selectedType = 'all';
+    this.selectedTicketType = 'all';
     this.selectedCategory = '全部';
     this.selectedTime = 'all';
     this.selectedRank = 'default';
     this.searchString = this.activatedRoute.snapshot.queryParams[ 'name' ];
     this.updateSearchList();
-    this.keywords = [
-      '关键词1',
-      '关键词2',
-      '关键词3',
-    ];
+    this.keywords = [];
+    if (this.activatedRoute.snapshot.queryParams[ 'key1' ] != null) {
+      this.keywords.push(this.activatedRoute.snapshot.queryParams[ 'key1' ]);
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'key2' ] != null) {
+      this.keywords.push(this.activatedRoute.snapshot.queryParams[ 'key2' ]);
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'key3' ] != null) {
+      this.keywords.push(this.activatedRoute.snapshot.queryParams[ 'key3' ]);
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'city' ] != null) {
+      this.selectedCity = this.activatedRoute.snapshot.queryParams[ 'city' ];
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'type' ] != null) {
+      this.selectedCategory = this.activatedRoute.snapshot.queryParams[ 'type' ];
+    }
     // or shortcut Type Casting
     // (<any> this.activatedRoute.snapshot.params).id
     this.toppings = [
@@ -128,8 +139,8 @@ export class VipSearchComponent implements OnInit {
     this.updateSearchList();
   }
 
-  updateType(item) {
-    this.selectedType = item;
+  updateTicketType(item) {
+    this.selectedTicketType = item;
     console.log(item);
     this.updateSearchList();
   }
@@ -149,7 +160,7 @@ export class VipSearchComponent implements OnInit {
   updateSearchList() {
     this.searchReasults = [];
     this.fetchService.setFetching();
-    this.searchService.getsearchlist(this.selectedCity, this.selectedCategory, this.selectedType)
+    this.searchService.getsearchlist(this.selectedCity, this.selectedCategory, this.selectedTicketType)
       .subscribe(res => {
         this.searchReasults = res;
         this.fetchService.setFetched();
