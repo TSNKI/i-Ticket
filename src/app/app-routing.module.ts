@@ -11,6 +11,7 @@ import { SingleTicketComponent } from './vip/single-ticket/single-ticket.compone
 import { VipConcertComponent } from './vip/categories/vip-concert/vip-concert.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './shared/auth-guard.service';
+import { VipBookingComponent } from "./vip/vip-booking/vip-booking.component";
 
 const routes: Routes = [
   { path: '', component: VipHomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'user/login', component: LoginComponent },
   { path: 'mgr', component: MgrHomeComponent },
   { path: 'ven', component: VenHomeComponent },
+  { path: 'booking', component: VipBookingComponent },
   // { path: 'vip', component: VipHomeComponent },
   { path: 'vip', redirectTo: '', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

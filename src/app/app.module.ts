@@ -45,6 +45,7 @@ import { PrivacyPipe } from './pipes/privacy.pipe';
 import { CityService } from './shared/city.service';
 import { SearchlistService } from './shared/searchlist.service';
 import { SingleTicketComponent } from './vip/single-ticket/single-ticket.component';
+import { VipBookingComponent } from './vip/vip-booking/vip-booking.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -85,6 +86,7 @@ registerLocaleData(zh);
     VipConcertComponent,
     PageNotFoundComponent,
     SingleTicketComponent,
+    VipBookingComponent,
   ],
   entryComponents: [
     VipLoginComponent,
