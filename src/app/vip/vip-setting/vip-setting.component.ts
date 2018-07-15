@@ -1,37 +1,59 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion, MatExpansionPanel, MatIconRegistry, MatSnackBar } from '@angular/material';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatAccordion,
+  MatDatepicker,
+  MatExpansionPanel,
+  MatIconRegistry,
+  MatSnackBar
+} from '@angular/material';
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
-import { BankCard, SecurityQuestion, SecurityQuestions, ShippingAddress, User, UserService } from '../../shared/user.service';
+import {
+  BankCard,
+  CreditCard,
+  DebitCard,
+  SecurityQuestion,
+  SecurityQuestions,
+  ShippingAddress,
+  User,
+  UserService
+} from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { Moment } from 'moment';
 import { MyErrorStateMatcher } from '../../shared/validation.service';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY/MM',
+  },
+  display: {
+    dateInput: 'YYYY/MM',
+    monthYearLabel: 'YYYY MMM',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'YYYY MMMM',
+  },
+};
 
 @Component({
   selector: 'it-vip-setting',
   templateUrl: './vip-setting.component.html',
   styleUrls: [ './vip-setting.component.scss' ],
-  // animations: [
-  //   trigger('toolBarState', [
-  //     state('invisible', style({
-  //       left: '446px',
-  //       right: '88px',
-  //       paddingRight: 0
-  //     })),
-  //     state('visible', style({
-  //       left: '430px',
-  //       right: '80px',
-  //       paddingRight: '8px'
-  //     })),
-  //     transition('invisible => visible', animate('150ms ease-in')),
-  //     transition('visible => invisible', animate('150ms ease-out'))
-  //   ])
-  // ]
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ]
 })
 export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
 
@@ -65,6 +87,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       flag: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg'
     }
   ];
+  banks = [
+    '中国工商银行',
+    '中国农业银行',
+    '中国交通银行',
+    '广东发展银行'
+  ];
 
   phoneMask = [
     /[1-9]/, /\d/, /\d/,
@@ -87,6 +115,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   asYouType = new AsYouType();
 
+  minCardExpireDate = moment();
   deletedCards: BankCard[] = [];
 
   isModifyingAddress = false;
@@ -177,10 +206,27 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
 
-    this.creditForm = this.fb.group({});
+    this.creditForm = this.fb.group({
+      name: [ '', Validators.required ],
+      country: [ '', Validators.required ],
+      province: [ '', Validators.required ],
+      city: [ '', Validators.required ],
+      address: [ '', Validators.required ],
+      zipCode: [ '', Validators.required ],
+      bank: [ '', Validators.required ],
+      id: [ '', Validators.required ],
+      expire: [ moment(), Validators.required ],
+      verifyCode: [ '', Validators.required ]
+    });
     // this.creditForm.disable();
 
-    this.debitForm = this.fb.group({});
+    this.debitForm = this.fb.group({
+      name: [ '', Validators.required ],
+      bank: [ '', Validators.required ],
+      id: [ '', Validators.required ],
+      expire: [ moment(), Validators.required ],
+      verifyCode: [ '', Validators.required ]
+    });
     // this.debitForm.disable();
 
     this.addressForm = this.fb.group({
@@ -273,8 +319,41 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
    *  Bank Cards                                     *
    *                                                 *
    ***************************************************/
-  openCardPanel(panel: MatExpansionPanel) {
+  onCloseCardPanel() {
+    this.resetCardForm();
+  }
 
+  chosenCreditExpireYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.creditForm.get('expire').value;
+    ctrlValue.year(normalizedYear.year());
+    this.creditForm.get('expire').setValue(ctrlValue);
+  }
+
+  chosenCreditExpireMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.creditForm.get('expire').value;
+    ctrlValue.month(normalizedMonth.month());
+    this.creditForm.get('expire').setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  chosenDebitExpireYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.debitForm.get('expire').value;
+    ctrlValue.year(normalizedYear.year());
+    this.debitForm.get('expire').setValue(ctrlValue);
+  }
+
+  chosenDebitExpireMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.debitForm.get('expire').value;
+    ctrlValue.month(normalizedMonth.month());
+    this.debitForm.get('expire').setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  getCardExpire(expire: Moment) {
+    const year = expire.year();
+    const month = expire.month() + 1;
+
+    return year + (month < 10 ? '/0' : '/') + month;
   }
 
   deleteCard(card: BankCard) {
@@ -282,6 +361,97 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.user.payment.bankCards.splice(index, 1);
     this.deletedCards.push(card);
 
+    this.submitCards(() => {
+      const snackBarRef = this.snackBar.open('已删除银行卡', '撤销', { duration: 10000 });
+      snackBarRef.onAction().subscribe(() => this.undoDeleteCard());
+    });
+  }
+
+  undoDeleteCard() {
+    const card = this.deletedCards.pop();
+    this.user.payment.bankCards.push(card);
+
+    this.submitCards();
+  }
+
+  resetCreditForm() {
+    this.creditForm.disable();
+    this.creditForm.reset({
+      name: '',
+      country: '',
+      province: '',
+      city: '',
+      address: '',
+      zipCode: '',
+      bank: '',
+      id: '',
+      expire: moment(),
+      verifyCode: ''
+    });
+    this.creditForm.enable();
+  }
+
+  resetDebitForm() {
+    this.debitForm.disable();
+    this.debitForm.reset({
+      name: '',
+      bank: '',
+      id: '',
+      expire: moment(),
+      verifyCode: ''
+    });
+    this.debitForm.enable();
+  }
+
+  resetCardForm() {
+    this.resetCreditForm();
+    this.resetDebitForm();
+  }
+
+  submitCreditForm(panel: MatExpansionPanel) {
+    const formModel = this.creditForm.value;
+
+    const saveCard: CreditCard = {
+      bank: formModel.bank,
+      id: (formModel.id as string).split(' - ').join(''),
+      expire: this.getCardExpire(formModel.expire as Moment),
+      personName: '*' + (formModel.name as string).slice(1),
+      billing: {
+        country: this.getCountryName(formModel.country as string),
+        province: formModel.province as string,
+        city: formModel.city as string,
+        address: formModel.address as string,
+        zipCode: formModel.zipCode as string
+      }
+    };
+    this.user.payment.bankCards.push(saveCard);
+
+    this.submitCards(() => {
+      panel.close();
+    });
+  }
+
+  submitDebitForm(panel: MatExpansionPanel) {
+    const formModel = this.debitForm.value;
+
+    const saveCard: DebitCard = {
+      bank: formModel.bank,
+      id: (formModel.id as string).split(' - ').join(''),
+      expire: this.getCardExpire(formModel.expire as Moment),
+      personName: '*' + (formModel.name as string).slice(1),
+    };
+    this.user.payment.bankCards.push(saveCard);
+
+    this.submitCards(() => {
+      panel.close();
+    });
+  }
+
+  /**
+   * Apply change of card list
+   * @param {function} handle the function called after fetched and before assigning bankCards
+   */
+  submitCards(handle?: () => void) {
     const saveCards: BankCard[] = this.user.payment.bankCards.map(
       (bankCard: BankCard) => Object.assign({}, bankCard)
     );
@@ -290,34 +460,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.userService.updateUserBankCards(saveCards)
       .subscribe(nextCards => {
         this.fetchService.setFetched();
+        if (handle) {
+          handle();
+        }
         this.user.payment.bankCards = nextCards;
-        const snackBarRef = this.snackBar.open('已删除银行卡', '撤销', { duration: 10000 });
-        snackBarRef.onAction().subscribe(() => this.undoDeleteCard());
       });
-  }
-
-  undoDeleteCard() {
-
-  }
-
-  submitCards() {
-
-  }
-
-  resetCreditForm() {
-
-  }
-
-  resetDebitForm() {
-
-  }
-
-  submitCreditForm() {
-
-  }
-
-  submitDebitForm() {
-
   }
 
 
@@ -338,11 +485,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       panel.open();
       this.resetAddressForm();
     }
-    panel.closed.subscribe(() => {
-      this.currentModifyingAddress = undefined;
-      this.isModifyingAddress = false;
-      this.resetAddressForm();
-    });
+  }
+
+  onCloseAddressPanel() {
+    this.currentModifyingAddress = undefined;
+    this.isModifyingAddress = false;
+    this.resetAddressForm();
   }
 
   deleteAddress(address: ShippingAddress) {
@@ -417,11 +565,14 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     }
 
     this.submitAddresses(() => {
-      this.resetAddressForm();
       panel.close();
     });
   }
 
+  /**
+   * Apply change of address list
+   * @param {function} handle the function called after fetched and before assigning addresses
+   */
   submitAddresses(handle?: () => void) {
     const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
       (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)

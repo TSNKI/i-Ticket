@@ -52,9 +52,9 @@ export const MY_DATE_FORMATS = {
   },
   display: {
     dateInput: 'L',
-    monthYearLabel: 'MM YYYY',
+    monthYearLabel: 'YYYY MM',
     dateA11yLabel: 'L',
-    monthYearA11yLabel: 'MM YYYY',
+    monthYearA11yLabel: 'YYYY MM',
   },
 };
 
