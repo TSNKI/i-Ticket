@@ -12,7 +12,7 @@ import {
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
 import {
@@ -46,14 +46,14 @@ const MY_FORMATS = {
   selector: 'it-vip-setting',
   templateUrl: './vip-setting.component.html',
   styleUrls: [ './vip-setting.component.scss' ],
-  providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
-
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ]
+  // providers: [
+  //   // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+  //   // application's root module. We provide it at the component level here, due to limitations of
+  //   // our example generation script.
+  //   { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+  //
+  //   { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  // ]
 })
 export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
 
@@ -64,6 +64,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   user: User;
 
   infoForm: FormGroup;
+  backupEmailForm: FormGroup;
   creditForm: FormGroup;
   debitForm: FormGroup;
   addressForm: FormGroup;
@@ -206,6 +207,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
 
+    this.backupEmailForm = this.fb.group({
+      email: [ '', [ Validators.required, Validators.email ] ],
+    });
+    // this.backupEmailForm.disable();
+
     this.creditForm = this.fb.group({
       name: [ '', Validators.required ],
       country: [ '', Validators.required ],
@@ -244,7 +250,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.passwordForm = this.fb.group({
       oldPassword: [ '', Validators.required ],
       newPassword: [ '', Validators.required ],
-      repPassword: [ '', [ Validators.required ] ],
+      repPassword: [ '', Validators.required ],
     });
     // this.passwordForm.disable();
 
@@ -264,11 +270,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Personal information form                      *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Personal information form                                                                                                         *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   resetInfoForm() {
     this.infoForm.disable();
 
@@ -306,19 +312,121 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     this.fetchService.setFetching();
     this.userService.updateUserInfo(saveInfo)
-      .subscribe(newUserInfo => {
+      .subscribe(nextUserInfo => {
         this.fetchService.setFetched();
-        this.user.info = newUserInfo;
+        this.user.info = nextUserInfo;
         this.resetInfoForm();
       });
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Bank Cards                                     *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Social accounts                                                                                                                   *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
+  bindBackupEmail() {
+    // if (this.validateBackupEmailForm()) {
+    const formModel = this.backupEmailForm.value;
+    const saveBackupEmail = formModel.email;
+
+    this.user.social.backupEmail = saveBackupEmail;
+
+    this.submitSocialAccounts();
+    // }
+  }
+
+  unbindBackupEmail() {
+    this.user.social.backupEmail = '';
+
+    this.submitSocialAccounts();
+  }
+
+  bindQQ() {
+    this.user.social.qq = '123456789';
+
+    this.submitSocialAccounts();
+  }
+
+  unbindQQ() {
+    this.user.social.qq = '';
+
+    this.submitSocialAccounts();
+  }
+
+  bindTencentWeibo() {
+    this.user.social.tencentWeibo = '987654321';
+
+    this.submitSocialAccounts();
+  }
+
+  unbindTencentWeibo() {
+    this.user.social.tencentWeibo = '';
+
+    this.submitSocialAccounts();
+  }
+
+  bindSinaWeibo() {
+    this.user.social.sinaWeibo = 'abc';
+
+    this.submitSocialAccounts();
+  }
+
+  unbindSinaWeibo() {
+    this.user.social.sinaWeibo = '';
+
+    this.submitSocialAccounts();
+  }
+
+  resetBackupEmailForm() {
+    this.backupEmailForm.disable();
+    this.backupEmailForm.reset({
+      email: ''
+    });
+    this.backupEmailForm.enable();
+  }
+
+  validateBackupEmailForm(): boolean {
+    const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const email = this.backupEmailForm.value.email;
+    console.log(email);
+    if (!email || email === '') {
+      this.backupEmailForm.get('email').setErrors({ 'required': true });
+      return false;
+    } else if (!regex.test(email)) {
+      this.backupEmailForm.get('email').setErrors({ 'email': true });
+      return false;
+    } else {
+      this.backupEmailForm.get('email').setErrors({});
+      return true;
+    }
+  }
+
+  submitSocialAccounts(handle?: () => void) {
+    const saveAccounts: User['social'] = {
+      backupEmail: this.user.social.backupEmail,
+      qq: this.user.social.qq,
+      tencentWeibo: this.user.social.tencentWeibo,
+      sinaWeibo: this.user.social.sinaWeibo,
+    };
+
+    this.fetchService.setFetching();
+    this.userService.updateUserSocialAccounts(saveAccounts)
+      .subscribe(nextAccounts => {
+        this.fetchService.setFetched();
+        if (handle) {
+          handle();
+        }
+        this.user.social = nextAccounts;
+      });
+  }
+
+
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Bank Cards                                                                                                                        *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   onCloseCardPanel() {
     this.resetCardForm();
   }
@@ -468,11 +576,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Shipping Addresses                             *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Shipping Addresses                                                                                                                *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   openAddressPanel(panel: MatExpansionPanel, address?: ShippingAddress) {
     if (address) {
       this.isModifyingAddress = true;
@@ -590,11 +698,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Change Password form                           *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Change Password form                                                                                                              *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   resetPasswordForm() {
     this.passwordForm.disable();
 
@@ -608,7 +716,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
   submitPasswordForm() {
-    this.passwordForm.disable();
+    // this.passwordForm.disable();
 
     if (this.checkPasswordForm()) {
       const formModel = this.passwordForm.value;
@@ -617,9 +725,9 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
       this.fetchService.setFetching();
       this.userService.updateUserPassword(savePassword)
-        .subscribe(newPassword => {
+        .subscribe(nextPassword => {
           this.fetchService.setFetched();
-          this.user.info.password = newPassword;
+          this.user.info.password = nextPassword;
           this.resetPasswordForm();
         });
     }
@@ -627,26 +735,41 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   checkPasswordForm(): boolean {
     const formModel = this.passwordForm.value;
+    console.log(formModel);
+    const oldPassword = this.passwordForm.get('oldPassword');
+    const newPassword = this.passwordForm.get('newPassword');
+    const repPassword = this.passwordForm.get('repPassword');
 
-    if (this.user.info.password !== formModel.oldPassword) { // Wrong password.
-      this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
-      this.passwordForm.enable();
+    if (!oldPassword.hasError('required')
+      && !newPassword.hasError('required')
+      && !repPassword.hasError('required')) {
+      if (this.user.info.password !== formModel.oldPassword) { // Wrong password.
+        // this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
+        // setTimeout(() => {
+        this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
+        // });
+        // this.passwordForm.enable();
+        return false;
+      } else if (formModel.newPassword !== formModel.repPassword) { // Repeated password not matching new password.
+        // setTimeout(() => {
+        this.passwordForm.get('repPassword').setErrors({ 'notMatch': true });
+        // });
+        // this.passwordForm.enable();
+        return false;
+      } else {  // Everything is checked true.
+        return true;
+      }
+    } else {
       return false;
-    } else if (formModel.newPassword !== formModel.repPassword) { // Repeated password not matching new password.
-      this.passwordForm.get('repPassword').setErrors({ 'notMatch': true });
-      this.passwordForm.enable();
-      return false;
-    } else {  // Everything is checked true.
-      return true;
     }
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Security Question form                         *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Security Question form                                                                                                            *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   get questions(): FormArray {
     return this.questionForm.get('questions') as FormArray;
   }
@@ -672,19 +795,19 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     this.fetchService.setFetching();
     this.userService.updateUserQuestions(saveQuestions)
-      .subscribe(newUserQuestions => {
+      .subscribe(nextUserQuestions => {
         this.fetchService.setFetched();
-        this.user.security.securityQuestions = newUserQuestions;
+        this.user.security.securityQuestions = nextUserQuestions;
         this.resetQuestionForm();
       });
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Real-name Auth form                            *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Real-name Auth form                                                                                                               *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   resetRealNameForm() {
     this.realNameForm.disable();
 
@@ -708,9 +831,9 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     this.fetchService.setFetching();
     this.userService.updateUserRealName(saveRealName)
-      .subscribe(newRealName => {
+      .subscribe(nextRealName => {
         this.fetchService.setFetched();
-        this.user.security.realName = newRealName;
+        this.user.security.realName = nextRealName;
         this.resetRealNameForm();
       });
   }

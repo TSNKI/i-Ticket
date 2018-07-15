@@ -63,6 +63,13 @@ export class UserService {
     return of(newUserInfo).pipe(delay(this.delay));
   }
 
+  updateUserSocialAccounts(accounts: User['social']): Observable<User['social']> {
+    const oldAccounts = user.social;
+    const newAccounts = Object.assign(oldAccounts, accounts);
+
+    return of(newAccounts).pipe(delay(this.delay));
+  }
+
   updateUserBankCards(cards: BankCard[]): Observable<BankCard[]> {
     const oldCards = user.payment.bankCards;
     const newCards = Object.assign(oldCards, cards);
