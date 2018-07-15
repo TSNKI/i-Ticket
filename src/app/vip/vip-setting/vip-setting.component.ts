@@ -1,53 +1,72 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion, MatIconRegistry } from '@angular/material';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatAccordion,
+  MatDatepicker,
+  MatExpansionPanel,
+  MatIconRegistry,
+  MatSnackBar
+} from '@angular/material';
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
-import { BankCard, SecurityQuestion, SecurityQuestions, User, UserService } from '../../shared/user.service';
+import {
+  BankCard,
+  CreditCard,
+  DebitCard,
+  SecurityQuestion,
+  SecurityQuestions,
+  ShippingAddress,
+  User,
+  UserService
+} from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { Moment } from 'moment';
 import { MyErrorStateMatcher } from '../../shared/validation.service';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY/MM',
+  },
+  display: {
+    dateInput: 'YYYY/MM',
+    monthYearLabel: 'YYYY MMM',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'YYYY MMMM',
+  },
+};
 
 @Component({
   selector: 'it-vip-setting',
   templateUrl: './vip-setting.component.html',
   styleUrls: [ './vip-setting.component.scss' ],
-  // animations: [
-  //   trigger('toolBarState', [
-  //     state('invisible', style({
-  //       left: '446px',
-  //       right: '88px',
-  //       paddingRight: 0
-  //     })),
-  //     state('visible', style({
-  //       left: '430px',
-  //       right: '80px',
-  //       paddingRight: '8px'
-  //     })),
-  //     transition('invisible => visible', animate('150ms ease-in')),
-  //     transition('visible => invisible', animate('150ms ease-out'))
-  //   ])
-  // ]
+  providers: [
+    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+    // application's root module. We provide it at the component level here, due to limitations of
+    // our example generation script.
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ]
 })
 export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
 
   private hostElement: HTMLElement;
 
-  panelOpenState = false;
-
   contentHeight: string;
-
-  // toolBarState = 'invisible';
 
   user: User;
 
   infoForm: FormGroup;
-  addCardForm: FormGroup;
-  addAddressForm: FormGroup;
+  creditForm: FormGroup;
+  debitForm: FormGroup;
+  addressForm: FormGroup;
   passwordForm: FormGroup;
   questionForm: FormGroup;
   realNameForm: FormGroup;
@@ -68,40 +87,13 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       flag: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg'
     }
   ];
-
-  person = {
-    nickname: 'CBBAmazing',
-    email: 'mock@sample.com',
-    motto: '解走点切思效导转决亲，律新5华变克。 构设质族员子住向志，北么每头使性五，' +
-    '传角J许实位园。由南志前议毛需界证决，合思十世又由叫快时，声二K音般X变坟。战定度全那队第，头且真中术，群C际维奋。式道据线众，新M。',
-    gender: 'male',
-    phone: '+86 137 7110 4099',
-    birth: '1989-03-09'
-  };
-
-  cards: BankCard[] = [
-    {
-      type: '储蓄卡',
-      bank: '中国工商银行',
-      id: '6222****1919',
-      expire: '2028-08-01',
-      personName: '*步兵'
-    },
-    {
-      type: '储蓄卡',
-      bank: '广东发展银行',
-      id: '6222****1919',
-      expire: '2022-03-04',
-      personName: '*步兵'
-    },
-    {
-      type: '信用卡',
-      bank: '中国农业银行',
-      id: '6222****1919',
-      expire: '2024-07-06',
-      personName: '*步兵'
-    }
+  banks = [
+    '中国工商银行',
+    '中国农业银行',
+    '中国交通银行',
+    '广东发展银行'
   ];
+
   phoneMask = [
     /[1-9]/, /\d/, /\d/,
     ' ', '-', ' ',
@@ -120,15 +112,15 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     ' ', '-', ' ',
     /\d/, /\d/, /\d/
   ];
-  newBankCardNumber = '';
-  newBankCard: BankCard;
 
   asYouType = new AsYouType();
 
-  country: CountryCode;
-  phoneNumber: string;
+  minCardExpireDate = moment();
+  deletedCards: BankCard[] = [];
 
-  birthDate = new FormControl(moment(this.person.birth));
+  isModifyingAddress = false;
+  currentModifyingAddress: ShippingAddress | undefined;
+  deletedAddresses: ShippingAddress[] = [];
 
   securityQuestionOptions = [
     '你最喜欢的格言是什么？',
@@ -150,20 +142,17 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     private tocService: TocService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public snackBar: MatSnackBar
   ) {
     this.hostElement = elementRef.nativeElement;
     this.registerIcons();
   }
 
   ngOnInit() {
+
     this.contentHeight = (window.innerHeight - 65 - 12) + 'px';
-    this.asYouType.input(this.person.phone);
-    this.country = this.asYouType.country;
-    const nationalNumber = this.asYouType.getNationalNumber();
-    this.resetCountry(this.country);
-    this.phoneNumber = this.asYouType.input(nationalNumber);
-    this.asYouType.reset();
+
     this.createForms();
   }
 
@@ -217,11 +206,40 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
 
-    this.addCardForm = this.fb.group({});
-    // this.addCardForm.disable();
+    this.creditForm = this.fb.group({
+      name: [ '', Validators.required ],
+      country: [ '', Validators.required ],
+      province: [ '', Validators.required ],
+      city: [ '', Validators.required ],
+      address: [ '', Validators.required ],
+      zipCode: [ '', Validators.required ],
+      bank: [ '', Validators.required ],
+      id: [ '', Validators.required ],
+      expire: [ moment(), Validators.required ],
+      verifyCode: [ '', Validators.required ]
+    });
+    // this.creditForm.disable();
 
-    this.addAddressForm = this.fb.group({});
-    // this.addAddressForm.disable();
+    this.debitForm = this.fb.group({
+      name: [ '', Validators.required ],
+      bank: [ '', Validators.required ],
+      id: [ '', Validators.required ],
+      expire: [ moment(), Validators.required ],
+      verifyCode: [ '', Validators.required ]
+    });
+    // this.debitForm.disable();
+
+    this.addressForm = this.fb.group({
+      country: [ 'CN', Validators.required ],
+      province: [ '', Validators.required ],
+      city: [ '', Validators.required ],
+      address: [ '', Validators.required ],
+      zipCode: '',
+      name: [ '', Validators.required ],
+      prefix: 'CN',
+      phone: [ '', Validators.required ]
+    });
+    // this.addressForm.disable();
 
     this.passwordForm = this.fb.group({
       oldPassword: [ '', Validators.required ],
@@ -298,6 +316,282 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   /***************************************************
    *                                                 *
+   *  Bank Cards                                     *
+   *                                                 *
+   ***************************************************/
+  onCloseCardPanel() {
+    this.resetCardForm();
+  }
+
+  chosenCreditExpireYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.creditForm.get('expire').value;
+    ctrlValue.year(normalizedYear.year());
+    this.creditForm.get('expire').setValue(ctrlValue);
+  }
+
+  chosenCreditExpireMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.creditForm.get('expire').value;
+    ctrlValue.month(normalizedMonth.month());
+    this.creditForm.get('expire').setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  chosenDebitExpireYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.debitForm.get('expire').value;
+    ctrlValue.year(normalizedYear.year());
+    this.debitForm.get('expire').setValue(ctrlValue);
+  }
+
+  chosenDebitExpireMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.debitForm.get('expire').value;
+    ctrlValue.month(normalizedMonth.month());
+    this.debitForm.get('expire').setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  getCardExpire(expire: Moment) {
+    const year = expire.year();
+    const month = expire.month() + 1;
+
+    return year + (month < 10 ? '/0' : '/') + month;
+  }
+
+  deleteCard(card: BankCard) {
+    const index = this.user.payment.bankCards.indexOf(card);
+    this.user.payment.bankCards.splice(index, 1);
+    this.deletedCards.push(card);
+
+    this.submitCards(() => {
+      const snackBarRef = this.snackBar.open('已删除银行卡', '撤销', { duration: 10000 });
+      snackBarRef.onAction().subscribe(() => this.undoDeleteCard());
+    });
+  }
+
+  undoDeleteCard() {
+    const card = this.deletedCards.pop();
+    this.user.payment.bankCards.push(card);
+
+    this.submitCards();
+  }
+
+  resetCreditForm() {
+    this.creditForm.disable();
+    this.creditForm.reset({
+      name: '',
+      country: '',
+      province: '',
+      city: '',
+      address: '',
+      zipCode: '',
+      bank: '',
+      id: '',
+      expire: moment(),
+      verifyCode: ''
+    });
+    this.creditForm.enable();
+  }
+
+  resetDebitForm() {
+    this.debitForm.disable();
+    this.debitForm.reset({
+      name: '',
+      bank: '',
+      id: '',
+      expire: moment(),
+      verifyCode: ''
+    });
+    this.debitForm.enable();
+  }
+
+  resetCardForm() {
+    this.resetCreditForm();
+    this.resetDebitForm();
+  }
+
+  submitCreditForm(panel: MatExpansionPanel) {
+    const formModel = this.creditForm.value;
+
+    const saveCard: CreditCard = {
+      bank: formModel.bank,
+      id: (formModel.id as string).split(' - ').join(''),
+      expire: this.getCardExpire(formModel.expire as Moment),
+      personName: '*' + (formModel.name as string).slice(1),
+      billing: {
+        country: this.getCountryName(formModel.country as string),
+        province: formModel.province as string,
+        city: formModel.city as string,
+        address: formModel.address as string,
+        zipCode: formModel.zipCode as string
+      }
+    };
+    this.user.payment.bankCards.push(saveCard);
+
+    this.submitCards(() => {
+      panel.close();
+    });
+  }
+
+  submitDebitForm(panel: MatExpansionPanel) {
+    const formModel = this.debitForm.value;
+
+    const saveCard: DebitCard = {
+      bank: formModel.bank,
+      id: (formModel.id as string).split(' - ').join(''),
+      expire: this.getCardExpire(formModel.expire as Moment),
+      personName: '*' + (formModel.name as string).slice(1),
+    };
+    this.user.payment.bankCards.push(saveCard);
+
+    this.submitCards(() => {
+      panel.close();
+    });
+  }
+
+  /**
+   * Apply change of card list
+   * @param {function} handle the function called after fetched and before assigning bankCards
+   */
+  submitCards(handle?: () => void) {
+    const saveCards: BankCard[] = this.user.payment.bankCards.map(
+      (bankCard: BankCard) => Object.assign({}, bankCard)
+    );
+
+    this.fetchService.setFetching();
+    this.userService.updateUserBankCards(saveCards)
+      .subscribe(nextCards => {
+        this.fetchService.setFetched();
+        if (handle) {
+          handle();
+        }
+        this.user.payment.bankCards = nextCards;
+      });
+  }
+
+
+  /***************************************************
+   *                                                 *
+   *  Shipping Addresses                             *
+   *                                                 *
+   ***************************************************/
+  openAddressPanel(panel: MatExpansionPanel, address?: ShippingAddress) {
+    if (address) {
+      this.isModifyingAddress = true;
+      this.currentModifyingAddress = address;
+      panel.open();
+      this.resetAddressForm(address);
+    } else {
+      this.isModifyingAddress = false;
+      this.currentModifyingAddress = undefined;
+      panel.open();
+      this.resetAddressForm();
+    }
+  }
+
+  onCloseAddressPanel() {
+    this.currentModifyingAddress = undefined;
+    this.isModifyingAddress = false;
+    this.resetAddressForm();
+  }
+
+  deleteAddress(address: ShippingAddress) {
+    const index = this.user.payment.shippingAddresses.indexOf(address);
+    this.user.payment.shippingAddresses.splice(index, 1);
+    this.deletedAddresses.push(address);
+
+    this.submitAddresses(() => {
+      const snackBarRef = this.snackBar.open('已删除地址', '撤销', { duration: 10000 });
+      snackBarRef.onAction().subscribe(() => this.undoDeleteAddress());
+    });
+  }
+
+  undoDeleteAddress() {
+    const address = this.deletedAddresses.pop();
+    this.user.payment.shippingAddresses.push(address);
+
+    this.submitAddresses();
+  }
+
+  resetAddressForm(address?: ShippingAddress) {
+    this.addressForm.disable();
+    if (!address) {
+      this.addressForm.reset({
+        country: 'CN',
+        province: '',
+        city: '',
+        address: '',
+        zipCode: '',
+        name: '',
+        prefix: 'CN',
+        phone: ''
+      });
+    } else {
+      this.asYouType.reset();
+      this.asYouType.input(address.phone);
+      this.addressForm.reset({
+        country: address.country,
+        province: address.province,
+        city: address.city,
+        address: address.address,
+        zipCode: address.zipCode,
+        name: address.name,
+        prefix: this.asYouType.country,
+        phone: this.asYouType.getNationalNumber()
+      });
+      this.asYouType.reset();
+    }
+    this.addressForm.enable();
+  }
+
+  submitAddressForm(panel: MatExpansionPanel) {
+    const formModel = this.addressForm.value;
+    this.asYouType.reset();
+    const phone = this.asYouType.input('+' + this.getPhonePrefix(formModel.prefix as CountryCode) + (formModel.phone as string));
+    const saveAddress = {
+      name: formModel.name,
+      phone,
+      country: formModel.country,
+      province: formModel.province,
+      city: formModel.city,
+      address: formModel.address,
+      zipCode: formModel.zipCode
+    };
+    this.asYouType.reset();
+
+    if (this.isModifyingAddress) {
+      const index = this.user.payment.shippingAddresses.indexOf(this.currentModifyingAddress);
+      this.user.payment.shippingAddresses[ index ] = saveAddress;
+    } else {
+      this.user.payment.shippingAddresses.push(saveAddress);
+    }
+
+    this.submitAddresses(() => {
+      panel.close();
+    });
+  }
+
+  /**
+   * Apply change of address list
+   * @param {function} handle the function called after fetched and before assigning addresses
+   */
+  submitAddresses(handle?: () => void) {
+    const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
+      (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
+    );
+
+    this.fetchService.setFetching();
+    this.userService.updateUserAddresses(saveAddresses)
+      .subscribe(nextAddresses => {
+        this.fetchService.setFetched();
+        if (handle) {
+          handle();
+        }
+        this.user.payment.shippingAddresses = nextAddresses;
+      });
+  }
+
+
+  /***************************************************
+   *                                                 *
    *  Change Password form                           *
    *                                                 *
    ***************************************************/
@@ -322,7 +616,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       const savePassword = formModel.newPassword;
 
       this.fetchService.setFetching();
-      this.userService.updateUserPassowrd(savePassword)
+      this.userService.updateUserPassword(savePassword)
         .subscribe(newPassword => {
           this.fetchService.setFetched();
           this.user.info.password = newPassword;
@@ -429,9 +723,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     return getCountryCallingCode(country);
   }
 
-  onPhoneInput(phoneNumber: string) {
-    this.asYouType.reset();
-    this.phoneNumber = this.asYouType.input(phoneNumber);
+  getCountryName(code: string): string {
+    return this.countries.find(country => country.code === code).name;
+  }
+
+  getCountryCode(name: string): string {
+    return this.countries.find(country => country.name === name).code;
   }
 
   // @HostListener('window:scroll', [])
@@ -443,6 +740,10 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   //     this.toolBarState = 'invisible';
   //   }
   // }
+
+  hasProp(obj: Object, key: string): boolean {
+    return obj.hasOwnProperty(key);
+  }
 
   @HostListener('window:resize', [ '$event.target.innerHeight' ])
   onResize(height: number) {

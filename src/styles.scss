@@ -1,17 +1,41 @@
-@import "theme/default-app-theme";
-@import "mixins/_mixins";
+@import '~@angular/material/theming';
+@import "mixins/mixins";
 
 @include material-icons;
 
-$primary-text-color: rgba(black, .87);
-$secondary-text-color: rgba(black, .6);
-$disabled-text-color: rgba(black, .38);
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$default-app-primary: mat-palette($mat-indigo);
+$default-app-accent: mat-palette($mat-pink, A200, A100, A400);
 
-$content-width: 1288px;
+// The warn palette is optional (defaults to red).
+$default-app-warn: mat-palette($mat-red);
 
-@function primary-text-color($base-color) {
+// Create the theme object (a Sass map containing all of the palettes).
+$default-app-theme: mat-light-theme($default-app-primary, $default-app-accent, $default-app-warn);
+
+@function primary-text-color($base-color: black) {
   @return rgba($base-color, .87);
 }
+
+@function secondary-text-color($base-color: black) {
+  @return rgba($base-color, .6);
+}
+
+@function disabled-text-color($base-color: black) {
+  @return rgba($base-color, .38);
+}
+
+$primary-text-color: primary-text-color();
+$secondary-text-color: secondary-text-color();
+$disabled-text-color: disabled-text-color();
+
+$default-undercoat: map-get($mat-grey, 50);
+
+$default-border: 1px map-get($mat-grey, 300) solid;
+
+$content-width: 1288px;
 
 body {
   margin: 0;

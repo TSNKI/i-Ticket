@@ -3,11 +3,12 @@ import { EventService } from '../../shared/event.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from '../../shared/user.service';
-import { MatIconRegistry } from '@angular/material';
+import { MatChipInputEvent, MatIconRegistry } from '@angular/material';
 import { CityService } from '../../shared/city.service';
 import { SearchlistService } from '../../shared/searchlist.service';
 import { ActivatedRoute } from '@angular/router';
 import { FetchService } from '../../shared/fetch.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 @Component({
   selector: 'it-vip-search',
   templateUrl: './vip-search.component.html',
@@ -20,10 +21,17 @@ export class VipSearchComponent implements OnInit {
   categories: { id: number, name: string, displayName: string }[];
   cities: { id: number, name: string, displayName: string }[];
   selectedCity: string;
-  selectedType: string;
+  selectedTicketType: string;
   selectedCategory: string;
   selectedTime: string;
   selectedRank: string;
+  keywords: string[];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   searchReasults: {
     id: number,
     name: string,
@@ -70,12 +78,28 @@ export class VipSearchComponent implements OnInit {
     this.categories = this.eventService.getCategories;
     this.cities = this.cityService.getCities;
     this.selectedCity = '全部';
-    this.selectedType = 'all';
+    this.selectedTicketType = 'all';
     this.selectedCategory = '全部';
     this.selectedTime = 'all';
     this.selectedRank = 'default';
     this.searchString = this.activatedRoute.snapshot.queryParams[ 'name' ];
     this.updateSearchList();
+    this.keywords = [];
+    if (this.activatedRoute.snapshot.queryParams[ 'key1' ] != null) {
+      this.keywords.push(this.activatedRoute.snapshot.queryParams[ 'key1' ]);
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'key2' ] != null) {
+      this.keywords.push(this.activatedRoute.snapshot.queryParams[ 'key2' ]);
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'key3' ] != null) {
+      this.keywords.push(this.activatedRoute.snapshot.queryParams[ 'key3' ]);
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'city' ] != null) {
+      this.selectedCity = this.activatedRoute.snapshot.queryParams[ 'city' ];
+    }
+    if (this.activatedRoute.snapshot.queryParams[ 'type' ] != null) {
+      this.selectedCategory = this.activatedRoute.snapshot.queryParams[ 'type' ];
+    }
     // or shortcut Type Casting
     // (<any> this.activatedRoute.snapshot.params).id
     this.toppings = [
@@ -115,8 +139,8 @@ export class VipSearchComponent implements OnInit {
     this.updateSearchList();
   }
 
-  updateType(item) {
-    this.selectedType = item;
+  updateTicketType(item) {
+    this.selectedTicketType = item;
     console.log(item);
     this.updateSearchList();
   }
@@ -136,7 +160,7 @@ export class VipSearchComponent implements OnInit {
   updateSearchList() {
     this.searchReasults = [];
     this.fetchService.setFetching();
-    this.searchService.getsearchlist(this.selectedCity, this.selectedCategory, this.selectedType)
+    this.searchService.getsearchlist(this.selectedCity, this.selectedCategory, this.selectedTicketType)
       .subscribe(res => {
         this.searchReasults = res;
         this.fetchService.setFetched();
@@ -144,5 +168,31 @@ export class VipSearchComponent implements OnInit {
 
   }
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.keywords.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+    // console.log(this.keywords);
+    this.updateSearchList();
+  }
+
+  remove(key: string): void {
+    const index = this.keywords.indexOf(key);
+
+    if (index >= 0) {
+      this.keywords.splice(index, 1);
+    }
+    // console.log(this.keywords);
+    this.updateSearchList();
+  }
 
 }

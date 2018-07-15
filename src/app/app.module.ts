@@ -44,6 +44,7 @@ import { AuthGuard } from './shared/auth-guard.service';
 import { PrivacyPipe } from './pipes/privacy.pipe';
 import { CityService } from './shared/city.service';
 import { SearchlistService } from './shared/searchlist.service';
+import { SingleTicketComponent } from './vip/single-ticket/single-ticket.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -51,9 +52,9 @@ export const MY_DATE_FORMATS = {
   },
   display: {
     dateInput: 'L',
-    monthYearLabel: 'MM YYYY',
+    monthYearLabel: 'YYYY MM',
     dateA11yLabel: 'L',
-    monthYearA11yLabel: 'MM YYYY',
+    monthYearA11yLabel: 'YYYY MM',
   },
 };
 
@@ -83,6 +84,7 @@ registerLocaleData(zh);
     BackTopComponent,
     VipConcertComponent,
     PageNotFoundComponent,
+    SingleTicketComponent,
   ],
   entryComponents: [
     VipLoginComponent,

@@ -21,6 +21,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
@@ -47,6 +48,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatButtonToggleModule,
     MatDatepickerModule,
     MatAutocompleteModule,
+    MatSnackBarModule,
     MatChipsModule,
   ],
   exports: [
@@ -72,6 +74,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatButtonToggleModule,
     MatDatepickerModule,
     MatAutocompleteModule,
+    MatSnackBarModule,
     MatChipsModule,
   ]
 })

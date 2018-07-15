@@ -53,17 +53,7 @@ export class UserService {
   }
 
   getUserDetail(): Observable<User> {
-    // return new Promise(resolve => {
-    //   setTimeout(() => resolve(user), 2000);
-    // });
     return of(user).pipe(delay(this.delay));
-  }
-
-  updateUserPassowrd(password: string): Observable<string> {
-    const oldPassword = user.info.password;
-    const newPassword = Object.assign(oldPassword, password);
-
-    return of(newPassword).pipe(delay(this.delay));
   }
 
   updateUserInfo(info: User['info']): Observable<User['info']> {
@@ -71,9 +61,37 @@ export class UserService {
     const newUserInfo = Object.assign(oldUserInfo, info);
 
     return of(newUserInfo).pipe(delay(this.delay));
-    // return new Promise(resolve => {
-    //   setTimeout(() => resolve(newUserInfo), this.delay);
-    // });
+  }
+
+  updateUserBankCards(cards: BankCard[]): Observable<BankCard[]> {
+    const oldCards = user.payment.bankCards;
+    const newCards = Object.assign(oldCards, cards);
+
+    return of(newCards).pipe(delay(this.delay));
+  }
+
+  updateUserAddresses(addresses: ShippingAddress[]): Observable<ShippingAddress[]> {
+    const oldAddresses = user.payment.shippingAddresses;
+    const newAddresses = Object.assign(oldAddresses, addresses);
+
+    return of(newAddresses).pipe(delay(this.delay));
+  }
+
+  updateUserPassword(password: string): Observable<string> {
+    const oldInfo = user.info;
+    const saveInfo = {
+      email: oldInfo.email,
+      password,
+      nickname: oldInfo.nickname,
+      phone: oldInfo.phone,
+      birth: oldInfo.birth,
+      motto: oldInfo.motto
+    };
+    const newInfo = Object.assign(oldInfo, saveInfo);
+
+    const newPassword = newInfo.password;
+
+    return of(newPassword).pipe(delay(this.delay));
   }
 
   updateUserQuestions(questions: SecurityQuestions): Observable<SecurityQuestions> {
@@ -111,32 +129,36 @@ const user: User = {
   payment: {
     bankCards: [
       {
-        type: '储蓄卡',
         bank: '中国工商银行',
-        id: '6222****1919',
-        expire: '2028-08-01',
+        id: '5678909876543212345',
+        expire: '2028/08',
         personName: '*步兵'
       },
       {
-        type: '储蓄卡',
         bank: '广东发展银行',
-        id: '6222****1919',
-        expire: '2022-03-04',
+        id: '2345678909876543212',
+        expire: '2022/03',
         personName: '*步兵'
       },
       {
-        type: '信用卡',
         bank: '中国农业银行',
-        id: '6222****1919',
-        expire: '2024-07-06',
-        personName: '*步兵'
+        id: '1234567890987654321',
+        expire: '2024/07',
+        personName: '*步兵',
+        billing: {
+          country: '中国',
+          province: '江苏省',
+          city: '南京市',
+          address: '南京大学（鼓楼校区）',
+          zipCode: '210009'
+        }
       }
     ],
     shippingAddresses: [
       {
         name: '陈步兵',
-        phone: '13771104099',
-        country: '中国',
+        phone: '+86 137 7110 4099',
+        country: 'CN',
         province: '江苏省',
         city: '南京市',
         address: '南京大学（鼓楼校区）',
@@ -144,20 +166,20 @@ const user: User = {
       },
       {
         name: '陈步兵',
-        phone: '13771104099',
-        country: '中国',
+        phone: '+86 137 7110 4099',
+        country: 'CN',
         province: '江苏省',
         city: '南京市',
-        address: '南京大学（鼓楼校区）',
+        address: '南京大学（仙林校区）',
         zipCode: '210009',
       },
       {
         name: '陈步兵',
-        phone: '13771104099',
-        country: '中国',
+        phone: '+86137 7110 4099',
+        country: 'CN',
         province: '江苏省',
         city: '南京市',
-        address: '南京大学（鼓楼校区）',
+        address: '汉口路小学',
         zipCode: '210009',
       }
     ],
@@ -219,13 +241,28 @@ export interface User {
   };
 }
 
-export interface BankCard {
-  type: bankCardType;
+export interface CreditCard {
+  bank: string;
+  id: string;
+  expire: string;
+  personName: string;
+  billing: {
+    country: string;
+    province: string;
+    city: string;
+    address: string;
+    zipCode: string;
+  };
+}
+
+export interface DebitCard {
   bank: string;
   id: string;
   expire: string;
   personName: string;
 }
+
+export type BankCard = CreditCard | DebitCard;
 
 export interface ShippingAddress {
   name: string;
