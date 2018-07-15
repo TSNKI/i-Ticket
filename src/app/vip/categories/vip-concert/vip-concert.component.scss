@@ -34,7 +34,7 @@
     **/
     .activities {
       padding: 0px 14px;
-      height: 320px;
+      height: 297px;
       overflow: hidden;
 
       .act-content {
@@ -45,9 +45,9 @@
         [nz-carousel-content] {
           text-align: center;
           width: 300px;
-          height: 270px;
+          height: 253px;
           //line-height: 160px;
-          background: map_get($default-app-primary, 100);
+          background: map_get($default-app-primary, 50);
           overflow: hidden;
           cursor: pointer;
         }
@@ -128,37 +128,295 @@
      */
     .hot-sell {
       padding: 0px 14px;
-      height: 370px;
+      height: 410px;
       overflow: hidden;
       margin-top: 20px;
+
+      .cat-rank-top {
+        height: 167px;
+        text-align: center;
+        line-height: 21px;
+        margin-bottom: 0px;
+
+        dt {
+          position: relative;
+
+          .top-rank-logo {
+            position: absolute;
+            left: -4px;
+            top: -1px;
+            width: 65px;
+            height: 30px;
+
+            background-color: map_get($default-app-primary, 400);
+            font-weight: bold;
+            font-size: 20px;
+            font-style: italic;
+            color: white;
+          }
+
+          img {
+            background: map_get($mat-grey, 200);
+          }
+        }
+
+        dd {
+          margin-top: 3px;
+          margin-bottom: 0px;
+        }
+      }
+
+      .cat-rank-rest {
+        width: 100%;
+        margin-bottom: 0px;
+
+        dt {
+          float: left;
+          width: 22px;
+          height: 50px;
+          border-top: 3px map_get($mat-grey, 400) solid;
+
+          padding-top: 3px;
+
+          font-size: 20px;
+          color: map_get($mat-grey, 600);
+        }
+
+        dd {
+          margin-left: 20px;
+          height: 50px;
+          border-top: 2px map_get($mat-grey, 200) dotted;
+          margin-bottom: 0;
+          padding: 3px 0px 0px 10px;
+        }
+      }
+    }
+  }
+}
+
+.main-right {
+  float: left;
+  width: 687px;
+  //background-color: #364d79;
+  margin-left: 10px;
+
+  ul {
+    list-style-type: none;
+  }
+
+  .carousel {
+    height: 297px;
+    background-size: cover;
+
+    [nz-carousel-content] {
+      text-align: center;
+      height: 297px;
+      overflow: hidden;
+      cursor: pointer;
+      background-size: cover;
     }
 
   }
 
-  .main-right {
-    float: left;
-    width: 687px;
-    min-height: 320px;
-    //background-color: #364d79;
-    margin-left: 10px;
+  .hot-tabs {
+    margin-top: 20px;
+    margin-left: 0px;
+    height: 370px;
+    border: 1px solid map_get($default-app-primary, 50);
+    box-shadow: none;
+    background-color: $default-undercoat;
 
-    .carousel {
-      height: 320px;
-      background: url(/assets/images/concert/tour/zsh.jpg);
-      background-size: cover;
+    .tab-con {
+      margin: 0;
+      padding: 0;
+      outline: none;
+      display: block;
+
+      .hot-clear {
+        &:after {
+          content: '\20';
+          display: block;
+          height: 0;
+          clear: both;
+        }
+      }
+
+      .hot-list {
+
+        //margin-left: 0 !important;
+        padding-left: 0;
+        margin-top: 8px;
+
+        font: normal 12px/1.5 'arial', 'Tahoma', 'simsun', '宋体';
+
+        li {
+          margin: 8px;
+          width: 155.25px;
+          float: left;
+          line-height: 21px;
+          padding: 0;
+          position: relative;
+          display: list-item;
+        }
+
+        .tab-img {
+          padding-bottom: 2px;
+        }
+
+        .tab-title {
+          height: 42px;
+          overflow: hidden;
+          margin: 0px;
+          color: #a6a6a6;
+
+          a {
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: #4c4c4c;
+
+            &:hover {
+              color: map_get($default-app-primary, 400);
+            }
+          }
+        }
+        .tab-date {
+          color: #a6a6a6;
+          margin: 0px;
+          height: 21px;
+          font-size: 12px;
+        }
+        .tab-price {
+          margin: 0px;
+          color: #a6a6a6;
+          height: 21px;
+          i {
+            color: #cb0100;
+            font-style: normal;
+          }
+          em {
+            padding-right: 5px;
+            font-family: "Tahoma";
+            color: #cb0100;
+            font-size: 18px;
+            font-weight: 700;
+            font-style: normal;
+          }
+        }
+      }
+    }
+  }
+
+  .city-tab {
+    margin-top: 20px;
+    height: 410px;
+
+    border: 1px solid map_get($default-app-primary, 50);
+    box-shadow: none;
+    background-color: $default-undercoat;
+
+    .ct-more {
+      margin: 0px 0px 0px 17px;
+      line-height: 40px;
+
+      em {
+        font-style: normal;
+      }
+
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        color: #636363;
+
+        &:hover {
+          color: map_get($default-app-primary, 300);
+        }
+      }
     }
 
-    .qwer {
-      margin-top: 20px;
-      height: 370px;
-      background: url(/assets/images/concert/tour/dzq.jpg);
-    }
-    .zxcs {
-      margin-top: 20px;
-      height: 370px;
-      background: url(/assets/images/concert/tour/jwq.jpg);
+    .tab-con {
+      margin: 0;
+      padding: 0;
+      outline: none;
+      display: block;
+
+      .hot-clear {
+        &:after {
+          content: '\20';
+          display: block;
+          height: 0;
+          clear: both;
+        }
+      }
+
+      .hot-list {
+
+        //margin-left: 0 !important;
+        padding-left: 0;
+        margin-top: 0px;
+
+        font: normal 12px/1.5 'arial', 'Tahoma', 'simsun', '宋体';
+
+        li {
+          margin: 4px 8px 8px 8px;
+          width: 155.25px;
+          float: left;
+          line-height: 21px;
+          padding: 0;
+          position: relative;
+          display: list-item;
+        }
+
+        .tab-img {
+          padding-bottom: 2px;
+        }
+
+        .tab-title {
+          height: 42px;
+          overflow: hidden;
+          margin: 0px;
+          color: #a6a6a6;
+
+          a {
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: #4c4c4c;
+
+            &:hover {
+              color: map_get($default-app-primary, 400);
+            }
+          }
+        }
+        .tab-date {
+          color: #a6a6a6;
+          margin: 0px;
+          height: 21px;
+          font-size: 12px;
+        }
+        .tab-price {
+          margin: 0px;
+          color: #a6a6a6;
+          height: 21px;
+          i {
+            color: #cb0100;
+            font-style: normal;
+          }
+          em {
+            padding-right: 5px;
+            font-family: "Tahoma";
+            color: #cb0100;
+            font-size: 18px;
+            font-weight: 700;
+            font-style: normal;
+          }
+        }
+      }
     }
 
+    .tab-icon {
+
+    }
   }
 
 }
@@ -177,4 +435,9 @@
     font-style: normal;
     float: left;
   }
+}
+
+.content-font {
+  font: normal 12px/1.5 'arial', 'Tahoma', 'simsun', '宋体';
+  color: #4c4c4c;
 }
