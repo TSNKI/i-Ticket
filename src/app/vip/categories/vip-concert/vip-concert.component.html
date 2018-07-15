@@ -11,12 +11,15 @@
           <span class="tl">演唱会专题/活动</span>
         </div>
         <div class="act-content">
-          <nz-carousel nzAutoPlay>
+          <nz-carousel nzAutoPlay [nzEffect]="'fade'" nzAutoPlaySpeed='4000'>
             <a nz-carousel-content *ngFor="let special of specials" [routerLink]=special.link target="_blank">
               <div><img [src]="special.img" width="100%" height="100%"></div>
               <div style="margin-top: 10px;">{{special.name}}</div>
               <div>{{special.sub_name}}</div>
-              <p style="color: #7c818e; margin:3px 10px; text-align: left; font-size: small;">{{special.describe}}</p>
+              <p
+                style="color: #7c818e; margin:3px 10px; text-align: left; font: normal 12px/1.5 'arial', 'Tahoma', 'simsun', '宋体';">
+                {{special.describe}}
+              </p>
             </a>
           </nz-carousel>
         </div>
@@ -45,21 +48,232 @@
       </mat-card>
       <!--end-->
       <mat-card class="it-card hot-sell">
-        演唱会热销
+        <div class="act-title">
+          <span class="tl">演唱会热销</span>
+        </div>
+        <dl class="cat-rank-top content-font">
+          <dt>
+            <span class="top-rank-logo">No.1</span>
+            <img width="210" height="120" src="assets/images/concert/hot-sale/jwq.jpg"/>
+          </dt>
+          <dd>
+            {{'金玟岐2018"大七电台"全国巡回演唱会-北京站' | maxLength: 45}}
+          </dd>
+        </dl>
+        <dl *ngFor="let i of [0,1,2,3,4] | slice:1" class="cat-rank-rest content-font">
+          <dt>
+            {{'0' + (i + 1)}}
+          </dt>
+          <dd>
+            {{'萧敬腾2018"娱乐先生"巡回演唱会--深圳站' | maxLength: 40}}
+          </dd>
+        </dl>
       </mat-card>
       <!--end-->
     </div>
 
     <div class="main-right">
 
-      <div class="carousel">123</div>
-
-      <div class="qwer">123</div>
-
-      <div class="zxcs">123</div>
+      <div class="carousel">
+        <nz-carousel nzAutoPlay>
+          <div nz-carousel-content *ngFor="let tour of tours">
+            <a [routerLink]="tour.link" target="_blank">
+              <img [src]="tour.img" width="100%">
+            </a>
+          </div>
+        </nz-carousel>
+      </div>
+      <!--end-->
+      <div class="hot-tabs">
+        <mat-tab-group mat-stretch-tabs class="hot-tabs-g" [backgroundColor]>
+          <mat-tab label="热门推荐">
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let hot of hots">
+                  <a [routerLink]="hot.link" target="_blank" class="tab-img">
+                    <img [src]="hot.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="hot.link" target="_blank">
+                      {{hot.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{hot.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{hot.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab label="最新上架">
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let newest of newest_s">
+                  <a [routerLink]="newest.link" target="_blank">
+                    <img [src]="newest.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="newest.link" target="_blank">
+                      {{newest.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{newest.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{newest.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab label="即将开唱">
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let upcoming of upcoming_s">
+                  <a [routerLink]="upcoming.link" target="_blank">
+                    <img [src]="upcoming.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="upcoming.link" target="_blank">
+                      {{upcoming.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{upcoming.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{upcoming.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab label="摇滚天堂">
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let rock of rock_s">
+                  <a [routerLink]="rock.link" target="_blank">
+                    <img [src]="rock.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="rock.link" target="_blank">
+                      {{rock.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{rock.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{rock.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <!--<mat-tab label="音乐节">音乐节</mat-tab>-->
+        </mat-tab-group>
+      </div>
+      <!--end-->
+      <div class="city-tab">
+        <mat-tab-group mat-stretch-tabs [backgroundColor]>
+          <mat-tab label="北京">
+            <p class="ct-more content-font">
+              目前北京有
+              <em>22</em>
+              个演唱会商品
+              <a href="/search" target="_blank">[ 查看全部 ]</a>
+            </p>
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let bj of beijing">
+                  <a [routerLink]="bj.link" target="_blank" class="tab-img">
+                    <img [src]="bj.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="bj.link" target="_blank">
+                      {{bj.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{bj.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{bj.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab label="上海">
+            <p class="ct-more content-font">
+              目前上海有
+              <em>34</em>
+              个演唱会商品
+              <a href="/search" target="_blank">[ 查看全部 ]</a>
+            </p>
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let sh of shanghai">
+                  <a [routerLink]="sh.link" target="_blank" class="tab-img">
+                    <img [src]="sh.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="sh.link" target="_blank">
+                      {{sh.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{sh.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{sh.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab label="广州">
+            <p class="ct-more content-font">
+              目前广州有
+              <em>16</em>
+              个演唱会商品
+              <a href="/search" target="_blank">[ 查看全部 ]</a>
+            </p>
+            <div class="tab-con">
+              <ul class="hot-list hot-clear">
+                <li *ngFor="let gz of guangzhou">
+                  <a [routerLink]="gz.link" target="_blank" class="tab-img">
+                    <img [src]="gz.img" width="100%">
+                  </a>
+                  <p class="tab-title">
+                    <a [routerLink]="gz.link" target="_blank">
+                      {{gz.name}}
+                    </a>
+                  </p>
+                  <p class="tab-date">{{gz.date}}</p>
+                  <p class="tab-price">
+                    <i>¥</i>
+                    <em>{{gz.price}}</em>
+                    元起
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="tab-icon" (click)="moreCity()" svgIcon="more_city" matTooltip="更多城市"></mat-icon>
+            </ng-template>
+            <button (click)="moreCity()"></button>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
 
     </div>
-
     <div class="clear-both"></div>
   </div>
 
@@ -70,6 +284,4 @@
 <it-back-top hrefBase="/concert"></it-back-top>
 
 <it-vip-footer></it-vip-footer>
-<!--<nz-carousel nzAutoPlay>-->
-<!--<div nz-carousel-content *ngFor="let index of array"><h3>{{index}}</h3></div>-->
-<!--</nz-carousel>-->
+

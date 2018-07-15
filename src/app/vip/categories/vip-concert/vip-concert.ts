@@ -43,3 +43,277 @@ export const concert_news = [
   }
 ];
 
+export const carousel = [
+  {
+    id: 0,
+    name: '潘玮柏',
+    img: 'assets/images/concert/tour/pwb.jpg',
+    link: '/'
+  },
+  {
+    id: 1,
+    name: '张学友',
+    img: 'assets/images/concert/tour/jessie.jpg',
+    link: '/'
+  },
+  {
+    id: 3,
+    name: '邓紫棋',
+    img: 'assets/images/concert/tour/dzq.jpg',
+    link: '/'
+  },
+  {
+    id: 4,
+    name: '张韶涵',
+    img: 'assets/images/concert/tour/zsh.jpg',
+    link: '/'
+  },
+];
+
+export const hots = [
+  {
+    id: 0,
+    name: '【万有音乐系】孟庭苇2018寻梦演唱会-北京站',
+    date: '2018-08-07',
+    img: 'assets/images/concert/hot/hot-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 1,
+    name: '【万有音乐系】孟庭苇2018寻梦演唱会-北京站',
+    date: '2018-08-07',
+    img: 'assets/images/concert/hot/hot-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 2,
+    name: '黄子韬 2018ISGOØD 巡回演唱会武汉站',
+    date: '2018-07-21',
+    img: 'assets/images/concert/hot/hot-2.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 3,
+    name: '黄子韬 2018ISGOØD 巡回演唱会武汉站',
+    date: '2018-07-21',
+    img: 'assets/images/concert/hot/hot-2.jpg',
+    price: '280',
+    link: '/'
+  }
+];
+
+export const newest_s = [
+  {
+    id: 0,
+    name: '[ LIVE HUNTER 2018 ]The BONEZ TOUR"WOKE"-EXTRA- SHANGHAI',
+    date: '2018-08-07',
+    img: 'assets/images/concert/newest/new-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 1,
+    name: '[ LIVE HUNTER 2018 ]The BONEZ TOUR"WOKE"-EXTRA- SHANGHAI',
+    date: '2018-08-07',
+    img: 'assets/images/concert/newest/new-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 2,
+    name: '[ LIVE HUNTER 2018 ]The BONEZ TOUR"WOKE"-EXTRA- SHANGHAI',
+    date: '2018-08-07',
+    img: 'assets/images/concert/newest/new-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 3,
+    name: '[ LIVE HUNTER 2018 ]The BONEZ TOUR"WOKE"-EXTRA- SHANGHAI',
+    date: '2018-08-07',
+    img: 'assets/images/concert/newest/new-1.jpg',
+    price: '280',
+    link: '/'
+  }
+];
+
+export const upcoming_s = [
+  {
+    id: 0,
+    name: '城市民谣 Vol.2',
+    date: '2018-07-20',
+    img: 'assets/images/concert/upcoming/upcoming-1.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 1,
+    name: '城市民谣 Vol.2',
+    date: '2018-07-20',
+    img: 'assets/images/concert/upcoming/upcoming-1.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 2,
+    name: '城市民谣 Vol.2',
+    date: '2018-07-20',
+    img: 'assets/images/concert/upcoming/upcoming-1.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 3,
+    name: '城市民谣 Vol.2',
+    date: '2018-07-20',
+    img: 'assets/images/concert/upcoming/upcoming-1.jpg',
+    price: '80',
+    link: '/'
+  }
+];
+
+export const rock_s = [
+  {
+    id: 0,
+    name: '2018咪咕音乐现场 世界杯特别派对Dear Jane专场',
+    date: '2018-07-15',
+    img: 'assets/images/concert/rock/rock-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 1,
+    name: '2018咪咕音乐现场 世界杯特别派对Dear Jane专场',
+    date: '2018-07-15',
+    img: 'assets/images/concert/rock/rock-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 2,
+    name: '2018咪咕音乐现场 世界杯特别派对Dear Jane专场',
+    date: '2018-07-15',
+    img: 'assets/images/concert/rock/rock-1.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 3,
+    name: '2018咪咕音乐现场 世界杯特别派对Dear Jane专场',
+    date: '2018-07-15',
+    img: 'assets/images/concert/rock/rock-1.jpg',
+    price: '280',
+    link: '/'
+  }
+];
+
+export const beijing = [
+  {
+    id: 0,
+    name: '【MAO Live呈现】夏日迷情•法国浪漫电子双人组合Kid ',
+    date: '2018-07-31',
+    img: 'assets/images/concert/city/beijing.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '【MAO Live呈现】夏日迷情•法国浪漫电子双人组合Kid ',
+    date: '2018-07-31',
+    img: 'assets/images/concert/city/beijing.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '【MAO Live呈现】夏日迷情•法国浪漫电子双人组合Kid ',
+    date: '2018-07-31',
+    img: 'assets/images/concert/city/beijing.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '【MAO Live呈现】夏日迷情•法国浪漫电子双人组合Kid ',
+    date: '2018-07-31',
+    img: 'assets/images/concert/city/beijing.jpg',
+    price: '80',
+    link: '/'
+  },
+];
+
+export const shanghai = [
+  {
+    id: 0,
+    name: '群英荟萃 放歌经典-颂今声乐作品名家演唱会-上海站',
+    date: '2018-08-09',
+    img: 'assets/images/concert/city/shanghai.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '群英荟萃 放歌经典-颂今声乐作品名家演唱会-上海站',
+    date: '2018-08-09',
+    img: 'assets/images/concert/city/shanghai.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '群英荟萃 放歌经典-颂今声乐作品名家演唱会-上海站',
+    date: '2018-08-09',
+    img: 'assets/images/concert/city/shanghai.jpg',
+    price: '80',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '群英荟萃 放歌经典-颂今声乐作品名家演唱会-上海站',
+    date: '2018-08-09',
+    img: 'assets/images/concert/city/shanghai.jpg',
+    price: '80',
+    link: '/'
+  },
+];
+
+export const guangzhou = [
+  {
+    id: 0,
+    name: '2018谢春花"点心"全国演唱会-广州站',
+    date: '2018-08-17',
+    img: 'assets/images/concert/city/guangzhou.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '2018谢春花"点心"全国演唱会-广州站',
+    date: '2018-08-17',
+    img: 'assets/images/concert/city/guangzhou.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '2018谢春花"点心"全国演唱会-广州站',
+    date: '2018-08-17',
+    img: 'assets/images/concert/city/guangzhou.jpg',
+    price: '280',
+    link: '/'
+  },
+  {
+    id: 0,
+    name: '2018谢春花"点心"全国演唱会-广州站',
+    date: '2018-08-17',
+    img: 'assets/images/concert/city/guangzhou.jpg',
+    price: '280',
+    link: '/'
+  },
+];
+
+
+
