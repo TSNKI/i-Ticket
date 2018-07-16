@@ -4,7 +4,8 @@
 <div class="container">
 
 
-  <mat-card *ngIf="ticket!=null" class="it-card" style="background-color: white;">
+  <mat-card *ngIf="ticket!=null" class="it-card"
+            style="background-color: white;margin-top: 10px;margin-left: 5%;margin-right: 5%;">
     <mat-card-content>
 
       <mat-grid-list cols="15" rowHeight="6px">
@@ -78,6 +79,7 @@
                     在线选座
                     </span>
             </p>
+            <div style="height: 100px;"></div>
           </div>
         </mat-grid-tile>
 
@@ -233,30 +235,266 @@
 
 
         <!--<div>-->
-          <mat-grid-tile *ngIf="itemlist.length>2" [colspan]="4"
-                         [rowspan]="6">
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="1"
-                         [rowspan]="6">
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="1"
-                         [rowspan]="8">
+        <mat-grid-tile *ngIf="itemlist.length>2" [colspan]="4"
+                       [rowspan]="6">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1"
+                       [rowspan]="6">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1"
+                       [rowspan]="8">
              <span class="prefix" style="color: #CD950C" *ngIf="ticket.state === 0"><button mat-raised-button
                                                                                             color="accent">&nbsp;&nbsp;立即预定&nbsp;&nbsp;</button></span>
-            <span class="prefix" style="color:red;" *ngIf="ticket.state === 1"><button mat-raised-button
-                                                                                       color="accent">&nbsp;&nbsp;立即购买&nbsp;&nbsp;</button></span>
-            <span class="prefix" style="color:red;" *ngIf="ticket.state === 2"><button mat-raised-button
-                                                                                       color="accent">&nbsp;&nbsp;缺货登记&nbsp;&nbsp;</button></span>
+          <span class="prefix" style="color:red;" *ngIf="ticket.state === 1"><button style="height: 140%;"
+                                                                                     mat-raised-button
+                                                                                     color="accent">&nbsp;&nbsp;立即购买&nbsp;&nbsp;</button></span>
+          <span class="prefix" style="color:red;" *ngIf="ticket.state === 2"><button mat-raised-button
+                                                                                     color="accent">&nbsp;&nbsp;缺货登记&nbsp;&nbsp;</button></span>
 
-          </mat-grid-tile>
-          <!--<mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">-->
-          <!--</mat-grid-tile>-->
-          <!--<mat-grid-tile [colspan]="1"-->
-          <!--[rowspan]="6">-->
-          <!--</mat-grid-tile>-->
+        </mat-grid-tile>
+        <!--<mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">-->
+        <!--</mat-grid-tile>-->
+        <!--<mat-grid-tile [colspan]="1"-->
+        <!--[rowspan]="6">-->
+        <!--</mat-grid-tile>-->
         <!--</div>-->
 
 
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card *ngIf="ticket!=null" class="it-card"
+            style="background-color: white;margin-top: 10px;margin-left: 5%;margin-right: 5%;">
+    <mat-card-content>
+
+      <mat-grid-list cols="10" [rowHeight]="10">
+
+        <mat-grid-tile [colspan]="10" [rowspan]="100">
+          <div class="cat-exhibit-top" style="width:1214px; height:1000px">
+
+            <mat-tab-group style="margin-top: -50px;" [dynamicHeight]="true">
+              <mat-tab label="演出信息">
+
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      基本信息
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+
+                  <div *ngFor="let tip of tips;let i=index;">
+                    <table width="100%" style="font-size: 110%;">
+                      <tr *ngIf="i!==tips.length-1">
+                        <td width="10%" style="font-weight: bold;text-align: center;">{{tip.name}}</td>
+                        <td width="35%" style="border-right: #ADB8B6 3px solid;margin-right: 5px;">{{tip.value}}。</td>
+                        <td width="10%" style="font-weight: bold;margin-left: 5px;text-align: center;">{{tip.name2}}
+                        </td>
+                        <td width="35%">{{tip.value2}}。</td>
+                      </tr>
+                      <tr *ngIf="i===tips.length-1" style="border-bottom: #ADB8B6 1px solid;">
+                        <td width="10%" style="font-weight: bold;text-align: center;">{{tip.name}}</td>
+                        <td width="35%" style="border-right: #ADB8B6 3px solid;margin-right: 5px;">{{tip.value}}。</td>
+                        <td width="10%" style="font-weight: bold;margin-left: 5px;text-align: center;">{{tip.name2}}
+                        </td>
+                        <td width="35%">{{tip.value2}}。</td>
+                      </tr>
+                    </table>
+                    <mat-divider></mat-divider>
+                  </div>
+
+                </div>
+
+                <div class="cat-title-bar" style="margin-top: 20px;">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      项目介绍
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-title">演出简介</p>
+                  <p class="p-detail">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;破碎虚空，不畏浮云遮望眼；尽观蓝图，上下求索踏新征。过去成曲，未来已来。张杰2018未·LIVE巡回演唱会正式启动！这一次，听张杰
+                    把未来唱给你听。 <br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12张专辑，150多首音乐作品；包揽160多个音乐奖项，其中33次最 受欢迎男歌手、15次最
+                    佳男歌手大满贯……卓著的成绩，印证着张杰已经从一个选秀出道的青涩少年，成长为如今的华语LIVE王。而如今的他，却依然坦言自己最怕的就是停止不前。随着作品越来越多，他渴望突破，尝试未来更新、或可能流行的东西。他说过，希望自己以后所做的音乐："可以一部分做给大众听，还有一小部分，做给未来。"本次巡演张杰将用全新的MIX-POP为歌迷打开他眼中的未来世界，让观众见到一个前所未见的张杰。<br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回顾张杰之前演唱会经历，已经多达44场，横跨四大洲七个国家。海外首站洛杉矶，张杰成为了在奥斯卡颁奖地杜比剧院开唱的内地歌手第一人；温哥华站，在伊丽莎白女王剧院同样有着超高的上座率；纽约演唱会，又让他成为第二位在纽约林肯艺术中心举办个人演唱会的内地歌手；吉隆坡、悉尼等地票房即刻售罄，也让大家看到了属于张杰的魅力；除此之外，去年"我想"登陆欧洲，他更是成为了首位在意大利开唱的内地歌手……<br>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"我想，有好多个我想，没人能阻挡。这一次，我想，把未来唱给你听。从过去抽身，眼里盛满广袤深邃的未来；与未来拥抱，荆棘丛生，艰险迷人。"这是全新的音乐征程。张杰2018未·LIVE巡回演唱会深圳站！让我们和张杰一起，面朝未来，且歌且行。<br>
+                  </p>
+                </div>
+
+
+                <div class="cat-title-bar" style="margin-top: 20px;">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      特别注意
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-title">发票事宜</p>
+                  <p class="p-detail">
+                    1.演出结束后将不支持开具发票申请，由此给您造成的不便我们深表歉意，感谢您的理解与支持。<br>
+                    2.如需发票，请您在演出前通过订单页补开，发票将在演出结束后1个月左右，统一由主办方提供。<br>
+                  </p>
+                </div>
+              </mat-tab>
+
+
+              <mat-tab label="购买说明">
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      特别提示
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-title">售前提示</p>
+                  <p class="p-detail">
+                    1.为避免快递配送不能及时送达，演出距开场时间少于3天时不提供【快递配送】服务，请您谅解！您可以选择电子票或在线支付后上门自取纸质票。<br>
+                    2.凡演出票类商品，开票时间一般为演出前二到四周，正式开票后会第一时间短信通知您，请注意接收。<br>
+                    3.如您不是通过“选座购买”通道进行的票品购买，最终票品数量视项目主办方及场馆情况而定，正式开票后i-Ticket将根据用户付款先后顺序依次配票，可能存在票品不足不能为您配票的风险，如最终未能配票，i-Ticket承诺全额退款，但不承担其他损失。
+                  </p>
+                  <p class="p-title">支付方式</p>
+                  <p class="p-detail">
+                    网上银行（招商银行等） 支付平台（支付宝等） 转账汇款(招商银行等)<a>查看详情>>></a>
+                  </p>
+                  <p class="p-title">退/换货说明</p>
+                  <p class="p-detail">
+                    针对不可抗力和非不可抗力的退/换票情况和处理，请点击查阅<a>退/换票处理说明>>></a>
+                  </p>
+                </div>
+
+
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      无线端订购
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-title">订购渠道</p>
+                  <p class="p-detail">
+                    1. 使用智能设备用户在各应用商店中搜索"大麦"下载安装客户端，购票体验更流畅<br>
+                    2. 非智能设备用户可浏览器访问m.damai.cn进行演出查询，随时购票<br>
+                  </p>
+                </div>
+
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      网上订购
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;padding-left: 5%;">
+                  <img width="639" height="50" src='../../../assets/images/searchlist/descimages/process.jpg'/>
+                </div>
+
+
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      电话订购
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-detail">
+                    全国统一订购热线:<span style="color: #DF3177;font-weight: bold;font-size: 140%;">888-8820-820</span>
+                  </p>
+                </div>
+              </mat-tab>
+
+
+              <mat-tab label="付款方式">
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      在线支付
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-title">支付平台</p>
+                  <div style="padding-left: 5%;">
+                    <img width="107" height="25" src='../../../assets/images/searchlist/descimages/alipay.jpg'/>
+                    <img width="110" height="28" src='../../../assets/images/searchlist/descimages/vchatpay.jpg'/>
+                  </div>
+                  <p class="p-title">网上银行</p>
+                  <div style="padding-left: 5%;">
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/1.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/2.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/3.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/4.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/5.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/6.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/7.jpg'/>
+                    <img style="margin-right: 5px;" src='../../../assets/images/searchlist/descimages/8.jpg'/>
+                  </div>
+                </div>
+
+
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      柜台付款
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-detail">
+                    您也可以选择就近的公司网点，到柜台直接付款购买，<a>查看分公司上门地址>>></a>
+                  </p>
+                </div>
+
+
+                <div class="cat-title-bar">
+                  <div class="cat-title-bar-container">
+                    <div class="cat-title">
+                      电子钱包
+                    </div>
+                    <span class="flex-spacer"></span>
+                  </div>
+                </div>
+
+                <div style="margin-left: 1%;margin-right: 1%;">
+                  <p class="p-detail">
+                    电子钱包是由大麦网自主研发的第三方支付平台，为每一个用户在购票过程中提供"简单、安全、快速"的在线支付解决方案。
+                  </p>
+                </div>
+
+              </mat-tab>
+            </mat-tab-group>
+
+          </div>
+
+        </mat-grid-tile>
       </mat-grid-list>
     </mat-card-content>
   </mat-card>

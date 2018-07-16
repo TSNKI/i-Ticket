@@ -85,3 +85,60 @@
   color: gray;
 
 }
+
+.cat-title-bar {
+  border-bottom: 1px map_get($default-app-primary, 400) solid;
+  padding: 6px 0 12px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+
+  .cat-title-bar-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 12px 0 18px;
+    border-left: 4px map_get($default-app-primary, 400) solid;
+
+    .cat-title {
+      font-size: 18px;
+      color: $primary-text-color;
+    }
+
+    .cat-subtitle {
+      position: relative;
+      min-height: 27px;
+      min-width: 42px;
+
+      a, span {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 12px;
+        color: $secondary-text-color;
+
+      }
+    }
+  }
+}
+
+//.mat-tab-label, .mat-tab-link{
+//  font-size: 23px!important;
+//  font-weight: bolder!important;
+//}
+
+.p-title {
+  font-size: 120%;
+  font-weight: bold;
+  color: gray;
+  background-color: #E4D2E8;
+  padding-left: 5%;
+  padding-right: 15%;
+  margin-top: 8px;
+}
+
+.p-detail {
+  font-size: 105%;
+  color: gray;
+  line-height: 120%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
