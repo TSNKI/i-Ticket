@@ -20,10 +20,10 @@ const routes: Routes = [
   { path: 'concert', component: VipConcertComponent },
   { path: 'setting', canActivate: [ AuthGuard ], component: VipSettingComponent },
   { path: 'orders', canActivate: [ AuthGuard ], component: VipOrdersComponent },
+  { path: 'booking', canActivate: [ AuthGuard ], component: VipBookingComponent }, //订票下单
   { path: 'user/login', component: LoginComponent },
   { path: 'mgr', component: MgrHomeComponent },
   { path: 'ven', component: VenHomeComponent },
-  { path: 'booking', component: VipBookingComponent },
   // { path: 'vip', component: VipHomeComponent },
   { path: 'vip', redirectTo: '', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

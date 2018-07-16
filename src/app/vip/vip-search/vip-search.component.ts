@@ -34,6 +34,7 @@ export class VipSearchComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   searchReasults: {
     id: number,
+    src: string,
     name: string,
     state: number,   // 012 预定中,售票中,已售罄
     displayName: string,
@@ -50,7 +51,9 @@ export class VipSearchComponent implements OnInit {
     hascode: boolean,
     hassafety: boolean,
     buytype: number,   // 012 预定,订票,缺票登记
-    items: any[]
+    datetochoose: string[],
+    pricetochoose: number[],
+    priceavailabliy: boolean[],
   }[];
 
   constructor(
@@ -73,6 +76,12 @@ export class VipSearchComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'seats',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_seats2.svg'));
+    iconRegistry.addSvgIcon(
+      'add',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_add.svg'));
+    iconRegistry.addSvgIcon(
+      'sub',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ic_sub.svg'));
   }
   ngOnInit() {
     this.categories = this.eventService.getCategories;

@@ -1,3 +1,265 @@
-<p>
-  single-ticket works!
-</p>
+<it-vip-header></it-vip-header>
+
+
+<div class="container">
+
+
+  <mat-card *ngIf="ticket!=null" class="it-card" style="background-color: white;">
+    <mat-card-content>
+
+      <mat-grid-list cols="15" rowHeight="6px">
+
+        <mat-grid-tile [colspan]="4"
+                       [rowspan]="65">
+          <div class="cat-exhibit-top">
+            <dl>
+              <dt>
+                <a>
+                  <img width="265" height="360" src={{ticket.src}}/>
+                </a>
+              </dt>
+            </dl>
+          </div>
+        </mat-grid-tile>
+
+
+        <mat-grid-tile [colspan]="6"
+                       [rowspan]="9" style="margin-top: 10px;">
+          <div class="cat-exhibit-top">
+            <div>
+              <dl>
+                <dt class="title">
+                  {{ticket.displayName|maxLength:25}}
+                </dt>
+
+              </dl>
+            </div>
+
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="3"
+                       [rowspan]="9" style="margin-top: 10px;">
+          <div class="cat-exhibit-top">
+            <dl>
+              <dt>
+                <button mat-mini-fab>
+                  <mat-icon>favorite</mat-icon>
+                </button>
+                &nbsp;
+                <button mat-mini-fab>
+                  <mat-icon>share</mat-icon>
+                </button>
+              </dt>
+
+            </dl>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2"
+                       [rowspan]="72" style="margin-top: 20px;">
+          <div class="cat-exhibit-top">
+            <p class="info">演出时间:</p>
+            <p class="info-detail"><span *ngFor="let date of ticket.datetochoose">'{{date}}',</span></p>
+            <p class="info">演出场馆(地点):</p>
+            <p class="info-detail">{{ticket.vuenename}}({{ticket.location}})</p>
+            <p class="info">票务支持:</p>
+            <p class="info-detail">
+                <span *ngIf="ticket.hascode === true">
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="code" width="50%"></mat-icon>
+                    电子票
+                    </span>
+              <span *ngIf="ticket.hassafety === true">
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="safety"></mat-icon>
+                    退票保险
+                    </span>
+              <span *ngIf="ticket.hasseats === true">
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="seats"></mat-icon>
+                    在线选座
+                    </span>
+            </p>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="7"
+                       [rowspan]="7" style="margin-top: 5px;">
+          <div class="cat-exhibit-rest">
+            <!--<div style="float:left;display: block;" >-->
+            <dl>
+              <dt class="description">
+                <span class="cover">“</span>
+                {{ticket.description|maxLength: 60}}
+                <span class="cover">”</span>
+              </dt>
+
+            </dl>
+            <!--</div>-->
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2"
+                       [rowspan]="6">
+        </mat-grid-tile>
+
+
+        <mat-grid-tile [colspan]="7"
+                       [rowspan]="10">
+          <div class="cat-exhibit-rest">
+            <dl>
+              <dt>
+
+                <mat-horizontal-stepper [linear]="false" [selectedIndex]="2" #stepper disabled="true" disabled>
+
+                  <mat-step [stepControl]="firstFormGroup" disabled>
+                    <form [formGroup]="firstFormGroup">
+                      <ng-template matStepLabel>演出待定</ng-template>
+                    </form>
+                  </mat-step>
+
+                  <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                      <ng-template matStepLabel>预售/预定</ng-template>
+
+                    </form>
+                  </mat-step>
+
+                  <mat-step [stepControl]="thirdFormGroup">
+                    <form [formGroup]="thirdFormGroup">
+                      <ng-template matStepLabel>售票中</ng-template>
+                    </form>
+                  </mat-step>
+
+                  <mat-step [stepControl]="fourthFormGroup">
+                    <form [formGroup]="fourthFormGroup">
+                      <ng-template matStepLabel>演出开始</ng-template>
+                    </form>
+                  </mat-step>
+
+                </mat-horizontal-stepper>
+
+              </dt>
+
+            </dl>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2"
+                       [rowspan]="10">
+        </mat-grid-tile>
+
+
+        <mat-grid-tile [colspan]="1"
+                       [rowspan]="8">
+          <span class="stip">可选时间:</span>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="5"
+                       [rowspan]="8">
+          <div class="cat-exhibit-rest">
+            <dl>
+              <dt>
+                <a style="padding-right: 1px;" *ngFor="let date of ticket.datetochoose;let i =index;">
+                  <button mat-stroked-button [color]="datechoosed==i ? 'accent':'primary'" (click)="setDateChoice(i)">
+                    {{date}}
+                  </button>
+                </a>
+              </dt>
+
+            </dl>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3"
+                       [rowspan]="8">
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1"
+                       [rowspan]="8">
+
+          <span class="stip">可选价格:</span>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="5"
+                       [rowspan]="8">
+          <div class="cat-exhibit-rest">
+            <dl>
+              <dt>
+                <span *ngFor="let price of ticket.pricetochoose;let i= index;" style="padding-right: 1px;">
+
+                  <button mat-stroked-button color="primary" (click)="addPrice(price)"
+                          *ngIf="ticket.priceavailabliy[i] === true">
+                    {{price}}
+                  </button>
+                  <button mat-stroked-button disabled *ngIf="ticket.priceavailabliy[i] === false">
+                    {{price}}
+                  </button>
+                </span>
+              </dt>
+
+            </dl>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3"
+                       [rowspan]="8">
+        </mat-grid-tile>
+
+        <div *ngFor="let item of itemlist;let i= index;">
+          <mat-grid-tile *ngIf="i>=3" [colspan]="4"
+                         [rowspan]="8">
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1"
+                         [rowspan]="8">
+            <div *ngIf="i===0">您选择了:</div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">
+            <div class="shop-cart">
+            <span class="ticket-info">
+              &nbsp;&nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span class="ticket-info">
+              “￥{{item.price}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              &nbsp;&nbsp;
+              <span class="input-add-sub">
+                <span class="add-sub" (click)="sub(i)"
+                      style="margin-left: 6px;margin-right: 6px;font-size: 170%;">-</span>
+                <input class="input-number" width="5px" type="text" value="{{item.number}}">
+                <span class="add-sub" (click)="add(i)">+</span>
+              </span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a>
+                <span class="delete" (click)="delete(i)">删除</span>
+              </a>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1"
+                         [rowspan]="8">
+          </mat-grid-tile>
+        </div>
+
+
+        <div>
+          <mat-grid-tile *ngIf="itemlist.length>2" [colspan]="4"
+                         [rowspan]="6">
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1"
+                         [rowspan]="6">
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1"
+                         [rowspan]="8">
+             <span class="prefix" style="color: #CD950C" *ngIf="ticket.state === 0"><button mat-raised-button
+                                                                                            color="accent">&nbsp;&nbsp;立即预定&nbsp;&nbsp;</button></span>
+            <span class="prefix" style="color:red;" *ngIf="ticket.state === 1"><button mat-raised-button
+                                                                                       color="accent">&nbsp;&nbsp;立即购买&nbsp;&nbsp;</button></span>
+            <span class="prefix" style="color:red;" *ngIf="ticket.state === 2"><button mat-raised-button
+                                                                                       color="accent">&nbsp;&nbsp;缺货登记&nbsp;&nbsp;</button></span>
+
+          </mat-grid-tile>
+          <!--<mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">-->
+          <!--</mat-grid-tile>-->
+          <!--<mat-grid-tile [colspan]="1"-->
+          <!--[rowspan]="6">-->
+          <!--</mat-grid-tile>-->
+        </div>
+
+
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<it-vip-footer></it-vip-footer>

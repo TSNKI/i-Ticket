@@ -75,7 +75,7 @@
                         {{keyword}}
                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                       </mat-chip>
-                      <input placeholder="关键词键入(ENTER键确认)"
+                      <input placeholder="关键词键入(按ENTER/或点击空白位置确认)"
                              [matChipInputFor]="chipList"
                              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                              [matChipInputAddOnBlur]="addOnBlur"
@@ -161,21 +161,21 @@
                 <dt style="margin-left: 10px;">
 
                   <a>
-                    <img width="135" height="180"/>
+                    <img width="135" height="180" src={{perform.src}}/>
                   </a>
                 </dt>
 
               </dl>
             </div>
           </mat-grid-tile>
-          <mat-grid-tile [colspan]="9"
+          <mat-grid-tile [colspan]="10"
                          [rowspan]="35">
             <div class="cat-exhibit-rest">
-              <div>
+              <div style="width:650px;">
                 <dl style="margin-bottom: 5px;margin-left: 10px;">
 
                   <dd class="title">
-                    <a href="./ticket">{{perform.displayName | maxLength: 40}}</a>
+                    <a href="./ticket?id={{perform.id}}">{{perform.displayName | maxLength: 40}}</a>
                     <span class="prefix" style="color:#CD950C;" *ngIf="perform.state === 0">[预定中]</span>
                     <span class="prefix" style="color:red;" *ngIf="perform.state === 1">[售票中]</span>
                     <span class="prefix" style="color:#636363;" *ngIf="perform.state === 2">[已售罄]</span>
@@ -199,7 +199,7 @@
                     <!--</i>-->
                     <!--<mat-icon>bookmarks</mat-icon>-->
                     <span *ngIf="perform.hascode === true">
-                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="code"></mat-icon>
+                    <mat-icon class="mat-icon-rtl-mirror" svgIcon="code" width="50%"></mat-icon>
                     电子票
                     </span>
                     <span *ngIf="perform.hassafety === true">
@@ -217,7 +217,7 @@
           </mat-grid-tile>
 
 
-          <mat-grid-tile [colspan]="2"
+          <mat-grid-tile [colspan]="1"
                          [rowspan]="13">
 
           </mat-grid-tile>
@@ -226,19 +226,18 @@
             <button mat-mini-fab color="warn" *ngIf="i<=4">NO.{{i+1| maxLength: 5}}</button>
             <span color="#cc3399" *ngIf="i>4">NO.{{i+1| maxLength: 5}}</span>
           </mat-grid-tile>
-          <mat-grid-tile [colspan]="4"
+          <mat-grid-tile [colspan]="3"
                          [rowspan]="9">
             <!--<p>test here</p>-->
 
           </mat-grid-tile>
-          <mat-grid-tile [colspan]="2"
+          <mat-grid-tile [colspan]="1"
                          [rowspan]="13">
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2"
                          [rowspan]="13">
-            <!--<p>test here</p>-->
 
-            <dd class="buy">
+            <a class="buy" href="./ticket?id=5">
               <span class="prefix" style="color: #CD950C" *ngIf="perform.state === 0"><button mat-raised-button
                                                                                               color="accent">立即预定</button></span>
               <span class="prefix" style="color:red;" *ngIf="perform.state === 1"><button mat-raised-button
@@ -246,7 +245,7 @@
               <span class="prefix" style="color:red;" *ngIf="perform.state === 2"><button mat-raised-button
                                                                                           color="accent">缺货登记</button></span>
 
-            </dd>
+            </a>
 
           </mat-grid-tile>
         </mat-grid-list>
