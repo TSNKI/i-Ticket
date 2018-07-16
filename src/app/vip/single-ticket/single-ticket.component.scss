@@ -1,0 +1,87 @@
+@import "../../../styles";
+
+.bigNumber {
+  color: map_get($mat-deep-orange, 900);
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.title {
+  font-size: 160%;
+  font-weight: bold;
+}
+
+.description {
+  color: #616161;
+  font-size: 90%;
+}
+
+.stip {
+  font-weight: bold;
+}
+
+//.price{
+//  color: map_get($mat-deep-orange,900);
+//  font-size: 110%;
+//}
+.shop-cart {
+  height: 42px;
+  width: 560px;
+  border: 1px solid #cceff5;
+  background: #fafcfd;
+  font-size: 140%;
+  line-height: 0.6;
+}
+
+.input-add-sub {
+  font-size: 100%;
+  width: 230px;
+  height: 50px;
+  border: 1px solid #cceff5;
+  background: #fafcfd;
+}
+
+.add-sub {
+  font-size: 160%;
+  line-height: 0.9;
+  margin-top: 10px;
+  //background-image: ;
+  //margin-top: 4px;
+  text-align: center;
+  margin-left: 2px;
+  margin-right: 2px;
+  //text-decoration: coral;
+  //border:1px solid #cceff5;background:#fafcfd;
+  //border-radius: 50%;
+}
+
+.add-sub:focus, .add-sub:hover, .add-sub::selection {
+  border-color: cornflowerblue;
+}
+
+.input-number {
+  font-size: 70%;
+  margin-bottom: 1px;
+  height: 26px;
+  width: 30px;
+  border-radius: 1px;
+  border: 1px solid #c8cccf;
+  outline: 0;
+  text-align: center;
+}
+
+.ticket-info {
+  width: 330px;
+}
+
+.info {
+  margin-bottom: 10px;
+  font-size: 110%;
+}
+
+.info-detail {
+  margin-bottom: 10px;
+  font-size: 80%;
+  color: gray;
+
+}
