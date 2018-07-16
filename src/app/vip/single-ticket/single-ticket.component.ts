@@ -3,7 +3,7 @@ import { EventService } from '../../shared/event.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from '../../shared/user.service';
-import { MatChipInputEvent, MatIconRegistry } from '@angular/material';
+import { MatChipInputEvent, MatIconRegistry, MatSnackBar } from '@angular/material';
 import { CityService } from '../../shared/city.service';
 import { SearchlistService } from '../../shared/searchlist.service';
 import { ActivatedRoute } from '@angular/router';
@@ -43,6 +43,7 @@ export class SingleTicketComponent implements OnInit {
   datechoosed: number;
   item: any;
   itemlist: any[];
+  allticket: number;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -59,6 +60,7 @@ export class SingleTicketComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fetchService: FetchService,
     private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
   ) {
     iconRegistry.addSvgIcon(
       'code',
@@ -72,8 +74,9 @@ export class SingleTicketComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = 1;
+    this.id = 5;
     this.datechoosed = 0;
+    this.allticket = 0;
     // this.itemlist = [];
     // this.itemlist.push(this.item);
     this.itemlist = [];
@@ -111,6 +114,11 @@ export class SingleTicketComponent implements OnInit {
     if (this.datechoosed === -1) {
 
     } else {
+      if (this.allticket >= 6) {
+        const snackBarRef = this.snackBar.open('您的订票数已达6张上限', '确认', { duration: 1000 });
+        snackBarRef.onAction().subscribe(() => this.snackBar.dismiss());
+        return;
+      }
       const date = this.ticket.datetochoose[ this.datechoosed ];
       let has = false;
       for (const i of this.itemlist) {
@@ -126,21 +134,41 @@ export class SingleTicketComponent implements OnInit {
           number: 1,
         });
       }
+      this.allticket += 1;
     }
   }
 
   add(item) {
+    if (this.allticket >= 6) {
+      const snackBarRef = this.snackBar.open('您的订票数已达6张上限', '确认', { duration: 1000 });
+      snackBarRef.onAction().subscribe(() => this.snackBar.dismiss());
+      return;
+    }
     this.itemlist[ item ].number += 1;
+    this.allticket += 1;
   }
 
   sub(item) {
     this.itemlist[ item ].number -= 1;
+    this.allticket -= 1;
     if (this.itemlist[ item ].number <= 0) {
       this.itemlist.splice(item, 1);
     }
   }
 
   delete(item) {
+    this.allticket -= this.itemlist[ item ].number;
     this.itemlist.splice(item, 1);
   }
+
+  like() {
+    const snackBarRef = this.snackBar.open('已加入收藏', '确认', { duration: 1000 });
+    snackBarRef.onAction().subscribe(() => this.snackBar.dismiss());
+  }
+
+  share() {
+    const snackBarRef = this.snackBar.open('已分享', '确认', { duration: 1000 });
+    snackBarRef.onAction().subscribe(() => this.snackBar.dismiss());
+  }
+
 }

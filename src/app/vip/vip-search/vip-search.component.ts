@@ -26,7 +26,8 @@ export class VipSearchComponent implements OnInit {
   selectedTime: string;
   selectedRank: string;
   keywords: string[];
-
+  itemall: number;
+  itemtoshow: number;
   visible = true;
   selectable = true;
   removable = true;
@@ -172,6 +173,8 @@ export class VipSearchComponent implements OnInit {
     this.searchService.getsearchlist(this.selectedCity, this.selectedCategory, this.selectedTicketType)
       .subscribe(res => {
         this.searchReasults = res;
+        this.itemall = this.searchReasults.length;
+        this.itemtoshow = 10;
         this.fetchService.setFetched();
       });
 
@@ -202,6 +205,10 @@ export class VipSearchComponent implements OnInit {
     }
     // console.log(this.keywords);
     this.updateSearchList();
+  }
+
+  increaseItemToShow() {
+    this.itemtoshow += 10;
   }
 
 }

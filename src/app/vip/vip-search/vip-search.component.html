@@ -149,7 +149,8 @@
       </mat-card-content>
     </mat-card>
     <div class="divider"></div>
-    <mat-card *ngFor="let perform of searchReasults; let i = index;" class="it-card" style="margin-bottom: 5px;">
+    <mat-card *ngFor="let perform of (searchReasults?searchReasults.slice(0,itemtoshow):[]); let i = index;"
+              class="it-card" style="margin-bottom: 5px;">
       <mat-card-content>
 
         <mat-grid-list cols="16" rowHeight="5px">
@@ -175,7 +176,8 @@
                 <dl style="margin-bottom: 5px;margin-left: 10px;">
 
                   <dd class="title">
-                    <a href="./ticket?id={{perform.id}}">{{perform.displayName | maxLength: 40}}</a>
+                    <a href="./ticket?id={{perform.id}}" style="color:black;">{{perform.displayName | maxLength:
+                      40}}</a>
                     <span class="prefix" style="color:#CD950C;" *ngIf="perform.state === 0">[预定中]</span>
                     <span class="prefix" style="color:red;" *ngIf="perform.state === 1">[售票中]</span>
                     <span class="prefix" style="color:#636363;" *ngIf="perform.state === 2">[已售罄]</span>
@@ -249,7 +251,18 @@
 
           </mat-grid-tile>
         </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
 
+    <mat-card>
+      <!--<mat-card class="it-card no-border">-->
+      <mat-card-content *ngIf="itemtoshow<itemall">
+        <mat-grid-list cols="5" rowHeight="40px">
+          <mat-grid-tile [colspan]="5"
+                         [rowspan]="1">
+            <button mat-stroked-button (click)="increaseItemToShow()" color="primary">点击继续加载...</button>
+          </mat-grid-tile>
+        </mat-grid-list>
       </mat-card-content>
     </mat-card>
   </div>
