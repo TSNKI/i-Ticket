@@ -1,36 +1,58 @@
 import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion, MatExpansionPanel, MatIconRegistry, MatSnackBar } from '@angular/material';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatAccordion,
+  MatDatepicker,
+  MatExpansionPanel,
+  MatIconRegistry,
+  MatSnackBar
+} from '@angular/material';
 import { FetchService } from '../../shared/fetch.service';
 import { TocService } from '../../shared/toc.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AsYouType, CountryCode, getCountryCallingCode } from 'libphonenumber-js';
-import { BankCard, SecurityQuestion, SecurityQuestions, ShippingAddress, User, UserService } from '../../shared/user.service';
+import {
+  BankCard,
+  CreditCard,
+  DebitCard,
+  SecurityQuestion,
+  SecurityQuestions,
+  ShippingAddress,
+  User,
+  UserService
+} from '../../shared/user.service';
 import { CookiesService } from '../../shared/cookies.service';
 import { Moment } from 'moment';
 import { MyErrorStateMatcher } from '../../shared/validation.service';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY/MM',
+  },
+  display: {
+    dateInput: 'YYYY/MM',
+    monthYearLabel: 'YYYY MMM',
+    dateA11yLabel: 'L',
+    monthYearA11yLabel: 'YYYY MMMM',
+  },
+};
 
 @Component({
   selector: 'it-vip-setting',
   templateUrl: './vip-setting.component.html',
   styleUrls: [ './vip-setting.component.scss' ],
-  // animations: [
-  //   trigger('toolBarState', [
-  //     state('invisible', style({
-  //       left: '446px',
-  //       right: '88px',
-  //       paddingRight: 0
-  //     })),
-  //     state('visible', style({
-  //       left: '430px',
-  //       right: '80px',
-  //       paddingRight: '8px'
-  //     })),
-  //     transition('invisible => visible', animate('150ms ease-in')),
-  //     transition('visible => invisible', animate('150ms ease-out'))
-  //   ])
+  // providers: [
+  //   // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+  //   // application's root module. We provide it at the component level here, due to limitations of
+  //   // our example generation script.
+  //   { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+  //
+  //   { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   // ]
 })
 export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
@@ -42,6 +64,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   user: User;
 
   infoForm: FormGroup;
+  backupEmailForm: FormGroup;
   creditForm: FormGroup;
   debitForm: FormGroup;
   addressForm: FormGroup;
@@ -65,6 +88,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       flag: 'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg'
     }
   ];
+  banks = [
+    '中国工商银行',
+    '中国农业银行',
+    '中国交通银行',
+    '广东发展银行'
+  ];
 
   phoneMask = [
     /[1-9]/, /\d/, /\d/,
@@ -87,6 +116,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   asYouType = new AsYouType();
 
+  minCardExpireDate = moment();
   deletedCards: BankCard[] = [];
 
   isModifyingAddress = false;
@@ -177,10 +207,32 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     });
     this.infoForm.disable();
 
-    this.creditForm = this.fb.group({});
+    this.backupEmailForm = this.fb.group({
+      email: [ '', [ Validators.required, Validators.email ] ],
+    });
+    // this.backupEmailForm.disable();
+
+    this.creditForm = this.fb.group({
+      name: [ '', Validators.required ],
+      country: [ '', Validators.required ],
+      province: [ '', Validators.required ],
+      city: [ '', Validators.required ],
+      address: [ '', Validators.required ],
+      zipCode: [ '', Validators.required ],
+      bank: [ '', Validators.required ],
+      id: [ '', Validators.required ],
+      expire: [ moment(), Validators.required ],
+      verifyCode: [ '', Validators.required ]
+    });
     // this.creditForm.disable();
 
-    this.debitForm = this.fb.group({});
+    this.debitForm = this.fb.group({
+      name: [ '', Validators.required ],
+      bank: [ '', Validators.required ],
+      id: [ '', Validators.required ],
+      expire: [ moment(), Validators.required ],
+      verifyCode: [ '', Validators.required ]
+    });
     // this.debitForm.disable();
 
     this.addressForm = this.fb.group({
@@ -198,7 +250,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.passwordForm = this.fb.group({
       oldPassword: [ '', Validators.required ],
       newPassword: [ '', Validators.required ],
-      repPassword: [ '', [ Validators.required ] ],
+      repPassword: [ '', Validators.required ],
     });
     // this.passwordForm.disable();
 
@@ -218,11 +270,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Personal information form                      *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Personal information form                                                                                                         *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   resetInfoForm() {
     this.infoForm.disable();
 
@@ -260,21 +312,156 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     this.fetchService.setFetching();
     this.userService.updateUserInfo(saveInfo)
-      .subscribe(newUserInfo => {
+      .subscribe(nextUserInfo => {
         this.fetchService.setFetched();
-        this.user.info = newUserInfo;
+        this.user.info = nextUserInfo;
         this.resetInfoForm();
       });
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Bank Cards                                     *
-   *                                                 *
-   ***************************************************/
-  openCardPanel(panel: MatExpansionPanel) {
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Social accounts                                                                                                                   *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
+  bindBackupEmail() {
+    // if (this.validateBackupEmailForm()) {
+    const formModel = this.backupEmailForm.value;
+    const saveBackupEmail = formModel.email;
 
+    this.user.social.backupEmail = saveBackupEmail;
+
+    this.submitSocialAccounts();
+    // }
+  }
+
+  unbindBackupEmail() {
+    this.user.social.backupEmail = '';
+
+    this.submitSocialAccounts();
+  }
+
+  bindQQ() {
+    this.user.social.qq = '123456789';
+
+    this.submitSocialAccounts();
+  }
+
+  unbindQQ() {
+    this.user.social.qq = '';
+
+    this.submitSocialAccounts();
+  }
+
+  bindTencentWeibo() {
+    this.user.social.tencentWeibo = '987654321';
+
+    this.submitSocialAccounts();
+  }
+
+  unbindTencentWeibo() {
+    this.user.social.tencentWeibo = '';
+
+    this.submitSocialAccounts();
+  }
+
+  bindSinaWeibo() {
+    this.user.social.sinaWeibo = 'abc';
+
+    this.submitSocialAccounts();
+  }
+
+  unbindSinaWeibo() {
+    this.user.social.sinaWeibo = '';
+
+    this.submitSocialAccounts();
+  }
+
+  resetBackupEmailForm() {
+    this.backupEmailForm.disable();
+    this.backupEmailForm.reset({
+      email: ''
+    });
+    this.backupEmailForm.enable();
+  }
+
+  validateBackupEmailForm(): boolean {
+    const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const email = this.backupEmailForm.value.email;
+    console.log(email);
+    if (!email || email === '') {
+      this.backupEmailForm.get('email').setErrors({ 'required': true });
+      return false;
+    } else if (!regex.test(email)) {
+      this.backupEmailForm.get('email').setErrors({ 'email': true });
+      return false;
+    } else {
+      this.backupEmailForm.get('email').setErrors({});
+      return true;
+    }
+  }
+
+  submitSocialAccounts(handle?: () => void) {
+    const saveAccounts: User['social'] = {
+      backupEmail: this.user.social.backupEmail,
+      qq: this.user.social.qq,
+      tencentWeibo: this.user.social.tencentWeibo,
+      sinaWeibo: this.user.social.sinaWeibo,
+    };
+
+    this.fetchService.setFetching();
+    this.userService.updateUserSocialAccounts(saveAccounts)
+      .subscribe(nextAccounts => {
+        this.fetchService.setFetched();
+        if (handle) {
+          handle();
+        }
+        this.user.social = nextAccounts;
+      });
+  }
+
+
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Bank Cards                                                                                                                        *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
+  onCloseCardPanel() {
+    this.resetCardForm();
+  }
+
+  chosenCreditExpireYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.creditForm.get('expire').value;
+    ctrlValue.year(normalizedYear.year());
+    this.creditForm.get('expire').setValue(ctrlValue);
+  }
+
+  chosenCreditExpireMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.creditForm.get('expire').value;
+    ctrlValue.month(normalizedMonth.month());
+    this.creditForm.get('expire').setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  chosenDebitExpireYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.debitForm.get('expire').value;
+    ctrlValue.year(normalizedYear.year());
+    this.debitForm.get('expire').setValue(ctrlValue);
+  }
+
+  chosenDebitExpireMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.debitForm.get('expire').value;
+    ctrlValue.month(normalizedMonth.month());
+    this.debitForm.get('expire').setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  getCardExpire(expire: Moment) {
+    const year = expire.year();
+    const month = expire.month() + 1;
+
+    return year + (month < 10 ? '/0' : '/') + month;
   }
 
   deleteCard(card: BankCard) {
@@ -282,6 +469,97 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.user.payment.bankCards.splice(index, 1);
     this.deletedCards.push(card);
 
+    this.submitCards(() => {
+      const snackBarRef = this.snackBar.open('已删除银行卡', '撤销', { duration: 10000 });
+      snackBarRef.onAction().subscribe(() => this.undoDeleteCard());
+    });
+  }
+
+  undoDeleteCard() {
+    const card = this.deletedCards.pop();
+    this.user.payment.bankCards.push(card);
+
+    this.submitCards();
+  }
+
+  resetCreditForm() {
+    this.creditForm.disable();
+    this.creditForm.reset({
+      name: '',
+      country: '',
+      province: '',
+      city: '',
+      address: '',
+      zipCode: '',
+      bank: '',
+      id: '',
+      expire: moment(),
+      verifyCode: ''
+    });
+    this.creditForm.enable();
+  }
+
+  resetDebitForm() {
+    this.debitForm.disable();
+    this.debitForm.reset({
+      name: '',
+      bank: '',
+      id: '',
+      expire: moment(),
+      verifyCode: ''
+    });
+    this.debitForm.enable();
+  }
+
+  resetCardForm() {
+    this.resetCreditForm();
+    this.resetDebitForm();
+  }
+
+  submitCreditForm(panel: MatExpansionPanel) {
+    const formModel = this.creditForm.value;
+
+    const saveCard: CreditCard = {
+      bank: formModel.bank,
+      id: (formModel.id as string).split(' - ').join(''),
+      expire: this.getCardExpire(formModel.expire as Moment),
+      personName: '*' + (formModel.name as string).slice(1),
+      billing: {
+        country: this.getCountryName(formModel.country as string),
+        province: formModel.province as string,
+        city: formModel.city as string,
+        address: formModel.address as string,
+        zipCode: formModel.zipCode as string
+      }
+    };
+    this.user.payment.bankCards.push(saveCard);
+
+    this.submitCards(() => {
+      panel.close();
+    });
+  }
+
+  submitDebitForm(panel: MatExpansionPanel) {
+    const formModel = this.debitForm.value;
+
+    const saveCard: DebitCard = {
+      bank: formModel.bank,
+      id: (formModel.id as string).split(' - ').join(''),
+      expire: this.getCardExpire(formModel.expire as Moment),
+      personName: '*' + (formModel.name as string).slice(1),
+    };
+    this.user.payment.bankCards.push(saveCard);
+
+    this.submitCards(() => {
+      panel.close();
+    });
+  }
+
+  /**
+   * Apply change of card list
+   * @param {function} handle the function called after fetched and before assigning bankCards
+   */
+  submitCards(handle?: () => void) {
     const saveCards: BankCard[] = this.user.payment.bankCards.map(
       (bankCard: BankCard) => Object.assign({}, bankCard)
     );
@@ -290,42 +568,19 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     this.userService.updateUserBankCards(saveCards)
       .subscribe(nextCards => {
         this.fetchService.setFetched();
+        if (handle) {
+          handle();
+        }
         this.user.payment.bankCards = nextCards;
-        const snackBarRef = this.snackBar.open('已删除银行卡', '撤销', { duration: 10000 });
-        snackBarRef.onAction().subscribe(() => this.undoDeleteCard());
       });
   }
 
-  undoDeleteCard() {
 
-  }
-
-  submitCards() {
-
-  }
-
-  resetCreditForm() {
-
-  }
-
-  resetDebitForm() {
-
-  }
-
-  submitCreditForm() {
-
-  }
-
-  submitDebitForm() {
-
-  }
-
-
-  /***************************************************
-   *                                                 *
-   *  Shipping Addresses                             *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Shipping Addresses                                                                                                                *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   openAddressPanel(panel: MatExpansionPanel, address?: ShippingAddress) {
     if (address) {
       this.isModifyingAddress = true;
@@ -338,11 +593,12 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
       panel.open();
       this.resetAddressForm();
     }
-    panel.closed.subscribe(() => {
-      this.currentModifyingAddress = undefined;
-      this.isModifyingAddress = false;
-      this.resetAddressForm();
-    });
+  }
+
+  onCloseAddressPanel() {
+    this.currentModifyingAddress = undefined;
+    this.isModifyingAddress = false;
+    this.resetAddressForm();
   }
 
   deleteAddress(address: ShippingAddress) {
@@ -417,11 +673,14 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
     }
 
     this.submitAddresses(() => {
-      this.resetAddressForm();
       panel.close();
     });
   }
 
+  /**
+   * Apply change of address list
+   * @param {function} handle the function called after fetched and before assigning addresses
+   */
   submitAddresses(handle?: () => void) {
     const saveAddresses: ShippingAddress[] = this.user.payment.shippingAddresses.map(
       (oldAddress: ShippingAddress) => Object.assign({}, oldAddress)
@@ -439,11 +698,11 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Change Password form                           *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Change Password form                                                                                                              *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   resetPasswordForm() {
     this.passwordForm.disable();
 
@@ -457,7 +716,7 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
   }
 
   submitPasswordForm() {
-    this.passwordForm.disable();
+    // this.passwordForm.disable();
 
     if (this.checkPasswordForm()) {
       const formModel = this.passwordForm.value;
@@ -466,9 +725,9 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
       this.fetchService.setFetching();
       this.userService.updateUserPassword(savePassword)
-        .subscribe(newPassword => {
+        .subscribe(nextPassword => {
           this.fetchService.setFetched();
-          this.user.info.password = newPassword;
+          this.user.info.password = nextPassword;
           this.resetPasswordForm();
         });
     }
@@ -476,26 +735,41 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
   checkPasswordForm(): boolean {
     const formModel = this.passwordForm.value;
+    console.log(formModel);
+    const oldPassword = this.passwordForm.get('oldPassword');
+    const newPassword = this.passwordForm.get('newPassword');
+    const repPassword = this.passwordForm.get('repPassword');
 
-    if (this.user.info.password !== formModel.oldPassword) { // Wrong password.
-      this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
-      this.passwordForm.enable();
+    if (!oldPassword.hasError('required')
+      && !newPassword.hasError('required')
+      && !repPassword.hasError('required')) {
+      if (this.user.info.password !== formModel.oldPassword) { // Wrong password.
+        // this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
+        // setTimeout(() => {
+        this.passwordForm.get('oldPassword').setErrors({ 'wrongPassword': true });
+        // });
+        // this.passwordForm.enable();
+        return false;
+      } else if (formModel.newPassword !== formModel.repPassword) { // Repeated password not matching new password.
+        // setTimeout(() => {
+        this.passwordForm.get('repPassword').setErrors({ 'notMatch': true });
+        // });
+        // this.passwordForm.enable();
+        return false;
+      } else {  // Everything is checked true.
+        return true;
+      }
+    } else {
       return false;
-    } else if (formModel.newPassword !== formModel.repPassword) { // Repeated password not matching new password.
-      this.passwordForm.get('repPassword').setErrors({ 'notMatch': true });
-      this.passwordForm.enable();
-      return false;
-    } else {  // Everything is checked true.
-      return true;
     }
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Security Question form                         *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Security Question form                                                                                                            *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   get questions(): FormArray {
     return this.questionForm.get('questions') as FormArray;
   }
@@ -521,19 +795,19 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     this.fetchService.setFetching();
     this.userService.updateUserQuestions(saveQuestions)
-      .subscribe(newUserQuestions => {
+      .subscribe(nextUserQuestions => {
         this.fetchService.setFetched();
-        this.user.security.securityQuestions = newUserQuestions;
+        this.user.security.securityQuestions = nextUserQuestions;
         this.resetQuestionForm();
       });
   }
 
 
-  /***************************************************
-   *                                                 *
-   *  Real-name Auth form                            *
-   *                                                 *
-   ***************************************************/
+  /**************************************************************************************************************************************
+   *                                                                                                                                    *
+   *  Real-name Auth form                                                                                                               *
+   *                                                                                                                                    *
+   **************************************************************************************************************************************/
   resetRealNameForm() {
     this.realNameForm.disable();
 
@@ -557,9 +831,9 @@ export class VipSettingComponent implements OnInit, AfterViewInit, OnDestroy, Af
 
     this.fetchService.setFetching();
     this.userService.updateUserRealName(saveRealName)
-      .subscribe(newRealName => {
+      .subscribe(nextRealName => {
         this.fetchService.setFetched();
-        this.user.security.realName = newRealName;
+        this.user.security.realName = nextRealName;
         this.resetRealNameForm();
       });
   }

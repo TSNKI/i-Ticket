@@ -63,6 +63,13 @@ export class UserService {
     return of(newUserInfo).pipe(delay(this.delay));
   }
 
+  updateUserSocialAccounts(accounts: User['social']): Observable<User['social']> {
+    const oldAccounts = user.social;
+    const newAccounts = Object.assign(oldAccounts, accounts);
+
+    return of(newAccounts).pipe(delay(this.delay));
+  }
+
   updateUserBankCards(cards: BankCard[]): Observable<BankCard[]> {
     const oldCards = user.payment.bankCards;
     const newCards = Object.assign(oldCards, cards);
@@ -130,20 +137,20 @@ const user: User = {
     bankCards: [
       {
         bank: '中国工商银行',
-        id: '6222****1919',
-        expire: '2028-08',
+        id: '5678909876543212345',
+        expire: '2028/08',
         personName: '*步兵'
       },
       {
         bank: '广东发展银行',
-        id: '6222****1919',
-        expire: '2022-03',
+        id: '2345678909876543212',
+        expire: '2022/03',
         personName: '*步兵'
       },
       {
         bank: '中国农业银行',
-        id: '6222****1919',
-        expire: '2024-07',
+        id: '1234567890987654321',
+        expire: '2024/07',
         personName: '*步兵',
         billing: {
           country: '中国',

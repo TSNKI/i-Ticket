@@ -23,6 +23,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatAutocompleteModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatRadioModule,
   ],
   exports: [
     MatDividerModule,
@@ -76,6 +78,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatAutocompleteModule,
     MatSnackBarModule,
     MatChipsModule,
+    MatRadioModule,
   ]
 })
 export class MaterialModule {

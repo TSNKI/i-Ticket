@@ -97,12 +97,12 @@
 
           <div class="form-item" style="margin-top: 12px">
             <div class="item">
-              <button mat-raised-button color="primary" type="button" class="primary-action"
+              <button mat-raised-button color="primary" type="submit" class="primary-action"
                       [disabled]="infoForm.pristine"
                       (click)="submitInfoForm()">
                 修改
               </button>
-              <button mat-button color="primary" type="submit" class="secondary-action"
+              <button mat-button color="primary" type="button" class="secondary-action"
                       [disabled]="infoForm.pristine"
                       (click)="resetInfoForm()">
                 复原
@@ -114,81 +114,113 @@
       </div>
       <h3>社交账号</h3>
       <div class="content">
-        <mat-accordion class="it-accordion">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon class="it-icon">email</mat-icon>
-                备用邮箱
-              </mat-panel-title>
-              <mat-panel-description>
-                151250007@smail.nju.edu.cn
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <mat-form-field>
-              <input matInput placeholder="First name">
-            </mat-form-field>
-
-            <mat-form-field>
-              <input matInput type="number" min="1" placeholder="Age">
-            </mat-form-field>
-
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon svgIcon="qq" class="it-icon"></mat-icon>
-                QQ
-              </mat-panel-title>
-              <mat-panel-description>
-                929509707
-                <!--<img src="assets/icons/ic_qq.svg" width="24">-->
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <mat-form-field>
-              <input matInput placeholder="Country">
-            </mat-form-field>
-
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon svgIcon="tencent_weibo" class="it-icon"></mat-icon>
-                腾讯微博
-              </mat-panel-title>
-              <mat-panel-description>
-                已绑定
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <mat-form-field>
-              <input matInput placeholder="Country">
-            </mat-form-field>
-
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon svgIcon="sina" class="it-icon"></mat-icon>
-                新浪微博
-              </mat-panel-title>
-              <mat-panel-description>
-                已绑定
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <mat-form-field>
-              <input matInput placeholder="Country">
-            </mat-form-field>
-
-          </mat-expansion-panel>
-
-        </mat-accordion>
+        <ul class="social-accounts-list">
+          <li class="account">
+            <div class="title">
+              <mat-icon class="it-icon">email</mat-icon>
+              <div class="name">备用邮箱</div>
+            </div>
+            <form *ngIf="!user || user.social.backupEmail === ''"
+                  [formGroup]="backupEmailForm">
+              <div class="description">
+                <mat-form-field appearance="standard">
+                  <mat-label>邮箱地址</mat-label>
+                  <input matInput placeholder="邮箱地址"
+                         formControlName="email"
+                         [errorStateMatcher]="formErrorStateMatcher">
+                </mat-form-field>
+              </div>
+              <div class="action">
+                <button *ngIf="!user || user.social.backupEmail === ''"
+                        mat-raised-button color="primary" class="social-action-btn"
+                        (click)="bindBackupEmail()" type="submit"
+                        [disabled]="backupEmailForm.pristine">
+                  绑定
+                </button>
+              </div>
+            </form>
+            <div *ngIf="user && user.social.backupEmail !== ''" class="description">
+              <p>
+                {{user.social.backupEmail}}
+              </p>
+            </div>
+            <div *ngIf="user && user.social.backupEmail !== ''" class="action">
+              <button mat-button color="primary" class="social-action-btn"
+                      (click)="unbindBackupEmail()">
+                解除绑定
+              </button>
+            </div>
+          </li>
+          <li class="account">
+            <div class="title">
+              <mat-icon class="it-icon" svgIcon="qq"></mat-icon>
+              <div class="name">qq</div>
+            </div>
+            <div class="description">
+              <p>
+                {{user && user.social.qq !== '' ? user.social.qq : '未绑定'}}
+              </p>
+            </div>
+            <div class="action">
+              <button *ngIf="user && user.social.qq !== ''"
+                      mat-button color="primary" class="social-action-btn"
+                      (click)="unbindQQ()">
+                解除绑定
+              </button>
+              <button *ngIf="!user || user.social.qq === ''"
+                      mat-raised-button color="primary" class="social-action-btn"
+                      (click)="bindQQ()">
+                绑定
+              </button>
+            </div>
+          </li>
+          <li class="account">
+            <div class="title">
+              <mat-icon class="it-icon" svgIcon="tencent_weibo"></mat-icon>
+              <div class="name">腾讯微博</div>
+            </div>
+            <div class="description">
+              <p>
+                {{user && user.social.tencentWeibo !== '' ? '已绑定' : '未绑定'}}
+              </p>
+            </div>
+            <div class="action">
+              <button *ngIf="user && user.social.tencentWeibo !== ''"
+                      mat-button color="primary" class="social-action-btn"
+                      (click)="unbindTencentWeibo()">
+                解除绑定
+              </button>
+              <button *ngIf="!user || user.social.tencentWeibo === ''"
+                      mat-raised-button color="primary" class="social-action-btn"
+                      (click)="bindTencentWeibo()">
+                绑定
+              </button>
+            </div>
+          </li>
+          <li class="account">
+            <div class="title">
+              <mat-icon class="it-icon" svgIcon="sina"></mat-icon>
+              <div class="name">新浪微博</div>
+            </div>
+            <div class="description">
+              <p>
+                {{user && user.social.sinaWeibo !== '' ? '已绑定' : '未绑定'}}
+              </p>
+            </div>
+            <div class="action">
+              <button *ngIf="user && user.social.sinaWeibo !== ''"
+                      mat-button color="primary" class="social-action-btn"
+                      (click)="unbindSinaWeibo()">
+                解除绑定
+              </button>
+              <button *ngIf="!user || user.social.sinaWeibo === ''"
+                      mat-raised-button color="primary" class="social-action-btn"
+                      (click)="bindSinaWeibo()">
+                绑定
+              </button>
+            </div>
+          </li>
+        </ul>
       </div>
     </mat-card>
     <mat-card class="it-card no-border">
@@ -207,12 +239,15 @@
                 <div class="divider"></div>
               </div>
               <div class="card-content">
-                <div class="card-id">{{card.id}}</div>
+                <div class="card-id">{{card.id | privacy: 12}}</div>
                 <div class="expire-date">{{card.expire}}</div>
                 <div class="divider"></div>
                 <div class="person-name">{{card.personName}}</div>
                 <div class="card-action">
-                  <button mat-button color="primary" class="btn-link">删除</button>
+                  <button mat-button color="primary" class="btn-link"
+                          (click)="deleteCard(card)">
+                    删除
+                  </button>
                 </div>
                 <div class="divider"></div>
               </div>
@@ -227,7 +262,7 @@
           </div>
         </div>
         <mat-accordion class="it-accordion" style="margin: 0 -24px">
-          <mat-expansion-panel [hideToggle]="true" #addCardPanel>
+          <mat-expansion-panel [hideToggle]="true" #addCardPanel (closed)="onCloseCardPanel()">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <mat-icon class="it-icon">add</mat-icon>
@@ -239,12 +274,15 @@
 
             <mat-tab-group mat-stretch-tabs style="margin: 12px 0">
               <mat-tab label="信用卡">
-                <form style="width: 556px;margin-top: 12px;margin-left: 20px" class="margin-4">
+                <form style="width: 556px;margin-top: 12px;margin-left: 20px" class="margin-4"
+                      [formGroup]="creditForm">
                   <div class="form-item">
                     <label><i class="material-icons">person</i></label>
                     <mat-form-field appearance="outline" class="item">
                       <mat-label>姓名</mat-label>
-                      <input matInput placeholder="姓名">
+                      <input matInput placeholder="姓名"
+                             formControlName="name"
+                             [errorStateMatcher]="formErrorStateMatcher">
                     </mat-form-field>
                   </div>
 
@@ -253,30 +291,58 @@
                     <div class="item">
                       <mat-form-field appearance="outline" style="width: 32%">
                         <mat-label>国家</mat-label>
-                        <mat-select placeholder="国家" value="CN">
+                        <mat-select placeholder="国家"
+                                    formControlName="country"
+                                    [errorStateMatcher]="formErrorStateMatcher">
                           <mat-option value="CN">中国</mat-option>
                           <mat-option value="US">USA</mat-option>
                         </mat-select>
                       </mat-form-field>
                       <mat-form-field appearance="outline" style="width: 32%;margin-left: 2%">
                         <mat-label>省份</mat-label>
-                        <mat-select placeholder="省份" value="江苏">
-                          <mat-option value="江苏">江苏</mat-option>
+                        <mat-select placeholder="省份"
+                                    formControlName="province"
+                                    [errorStateMatcher]="formErrorStateMatcher">
+                          <mat-option value="江苏省">江苏</mat-option>
                         </mat-select>
                       </mat-form-field>
                       <mat-form-field appearance="outline" style="width: 32%;margin-left: 2%">
                         <mat-label>市</mat-label>
-                        <mat-select placeholder="市" value="南京">
-                          <mat-option value="南京">南京</mat-option>
+                        <mat-select placeholder="市"
+                                    formControlName="city"
+                                    [errorStateMatcher]="formErrorStateMatcher">
+                          <mat-option value="南京市">南京</mat-option>
                         </mat-select>
                       </mat-form-field>
                     </div>
                   </div>
 
                   <div class="form-item">
+                    <div class="item">
+                      <mat-form-field appearance="outline" style="width: 74%">
+                        <mat-label>详细地址</mat-label>
+                        <input matInput placeholder="地址"
+                               formControlName="address"
+                               [errorStateMatcher]="formErrorStateMatcher">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" style="width: 24%;margin-left: 2%">
+                        <mat-label>邮编</mat-label>
+                        <input matInput placeholder="邮编" maxlength="7"
+                               formControlName="zipCode"
+                               [errorStateMatcher]="formErrorStateMatcher">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="form-item">
+                    <label><i class="material-icons">account_balance</i></label>
                     <mat-form-field appearance="outline" class="item">
-                      <mat-label>地址</mat-label>
-                      <input matInput placeholder="地址">
+                      <mat-label>银行</mat-label>
+                      <mat-select placeholder="银行"
+                                  formControlName="bank"
+                                  [errorStateMatcher]="formErrorStateMatcher">
+                        <mat-option *ngFor="let bank of banks" [value]="bank">{{bank}}</mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
 
@@ -287,25 +353,40 @@
                         <mat-label>银行卡号</mat-label>
                         <input matInput #bankCardNumber
                                placeholder="1234 - 5678 - 9098 - 7654 - 321"
-                               [textMask]="{mask: bankCardMask, guide: false}">
+                               [textMask]="{mask: bankCardMask, guide: false}"
+                               formControlName="id"
+                               [errorStateMatcher]="formErrorStateMatcher">
                       </mat-form-field>
                       <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
                         <mat-label>有效期</mat-label>
-                        <input matInput placeholder="有效期">
+                        <input matInput [min]="minCardExpireDate" [matDatepicker]="creditCardExpirePicker"
+                               placeholder="有效期"
+                               formControlName="expire"
+                               [errorStateMatcher]="formErrorStateMatcher">
+                        <mat-datepicker-toggle matSuffix [for]="creditCardExpirePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #creditCardExpirePicker
+                                        startView="multi-year"
+                                        (yearSelected)="chosenCreditExpireYearHandler($event)"
+                                        (monthSelected)="chosenCreditExpireMonthHandler($event, creditCardExpirePicker)"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
                       </mat-form-field>
                       <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
                         <mat-label>校验码</mat-label>
-                        <input matInput placeholder="校验码" maxlength="4">
+                        <input matInput placeholder="校验码" maxlength="4"
+                               formControlName="verifyCode"
+                               [errorStateMatcher]="formErrorStateMatcher">
                       </mat-form-field>
                     </div>
                   </div>
 
                   <div class="form-item" style="margin-top: 8px">
                     <div class="item">
-                      <button mat-raised-button color="primary" type="submit" class="primary-action">
+                      <button mat-raised-button color="primary" type="submit" class="primary-action"
+                              (click)="submitCreditForm(addCardPanel)">
                         添加
                       </button>
-                      <button mat-button color="primary" type="submit" class="secondary-action"
+                      <button mat-button color="primary" type="button" class="secondary-action"
                               (click)="addCardPanel.close()">
                         放弃
                       </button>
@@ -315,12 +396,27 @@
                 </form>
               </mat-tab>
               <mat-tab label="储蓄卡">
-                <form style="width: 556px;margin-top: 12px;margin-left: 20px" class="margin-4">
+                <form style="width: 556px;margin-top: 12px;margin-left: 20px" class="margin-4"
+                      [formGroup]="debitForm">
                   <div class="form-item">
                     <label><i class="material-icons">person</i></label>
                     <mat-form-field appearance="outline" class="item">
                       <mat-label>姓名</mat-label>
-                      <input matInput placeholder="姓名">
+                      <input matInput placeholder="姓名"
+                             formControlName="name"
+                             [errorStateMatcher]="formErrorStateMatcher">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-item">
+                    <label><i class="material-icons">account_balance</i></label>
+                    <mat-form-field appearance="outline" class="item">
+                      <mat-label>银行</mat-label>
+                      <mat-select placeholder="银行"
+                                  formControlName="bank"
+                                  [errorStateMatcher]="formErrorStateMatcher">
+                        <mat-option *ngFor="let bank of banks" [value]="bank">{{bank}}</mat-option>
+                      </mat-select>
                     </mat-form-field>
                   </div>
 
@@ -331,22 +427,37 @@
                         <mat-label>银行卡号</mat-label>
                         <input matInput #bankCardNumber
                                placeholder="1234 - 5678 - 9098 - 7654 - 321"
-                               [textMask]="{mask: bankCardMask, guide: false}">
+                               [textMask]="{mask: bankCardMask, guide: false}"
+                               formControlName="id"
+                               [errorStateMatcher]="formErrorStateMatcher">
                       </mat-form-field>
                       <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
                         <mat-label>有效期</mat-label>
-                        <input matInput placeholder="有效期">
+                        <input matInput [min]="minCardExpireDate" [matDatepicker]="debitCardExpirePicker"
+                               placeholder="有效期"
+                               formControlName="expire"
+                               [errorStateMatcher]="formErrorStateMatcher">
+                        <mat-datepicker-toggle matSuffix [for]="debitCardExpirePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #debitCardExpirePicker
+                                        startView="multi-year"
+                                        (yearSelected)="chosenDebitExpireYearHandler($event)"
+                                        (monthSelected)="chosenDebitExpireMonthHandler($event, debitCardExpirePicker)"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
                       </mat-form-field>
                       <mat-form-field appearance="outline" style="width: 23%;margin-left: 2%">
                         <mat-label>校验码</mat-label>
-                        <input matInput placeholder="校验码" maxlength="4">
+                        <input matInput placeholder="校验码" maxlength="4"
+                               formControlName="verifyCode"
+                               [errorStateMatcher]="formErrorStateMatcher">
                       </mat-form-field>
                     </div>
                   </div>
 
                   <div class="form-item" style="margin-top: 8px">
                     <div class="item">
-                      <button mat-raised-button color="primary" type="submit" class="primary-action">
+                      <button mat-raised-button color="primary" type="submit" class="primary-action"
+                              (click)="submitDebitForm(addCardPanel)">
                         添加
                       </button>
                       <button mat-button color="primary" type="button" class="secondary-action"
@@ -399,7 +510,7 @@
           </div>
         </div>
         <mat-accordion class="it-accordion" style="margin: 0 -24px">
-          <mat-expansion-panel [hideToggle]="true" #addAddressPanel>
+          <mat-expansion-panel [hideToggle]="true" #addAddressPanel (closed)="onCloseAddressPanel()">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <mat-icon class="it-icon">add</mat-icon>
@@ -517,7 +628,7 @@
       <h2>账户安全</h2>
       <h3>修改密码</h3>
       <div class="content">
-        <form [formGroup]="passwordForm" style="width: 556px" class="margin-4">
+        <form [formGroup]="passwordForm" style="width: 556px" class="margin-4" (submit)="submitQuestionForm()">
           <div class="form-item">
             <!--<label><i class="material-icons">vpn_key</i></label>-->
             <mat-form-field appearance="outline" class="item">
@@ -606,8 +717,7 @@
           <div class="form-item" style="margin-top: 8px">
             <div class="item">
               <button mat-raised-button color="primary" type="submit" class="primary-action"
-                      [disabled]="questionForm.pristine"
-                      (click)="submitQuestionForm()">
+                      [disabled]="questionForm.pristine">
                 更新
               </button>
               <button mat-button color="primary" type="submit" class="secondary-action"
