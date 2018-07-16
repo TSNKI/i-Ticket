@@ -23,7 +23,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatRadioButton } from "@angular/material";
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -51,7 +51,7 @@ import { MatRadioButton } from "@angular/material";
     MatAutocompleteModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatRadioButton,
+    MatRadioModule,
   ],
   exports: [
     MatDividerModule,
@@ -78,7 +78,7 @@ import { MatRadioButton } from "@angular/material";
     MatAutocompleteModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatRadioButton,
+    MatRadioModule,
   ]
 })
 export class MaterialModule {
