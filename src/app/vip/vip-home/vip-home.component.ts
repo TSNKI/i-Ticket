@@ -31,56 +31,56 @@ export class VipHomeComponent implements OnInit, AfterViewInit {
       id: 0,
       title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
       link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
+      img: 'assets/images/home/carousel/1806151351072999_m1.jpg'
     },
     {
       id: 1,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+      title: 'OLive橄榄现场 "我想念我自己" 2018年彭佳慧巡回演唱会-福州站',
       link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
+      img: 'assets/images/home/carousel/180614102542824_m1.jpg'
     },
     {
       id: 2,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+      title: '2018久石让交响音乐会-重庆站 JOE HISAISHI CONCERT 2018 IN CHINA',
       link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
+      img: 'assets/images/home/carousel/180614104048961_m1.jpg'
     },
     {
       id: 3,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+      title: '吴牧野钢琴独奏音乐会',
       link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
+      img: 'assets/images/home/carousel/1807161850182015_m1.jpg'
     },
-    {
-      id: 4,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
-      link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
-    },
-    {
-      id: 5,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
-      link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
-    },
-    {
-      id: 6,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
-      link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
-    },
-    {
-      id: 7,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
-      link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
-    },
-    {
-      id: 8,
-      title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
-      link: '',
-      img: 'assets/images/1806151351072999_m1.jpg'
-    }
+    // {
+    //   id: 4,
+    //   title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+    //   link: '',
+    //   img: 'assets/images/1806151351072999_m1.jpg'
+    // },
+    // {
+    //   id: 5,
+    //   title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+    //   link: '',
+    //   img: 'assets/images/1806151351072999_m1.jpg'
+    // },
+    // {
+    //   id: 6,
+    //   title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+    //   link: '',
+    //   img: 'assets/images/1806151351072999_m1.jpg'
+    // },
+    // {
+    //   id: 7,
+    //   title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+    //   link: '',
+    //   img: 'assets/images/1806151351072999_m1.jpg'
+    // },
+    // {
+    //   id: 8,
+    //   title: '梅赛德斯-奔驰特别呈现 Mike Shinoda 麦克·信田上海演唱会',
+    //   link: '',
+    //   img: 'assets/images/1806151351072999_m1.jpg'
+    // }
   ];
 
   floatBarState = 'wrapped';
@@ -106,7 +106,8 @@ export class VipHomeComponent implements OnInit, AfterViewInit {
           id: category.id,
           name: category.name,
           displayName: category.displayName,
-          items: []
+          items: category.items,
+          ranking: category.ranking
         }
       );
     });

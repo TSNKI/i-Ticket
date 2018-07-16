@@ -36,7 +36,7 @@
               </div>
               <span class="flex-spacer"></span>
               <div class="cat-subtitle">
-                <a routerLink="">更多&nbsp;>></a>
+                <a [routerLink]="category.name">更多&nbsp;>></a>
               </div>
             </div>
           </div>
@@ -47,46 +47,48 @@
                 <dl>
                   <dt>
                     <a>
-                      <img width="240" height="320"/>
+                      <img width="240" height="320" [src]="category.items[0].img"/>
                     </a>
                   </dt>
                   <dd class="title">
-                    {{'[洛阳] 2018岳云鹏《爱岳之城》相声专场-洛阳站' | maxLength: 40}}
+                    {{ category.items[0].title | maxLength: 40 }}
                   </dd>
                   <dd class="date">
-                    {{ '2018-05-09' | date }}
+                    {{ category.items[0].date | date }}
                   </dd>
                   <dd class="price">
                     <span class="prefix">¥</span>128<span class="suffix">起</span>
                   </dd>
                   <dd class="address">
-                    {{'洛阳新区-体育场' | maxLength: 8}}
+                    {{ category.items[0].venue | maxLength: 8 }}
                   </dd>
                 </dl>
               </div>
             </mat-grid-tile>
 
-            <mat-grid-tile *ngFor="let i of [0,1,2,3,4] | slice:1"
+            <mat-grid-tile *ngFor="let item of category.items | slice:1"
                            [colspan]="'1'"
                            [rowspan]="'1'">
               <div class="cat-exhibit-rest">
                 <dl>
                   <dt>
-                    <a>
-                      <img width="153" height="204"/>
+                    <a [href]="item.link">
+                      <img width="153" height="204" [src]="item.img"/>
                     </a>
                   </dt>
                   <dd class="title">
-                    {{'[西安] 青曲社相声大会暑期专场' | maxLength: 20}}
+                    <a [href]="item.link">
+                      {{ item.title | maxLength: 18}}
+                    </a>
                   </dd>
                   <dd class="date">
-                    {{ '2018-05-09' | date }}
+                    {{ item.date | date }}
                   </dd>
                   <dd class="address">
-                    {{'广西文化艺术中心音乐厅' | maxLength: 8}}
+                    {{ item.venue | maxLength: 8}}
                   </dd>
                   <dd class="price">
-                    <span class="prefix">¥</span>128<span class="suffix">起</span>
+                    <span class="prefix">¥</span>{{ item.price }}<span class="suffix">起</span>
                   </dd>
                 </dl>
               </div>
@@ -109,18 +111,18 @@
           <dl class="cat-rank-top">
             <dt>
               <span class="top-rank-logo">No.1</span>
-              <img width="268" height="130"/>
+              <img width="268" height="130" [src]="category.ranking[0].img"/>
             </dt>
             <dd>
-              {{'打开音乐之门•2018北京音乐厅暑期系列音乐会 经典昆曲剧目《牡丹亭》' | maxLength: 45}}
+              {{ category.ranking[0].title | maxLength: 45}}
             </dd>
           </dl>
-          <dl *ngFor="let i of [0,1,2,3,4] | slice:1" class="cat-rank-rest">
+          <dl *ngFor="let item of category.ranking | slice:1" class="cat-rank-rest">
             <dt>
-              {{'0' + (i + 1)}}
+              {{'0' + (item.id + 1)}}
             </dt>
             <dd>
-              {{'[北京] 太阳马戏《阿凡达前传：托鲁克-首次翱翔》全球巡演 北京站' | maxLength: 40}}
+              {{ item.title | maxLength: 40}}
             </dd>
           </dl>
         </div>
