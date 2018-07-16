@@ -1,3 +1,37 @@
-<p>
-  vip-booking works!
-</p>
+<it-vip-header></it-vip-header>
+
+<div class="container">
+  <p class="buy-title">首页 > 我的订单 > 确认订单信息</p>
+  <div class="booking-area">
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step>
+        <ng-template matStepLabel>加入购物车</ng-template>
+      </mat-step>
+      <mat-step [stepControl]="formGroup">
+        <form [formGroup]="formGroup">
+          <ng-template matStepLabel>确认订单信息</ng-template>
+          <div class="booking-bar">
+            票纸类型
+          </div>
+          <mat-radio-group>
+            <mat-radio-button value="1">Option 1</mat-radio-button>
+            <mat-radio-button value="2">Option 2</mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field>
+            <input matInput placeholder="Last name, First name" formControlName="myCtrl" required>
+          </mat-form-field>
+        </form>
+
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>支付中心</ng-template>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>完成支付</ng-template>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>
+
+<it-back-top hrefBase="/concert"></it-back-top>
+<it-vip-footer></it-vip-footer>

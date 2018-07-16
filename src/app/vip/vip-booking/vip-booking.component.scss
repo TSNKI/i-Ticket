@@ -1,0 +1,22 @@
+@import "../../../styles";
+
+.booking-area {
+
+  border: 1px solid map_get($default-app-primary, 50);
+  box-shadow: none;
+  background-color: $default-undercoat;
+  height: 800px;
+
+  .booking-bar {
+    margin: 0px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 12px 0 18px;
+    border-left: 12px #5c6bc0 solid;
+    border-top: 1px #ededed solid;
+    background-color: #fafafa;
+    height: 33px;
+    line-height: 33px;
+
+  }
+}
