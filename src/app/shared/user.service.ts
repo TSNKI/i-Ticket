@@ -182,7 +182,7 @@ const user: User = {
       },
       {
         name: '陈步兵',
-        phone: '+86137 7110 4099',
+        phone: '+86 137 7110 4099',
         country: 'CN',
         province: '江苏省',
         city: '南京市',

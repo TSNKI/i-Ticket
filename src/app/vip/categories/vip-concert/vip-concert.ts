@@ -81,17 +81,18 @@ export const hots = [
   },
   {
     id: 1,
-    name: '【万有音乐系】孟庭苇2018寻梦演唱会-北京站',
-    date: '2018-08-07',
-    img: 'assets/images/concert/hot/hot-1.jpg',
+
+    name: '黄子韬 2018ISGOØD 巡回演唱会武汉站',
+    date: '2018-07-21',
+    img: 'assets/images/concert/hot/hot-2.jpg',
     price: '280',
     link: '/'
   },
   {
     id: 2,
-    name: '黄子韬 2018ISGOØD 巡回演唱会武汉站',
-    date: '2018-07-21',
-    img: 'assets/images/concert/hot/hot-2.jpg',
+    name: '【万有音乐系】孟庭苇2018寻梦演唱会-北京站',
+    date: '2018-08-07',
+    img: 'assets/images/concert/hot/hot-1.jpg',
     price: '280',
     link: '/'
   },

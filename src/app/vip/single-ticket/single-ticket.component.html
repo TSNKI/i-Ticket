@@ -58,7 +58,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2"
-                       [rowspan]="75" style="margin-top: 10px;line-height: 130%;">
+                       [rowspan]="75" style="margin-top: 10px;line-height: 140%;">
           <div class="cat-exhibit-top">
             <p class="info">演出时间:</p>
             <p class="info-detail"><span *ngFor="let date of ticket.datetochoose">'{{date}}',</span></p>
@@ -104,7 +104,7 @@
 
 
         <mat-grid-tile [colspan]="7"
-                       [rowspan]="10">
+                       [rowspan]="10" style="margin-top: 10px;">
           <div class="cat-exhibit-rest">
             <dl>
               <dt>
@@ -242,7 +242,7 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1"
                        [rowspan]="8">
-          <a href="./booking?id=1">
+          <a href="./booking?id=5">
              <span class="prefix" style="color: #CD950C" *ngIf="ticket.state === 0"><button mat-raised-button
                                                                                             color="accent">&nbsp;&nbsp;立即预定&nbsp;&nbsp;</button></span>
             <span class="prefix" style="color:red;" *ngIf="ticket.state === 1"><button style="height: 140%;"
@@ -289,9 +289,9 @@
                 <div style="margin-left: 1%;margin-right: 1%;">
 
                   <div *ngFor="let tip of tips;let i=index;">
-                    <table width="100%" style="font-size: 110%;">
+                    <table width="100%" style="font-size: 110%;line-height: 170%;">
                       <tr *ngIf="i!==tips.length-1">
-                        <td width="10%" style="font-weight: bold;text-align: center;"><p>{{tip.name}}</p></td>
+                        <td width="10%" style="font-weight: bold;text-align: center;">{{tip.name}}</td>
                         <td width="35%" style="border-right: #ADB8B6 3px solid;margin-right: 5px;">{{tip.value}}。</td>
                         <td width="10%" style="font-weight: bold;margin-left: 5px;text-align: center;">{{tip.name2}}
                         </td>
