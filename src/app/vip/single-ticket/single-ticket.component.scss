@@ -53,11 +53,15 @@
   background-color: #E4D2E8;
 }
 
-.add-sub:focus, .add-sub:hover, .add-sub:active {
+.add-sub:hover {
 
-  outline: none;
+
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
-  background-color: #D8C2F8;
+  background-color: #D87DC6;
+}
+
+.add-sub:focus {
+  outline: none;
 }
 
 //.plus{
@@ -85,6 +89,8 @@
   border: 1px solid #c8cccf;
   outline: 0;
   text-align: center;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .ticket-info {

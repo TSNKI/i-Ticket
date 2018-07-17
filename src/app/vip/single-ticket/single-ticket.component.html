@@ -155,10 +155,10 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="5"
                        [rowspan]="8">
-          <div class="cat-exhibit-rest">
+          <div class="cat-exhibit-rest" style="width: 405px;padding-left: 5px;">
             <dl>
               <dt>
-                <a style="padding-right: 1px;" *ngFor="let date of ticket.datetochoose;let i =index;">
+                <a style="padding-right: 1px;margin-right: 5px;" *ngFor="let date of ticket.datetochoose;let i =index;">
                   <button mat-stroked-button [color]="datechoosed==i ? 'accent':'primary'" (click)="setDateChoice(i)">
                     {{date}}
                   </button>
@@ -179,16 +179,17 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="5"
                        [rowspan]="8">
-          <div class="cat-exhibit-rest">
+          <div class="cat-exhibit-rest" style="width: 405px;padding-left: 5px;">
             <dl>
               <dt>
                 <span *ngFor="let price of ticket.pricetochoose;let i= index;" style="padding-right: 1px;">
 
-                  <button mat-stroked-button color="primary" (click)="addPrice(price)"
+                  <button style="margin-right: 5px;" mat-stroked-button color="primary" (click)="addPrice(price)"
                           *ngIf="ticket.priceavailabliy[i] === true">
                     {{price}}
                   </button>
-                  <button mat-stroked-button disabled *ngIf="ticket.priceavailabliy[i] === false">
+                  <button style="margin-right: 5px;" mat-stroked-button disabled
+                          *ngIf="ticket.priceavailabliy[i] === false">
                     {{price}}
                   </button>
                 </span>
