@@ -1,13 +1,58 @@
+@import "../../../styles";
+
 .statistic-list {
   display: flex;
   margin-left: 0;
   margin-right: 0;
-}
 
-.statistic-list .statistic-item {
-  width: 25%;
-  min-height: 50px;
-  margin: 0 12px;
+  .statistic-item {
+    width: 25%;
+    min-height: 50px;
+    height: 148px;
+    margin: 0 12px;
+    position: relative;
+
+    .graphic {
+      position: absolute;
+      top: 24px;
+      left: 36px;
+    }
+
+    .description {
+      position: absolute;
+      top: 24px;
+      left: 172px;
+      font-size: 24px;
+      font-weight: 400;
+      color: $secondary-text-color
+    }
+
+    .number {
+      position: absolute;
+      bottom: 24px;
+      left: 172px;
+      font-size: 48px;
+      font-weight: 500;
+
+      .percentage {
+        color: $disabled-text-color;
+        font-size: 24px;
+        font-weight: 400;
+      }
+
+      &.primary {
+        color: map_get($default-app-primary, 500)
+      }
+
+      &.accent {
+        color: map_get($default-app-accent, A200)
+      }
+
+      &.warn {
+        color: map_get($default-app-warn, 500)
+      }
+    }
+  }
 }
 
 .ticket-list {

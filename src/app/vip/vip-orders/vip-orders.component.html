@@ -2,23 +2,51 @@
 <div class="container">
   <div class="statistic-list">
     <mat-card class="statistic-item">
-      <div align="middle">
-        <mat-progress-spinner [value]="72" [mode]="'determinate'"></mat-progress-spinner>
+      <div class="graphic">
+        <mat-progress-spinner [value]="72" [mode]="'determinate'" color="primary"></mat-progress-spinner>
+      </div>
+      <div class="description">
+        已评价
+      </div>
+      <div class="number primary">
+        72
+        <span class="percentage">%</span>
       </div>
     </mat-card>
     <mat-card class="statistic-item">
-      <div align="middle">
+      <div class="graphic">
         <mat-progress-spinner [value]="44" [mode]="'determinate'" color="warn"></mat-progress-spinner>
       </div>
-    </mat-card>
-    <mat-card class="statistic-item">
-      <div align="middle">
-        <mat-progress-spinner [value]="88" [mode]="'determinate'" color="primary"></mat-progress-spinner>
+      <div class="description">
+        占位符
+      </div>
+      <div class="number warn">
+        44
+        <span class="percentage">%</span>
       </div>
     </mat-card>
     <mat-card class="statistic-item">
-      <div align="middle">
+      <div class="graphic">
+        <mat-progress-spinner [value]="88" [mode]="'determinate'" color="primary"></mat-progress-spinner>
+      </div>
+      <div class="description">
+        满意度
+      </div>
+      <div class="number primary">
+        88
+        <span class="percentage">%</span>
+      </div>
+    </mat-card>
+    <mat-card class="statistic-item">
+      <div class="graphic">
         <mat-progress-spinner [value]="76" [mode]="'determinate'" color="accent"></mat-progress-spinner>
+      </div>
+      <div class="description">
+        占位符
+      </div>
+      <div class="number accent">
+        76
+        <span class="percentage">%</span>
       </div>
     </mat-card>
   </div>
@@ -41,6 +69,19 @@
     <div class="ticket-list-container">
       <mat-accordion multi>
 
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <table width="100%">
+              <tr>
+                <td width="30%">张杰2018“未·LIVE”巡回演唱会-深圳站</td>
+                <td width="30%">2018-07-17</td>
+                <td width="20%"><span style="color: red">¥ 298</span></td>
+                <td width="20%">已支付</td>
+              </tr>
+            </table>
+          </mat-expansion-panel-header>
+          Sth. here
+        </mat-expansion-panel>
         <mat-expansion-panel *ngFor="let ticket of tickets">
           <mat-expansion-panel-header>
             <table width="100%">
