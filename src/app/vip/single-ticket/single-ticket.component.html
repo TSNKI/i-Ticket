@@ -211,15 +211,14 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">
             <div class="shop-cart">
-            <span class="ticket-info">
-              &nbsp;&nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span class="ticket-info">
-              “￥{{item.price}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              &nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;</span>
+              <span class="ticket-info">
+              “￥{{item.price}}”&nbsp;&nbsp;</span>
               <span class="input-add-sub">
-                <span class="add-sub" (click)="sub(i)"
-                      style="margin-left: 6px;margin-right: 6px;font-size: 170%;">-</span>
+                <button class="add-sub" (click)="sub(i)" style="font-weight: bold">-</button>
                 <input class="input-number" width="5px" type="text" value="{{item.number}}">
-                <span class="add-sub" (click)="add(i)">+</span>
+                <button class="add-sub" (click)="add(i)">+</button>
               </span>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <a>
