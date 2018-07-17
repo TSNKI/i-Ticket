@@ -155,10 +155,10 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="5"
                        [rowspan]="8">
-          <div class="cat-exhibit-rest">
+          <div class="cat-exhibit-rest" style="width: 405px;padding-left: 5px;">
             <dl>
               <dt>
-                <a style="padding-right: 1px;" *ngFor="let date of ticket.datetochoose;let i =index;">
+                <a style="padding-right: 1px;margin-right: 5px;" *ngFor="let date of ticket.datetochoose;let i =index;">
                   <button mat-stroked-button [color]="datechoosed==i ? 'accent':'primary'" (click)="setDateChoice(i)">
                     {{date}}
                   </button>
@@ -179,16 +179,17 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="5"
                        [rowspan]="8">
-          <div class="cat-exhibit-rest">
+          <div class="cat-exhibit-rest" style="width: 405px;padding-left: 5px;">
             <dl>
               <dt>
                 <span *ngFor="let price of ticket.pricetochoose;let i= index;" style="padding-right: 1px;">
 
-                  <button mat-stroked-button color="primary" (click)="addPrice(price)"
+                  <button style="margin-right: 5px;" mat-stroked-button color="primary" (click)="addPrice(price)"
                           *ngIf="ticket.priceavailabliy[i] === true">
                     {{price}}
                   </button>
-                  <button mat-stroked-button disabled *ngIf="ticket.priceavailabliy[i] === false">
+                  <button style="margin-right: 5px;" mat-stroked-button disabled
+                          *ngIf="ticket.priceavailabliy[i] === false">
                     {{price}}
                   </button>
                 </span>
@@ -211,15 +212,14 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">
             <div class="shop-cart">
-            <span class="ticket-info">
-              &nbsp;&nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span class="ticket-info">
-              “￥{{item.price}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              &nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;</span>
+              <span class="ticket-info">
+              “￥{{item.price}}”&nbsp;&nbsp;</span>
               <span class="input-add-sub">
-                <span class="add-sub" (click)="sub(i)"
-                      style="margin-left: 6px;margin-right: 6px;font-size: 170%;">-</span>
+                <button class="add-sub" (click)="sub(i)" style="font-weight: bold">-</button>
                 <input class="input-number" width="5px" type="text" value="{{item.number}}">
-                <span class="add-sub" (click)="add(i)">+</span>
+                <button class="add-sub" (click)="add(i)">+</button>
               </span>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <a>
