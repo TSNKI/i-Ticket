@@ -4,8 +4,10 @@
 
   border: 1px solid map_get($default-app-primary, 50);
   box-shadow: none;
-  background-color: $default-undercoat;
+  background-color: white;
   min-height: 400px;
+
+  padding: 24px 120px;
 
   .booking-bar {
 
@@ -226,9 +228,107 @@
   }
 
   .orderSure-orderDetail {
-    margin-left: 60px;
+    margin-left: 40px;
   }
 
+  .order-detail-container {
+    margin: 20px 60px 0 0;
+    line-height: 1;
+
+    .order-detail-money {
+      float: right;
+      width: 130px;
+      text-align: right;
+      color: #4c4c4c;
+    }
+
+    .order-detail-label {
+      float: right;
+      text-align: right;
+      color: #666;
+
+      .order-detail-em {
+        color: #eb414a;
+        font-style: normal;
+      }
+    }
+  }
+
+  .order-total-container {
+    height: 83px;
+    margin: 16px 20px 0;
+    padding-right: 40px;
+    line-height: 1;
+    border-top: 1px solid #ededed;
+    color: #a1a1a1;
+    background-color: #fafafa;
+
+    .order-total-money {
+      float: right;
+      color: #eb414a;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .order-total-label {
+      float: right;
+      margin-right: 48px;
+      color: #4c4c4c;
+      line-height: 20px;
+
+      .order-detail-em {
+        color: #eb414a;
+        font-style: normal;
+      }
+    }
+
+    .order-total-person {
+      float: right;
+    }
+
+    .order-total-address {
+      float: right;
+      margin-right: 50px;
+    }
+  }
+
+  .orderSure-goto {
+    width: 800px;
+    float: right;
+    overflow: hidden;
+    padding-right: 50px;
+    margin-top: 10px;
+
+    .orderSure-goto-btn {
+      width: 182px;
+      float: right;
+      margin-left: 20px;
+      height: 50px;
+
+    }
+
+    .orderSure-goto-tips {
+      text-align: right;
+      margin-top: 4px;
+      font-weight: bold;
+      color: #cc0001;
+    }
+
+    .orderSure-goto-read {
+      text-align: right;
+      margin-top: 4px;
+
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        color: map_get($default-app-primary, 500);
+
+        &:hover {
+          color: map_get($default-app-primary, 300);
+        }
+      }
+    }
+  }
 }
 
 .clear-float {
@@ -241,5 +341,10 @@
     visibility: hidden;
     height: 0;
   }
+}
+
+.content-font {
+  font: normal 12px/1.5 'arial', 'Tahoma', 'simsun', '宋体';
+  color: #4c4c4c;
 }
 

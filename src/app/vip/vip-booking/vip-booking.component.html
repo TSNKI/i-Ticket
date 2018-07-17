@@ -59,7 +59,7 @@
               <tr>
                 <td class="buyCar-table-proInfo">
                   <span class="buyCar-table-proInfo-sp2" style="width: 340px">
-                    <strong class="red">[售票中]</strong>
+                    <strong class="red">[售票中] </strong>
                     <a href="/ticket?id=5" class="c2" title="张杰2018">张杰2018“未·LIVE”巡回演唱会-深圳站</a>
                   </span>
                 </td>
@@ -76,12 +76,12 @@
               </tr>
               <tr>
                 <td class="member-info no-border" colspan="6">
-                  级别：普通会员（无折扣）
+                  级别：Lv.8（9.8折）
                   <span class="ml30">此单可获积分280分</span>
 
                 </td>
               </tr>
-              <tr>TODO</tr>
+              <!--<tr>TODO</tr>-->
               </tbody>
             </table>
           </div>
@@ -130,23 +130,58 @@
               <span class="order-favorable-info-price" style="margin-left: 10px">优惠券0张，优惠0元</span>
             </div>
           </div>
-
-
-          <div></div>
-          <div></div>
-          <div></div>
-          <mat-form-field>
-            <input matInput placeholder="Last name, First name" formControlName="myCtrl" required>
-          </mat-form-field>
+          <div class="order-detail-container">
+            <div class="clear-float" style="margin-top: 12px">
+              <span class="order-detail-money">¥274.40</span>
+              <span class="order-detail-label">
+                <em class="order-detail-em">1</em>件商品，商品总额：
+              </span>
+            </div>
+            <div class="clear-float" style="margin-top: 12px">
+              <span class="order-detail-money">¥10.00</span>
+              <span class="order-detail-label">运费：</span>
+            </div>
+            <div class="clear-float" style="margin-top: 12px">
+              <span class="order-detail-money">¥0.00</span>
+              <span class="order-detail-label">退票保险：</span>
+            </div>
+          </div>
+          <div class="order-total-container">
+            <div class="clear-float" style="margin-top: 17px">
+              <span class="order-total-money">¥284.40</span>
+              <span class="order-total-label">应付总额：</span>
+            </div>
+            <div class="clear-float" style="margin-top: 17px">
+                <span class="order-total-person">
+                  <span>收货人：陈步兵 </span>
+                  <span>15105199359</span>
+                </span>
+              <span class="order-total-address">
+                  寄送至：江苏省 南京市 南京大学(鼓楼校区)
+                </span>
+            </div>
+          </div>
+          <div class="orderSure-goto">
+            <button mat-raised-button matStepperNext color="primary" class="orderSure-goto-btn">确认并提交订单</button>
+            <div style="float: left">
+              <div class="orderSure-goto-tips">温馨提示：请您仔细核对订单信息，因演出票的唯一性，时效性，购买后无法退票或更换</div>
+              <div class="orderSure-goto-read">
+                <mat-checkbox formControlName="myCtrl" required>我已阅读并同意</mat-checkbox>
+                <a href="#">《i-Ticket用户票务服务协议》</a>
+              </div>
+            </div>
+          </div>
         </form>
-
       </mat-step>
+
       <mat-step>
         <ng-template matStepLabel>支付中心</ng-template>
       </mat-step>
+
       <mat-step>
         <ng-template matStepLabel>完成支付</ng-template>
       </mat-step>
+
     </mat-horizontal-stepper>
   </div>
 </div>
