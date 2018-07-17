@@ -58,7 +58,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="2"
-                       [rowspan]="75" style="margin-top: 10px;">
+                       [rowspan]="75" style="margin-top: 10px;line-height: 130%;">
           <div class="cat-exhibit-top">
             <p class="info">演出时间:</p>
             <p class="info-detail"><span *ngFor="let date of ticket.datetochoose">'{{date}}',</span></p>
@@ -84,7 +84,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile [colspan]="7"
-                       [rowspan]="7" style="margin-top: 5px;">
+                       [rowspan]="7" style="margin-top: 5px;line-height: 130%;">
           <div class="cat-exhibit-rest">
             <!--<div style="float:left;display: block;" >-->
             <dl>
@@ -212,17 +212,16 @@
           <mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">
             <div class="shop-cart">
             <span class="ticket-info">
-              &nbsp;&nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;“{{item.date}}”&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span class="ticket-info">
-              “￥{{item.price}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              &nbsp;&nbsp;
+              “￥{{item.price}}”&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span class="input-add-sub">
                 <span class="add-sub" (click)="sub(i)"
                       style="margin-left: 6px;margin-right: 6px;font-size: 170%;">-</span>
                 <input class="input-number" width="5px" type="text" value="{{item.number}}">
                 <span class="add-sub" (click)="add(i)">+</span>
               </span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <a>
                 <span class="delete" (click)="delete(i)">删除</span>
               </a>
@@ -243,14 +242,15 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1"
                        [rowspan]="8">
+          <a href="./booking?id=1">
              <span class="prefix" style="color: #CD950C" *ngIf="ticket.state === 0"><button mat-raised-button
                                                                                             color="accent">&nbsp;&nbsp;立即预定&nbsp;&nbsp;</button></span>
-          <span class="prefix" style="color:red;" *ngIf="ticket.state === 1"><button style="height: 140%;"
-                                                                                     mat-raised-button
-                                                                                     color="accent">&nbsp;&nbsp;立即购买&nbsp;&nbsp;</button></span>
-          <span class="prefix" style="color:red;" *ngIf="ticket.state === 2"><button mat-raised-button
-                                                                                     color="accent">&nbsp;&nbsp;缺货登记&nbsp;&nbsp;</button></span>
-
+            <span class="prefix" style="color:red;" *ngIf="ticket.state === 1"><button style="height: 140%;"
+                                                                                       mat-raised-button
+                                                                                       color="accent">&nbsp;&nbsp;立即购买&nbsp;&nbsp;</button></span>
+            <span class="prefix" style="color:red;" *ngIf="ticket.state === 2"><button mat-raised-button
+                                                                                       color="accent">&nbsp;&nbsp;缺货登记&nbsp;&nbsp;</button></span>
+          </a>
         </mat-grid-tile>
         <!--<mat-grid-tile [colspan]="7" [rowspan]="8" style="margin-bottom: 2px;">-->
         <!--</mat-grid-tile>-->
@@ -272,7 +272,7 @@
       <mat-grid-list cols="10" [rowHeight]="10">
 
         <mat-grid-tile [colspan]="10" [rowspan]="100">
-          <div class="cat-exhibit-top" style="width:1214px; height:1000px">
+          <div class="cat-exhibit-top" style="width:1214px; height:1000px;line-height: 130%;">
 
             <mat-tab-group style="margin-top: -50px;" [dynamicHeight]="true">
               <mat-tab label="演出信息">
@@ -291,7 +291,7 @@
                   <div *ngFor="let tip of tips;let i=index;">
                     <table width="100%" style="font-size: 110%;">
                       <tr *ngIf="i!==tips.length-1">
-                        <td width="10%" style="font-weight: bold;text-align: center;">{{tip.name}}</td>
+                        <td width="10%" style="font-weight: bold;text-align: center;"><p>{{tip.name}}</p></td>
                         <td width="35%" style="border-right: #ADB8B6 3px solid;margin-right: 5px;">{{tip.value}}。</td>
                         <td width="10%" style="font-weight: bold;margin-left: 5px;text-align: center;">{{tip.name2}}
                         </td>

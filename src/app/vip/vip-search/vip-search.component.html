@@ -254,13 +254,13 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card>
+    <mat-card *ngIf="itemtoshow<itemall">
       <!--<mat-card class="it-card no-border">-->
-      <mat-card-content *ngIf="itemtoshow<itemall">
+      <mat-card-content>
         <mat-grid-list cols="5" rowHeight="40px">
           <mat-grid-tile [colspan]="5"
                          [rowspan]="1">
-            <button mat-stroked-button (click)="increaseItemToShow()" color="primary">点击继续加载...</button>
+            <button mat-stroked-button (click)="increaseItemToShow()" color="primary">>>>继续加载<<<</button>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-card-content>
