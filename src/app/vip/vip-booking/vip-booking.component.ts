@@ -9,8 +9,10 @@ import {
   UserService
 } from "../../shared/user.service";
 import { FetchService } from "../../shared/fetch.service";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatIconRegistry } from '@angular/material';
 import { CookiesService } from "../../shared/cookies.service";
 import { toNumber } from "ng-zorro-antd/src/core/util/convert";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'it-vip-booking',
@@ -28,7 +30,12 @@ export class VipBookingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private fetchService: FetchService,
+    private iconRegistry: MatIconRegistry,
+    private sanitiser: DomSanitizer
   ) {
+
+    iconRegistry.addSvgIcon('ordering_success',
+      sanitiser.bypassSecurityTrustResourceUrl('assets/icons/ic_ordering_success.svg'));
 
   }
 
@@ -56,5 +63,9 @@ export class VipBookingComponent implements OnInit {
     if (param == 0)
       return true;
     return false;
+  }
+
+  openDialog(): void {
+
   }
 }

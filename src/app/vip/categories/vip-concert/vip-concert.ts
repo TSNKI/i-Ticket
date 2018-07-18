@@ -73,10 +73,10 @@ export const carousel = [
 export const hots = [
   {
     id: 0,
-    name: '【万有音乐系】孟庭苇2018寻梦演唱会-北京站',
-    date: '2018-08-07',
-    img: 'assets/images/concert/hot/hot-1.jpg',
-    price: '280',
+    name: '张杰2018“未·LIVE”巡回演唱会-深圳站',
+    date: '2018-09-08',
+    img: 'assets/images/searchlist/zjych.jpg',
+    price: '198',
     link: '/'
   },
   {

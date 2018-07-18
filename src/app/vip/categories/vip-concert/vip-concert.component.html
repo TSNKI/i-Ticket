@@ -12,7 +12,8 @@
         </div>
         <div class="act-content">
           <nz-carousel nzAutoPlay [nzEffect]="'fade'" nzAutoPlaySpeed='4000'>
-            <a nz-carousel-content *ngFor="let special of specials" [routerLink]=special.link target="_blank">
+            <a nz-carousel-content *ngFor="let special of specials" href="https://www.228.com.cn/zhuanti/dengziqi2017/"
+               target="_blank">
               <div><img [src]="special.img" width="100%" height="100%"></div>
               <div style="margin-top: 10px;">{{special.name}}</div>
               <div>{{special.sub_name}}</div>
@@ -90,11 +91,11 @@
             <div class="tab-con">
               <ul class="hot-list hot-clear">
                 <li *ngFor="let hot of hots">
-                  <a [routerLink]="hot.link" target="_blank" class="tab-img">
+                  <a href="/ticket?id=5" target="_blank" class="tab-img">
                     <img [src]="hot.img" width="100%">
                   </a>
                   <p class="tab-title">
-                    <a [routerLink]="hot.link" target="_blank">
+                    <a href="/ticket?id=5" target="_blank">
                       {{hot.name}}
                     </a>
                   </p>
@@ -112,11 +113,11 @@
             <div class="tab-con">
               <ul class="hot-list hot-clear">
                 <li *ngFor="let newest of newest_s">
-                  <a [routerLink]="newest.link" target="_blank">
+                  <a href="/ticket?id=5" target="_blank">
                     <img [src]="newest.img" width="100%">
                   </a>
                   <p class="tab-title">
-                    <a [routerLink]="newest.link" target="_blank">
+                    <a href="/ticket?id=5" target="_blank">
                       {{newest.name}}
                     </a>
                   </p>
@@ -185,7 +186,7 @@
               目前北京有
               <em>22</em>
               个演唱会商品
-              <a href="/search" target="_blank">[ 查看全部 ]</a>
+              <a href="/search?city=北京" target="_blank">[ 查看全部 ]</a>
             </p>
             <div class="tab-con">
               <ul class="hot-list hot-clear">
@@ -213,7 +214,7 @@
               目前上海有
               <em>34</em>
               个演唱会商品
-              <a href="/search" target="_blank">[ 查看全部 ]</a>
+              <a href="/search?city=上海" target="_blank">[ 查看全部 ]</a>
             </p>
             <div class="tab-con">
               <ul class="hot-list hot-clear">
@@ -241,7 +242,7 @@
               目前广州有
               <em>16</em>
               个演唱会商品
-              <a href="/search" target="_blank">[ 查看全部 ]</a>
+              <a href="/search?city=广州" target="_blank">[ 查看全部 ]</a>
             </p>
             <div class="tab-con">
               <ul class="hot-list hot-clear">

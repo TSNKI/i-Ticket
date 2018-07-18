@@ -3,7 +3,7 @@
 <div class="container">
   <p class="buy-title">首页 > 我的订单 > 确认订单信息</p>
   <div class="booking-area">
-    <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-horizontal-stepper [linear]="false" #stepper>
       <mat-step [stepControl]="formGroup">
         <form [formGroup]="formGroup">
           <ng-template matStepLabel>确认订单信息</ng-template>
@@ -167,7 +167,7 @@
               <div class="orderSure-goto-tips">温馨提示：请您仔细核对订单信息，因演出票的唯一性，时效性，购买后无法退票或更换</div>
               <div class="orderSure-goto-read">
                 <mat-checkbox formControlName="myCtrl" required>我已阅读并同意</mat-checkbox>
-                <a href="#">《i-Ticket用户票务服务协议》</a>
+                <a>《i-Ticket用户票务服务协议》</a>
               </div>
             </div>
           </div>
@@ -176,12 +176,76 @@
 
       <mat-step>
         <ng-template matStepLabel>支付中心</ng-template>
+        <div class="pay-container">
+          <div class="pay-title">选择支付方式</div>
+          <div class="pay-info">
+            <span class="pay-info-num">订单号：46126439</span>
+            <span class="pay-info-total">
+              应付总额
+              <em class="pay-info-money">284.40</em>
+              元
+            </span>
+          </div>
+          <div class="pay-center">
+            <div class="pay-center-head">支付方式</div>
+            <div class="pay-center-body clear-float">
+              <mat-radio-group class="pay-radio-group">
+                <mat-radio-button class="pay-radio-btn" value="0" [checked]="true">
+                  <img src="assets/images/banklogo/ccbbank-pc.png">
+                  <span style="margin-left: 10px">交行支付</span>
+                </mat-radio-button>
+                <div class="divider-border"></div>
+                <mat-radio-button class="pay-radio-btn" value="1">
+                  <img src="assets/images/banklogo/cibbank.png" alt="">
+                  <span style="margin-left: 10px">民生信用卡</span>
+                </mat-radio-button>
+                <div class="divider-border"></div>
+                <mat-radio-button class="pay-radio-btn" value="2">
+                  <img src="assets/images/banklogo/cmbcbank.png" alt="">
+                  <span style="margin-left: 10px">浦发信用卡</span>
+                </mat-radio-button>
+                <div class="divider-border"></div>
+                <mat-radio-button class="pay-radio-btn" value="3">
+                  <img src="assets/images/banklogo/spdbank-pc.png" alt="">
+                  <span style="margin-left: 10px">兴业银行</span>
+                </mat-radio-button>
+                <div class="divider-border"></div>
+              </mat-radio-group>
+              <div class="pay-footer">
+                <button mat-raised-button matStepperNext color="primary" class="pay-footer-btn">立即支付</button>
+                <div class="pay-footer-tips">
+                  <p class="pay-footer-tip1">温馨提示：订单提交成功，请您务必在 15分钟内 完成支付，否则您的订单将自动取消！</p>
+                  <p class="pay-footer-tip2">
+                    剩余支付时间：
+                    <span class="pay-timer">
+                      <em>00</em>
+                      小时
+                      <em>06</em>
+                      分
+                      <em>15</em>
+                      秒
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </mat-step>
 
       <mat-step>
         <ng-template matStepLabel>完成支付</ng-template>
+        <div class="pay-success">
+          <div>
+            <i class="material-icons pay-success-ico">check_circle_outline</i>
+          </div>
+          <p class="pay-success-info">支付成功！</p>
+          <p class="pay-success-goto">
+            <span> <a href="/"> << 返回首页 &nbsp;&nbsp;</a> </span>
+            <span> <a href="/orders"> 我的订单 >> </a></span>
+          </p>
+        </div>
       </mat-step>
-
     </mat-horizontal-stepper>
   </div>
 </div>

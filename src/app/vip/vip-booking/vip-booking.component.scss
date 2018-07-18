@@ -329,6 +329,146 @@
       }
     }
   }
+
+  .pay-container {
+    width: auto;
+    margin: 0 20px;
+
+    .pay-title {
+      line-height: 40px;
+      font-size: 16px;
+      font-weight: bold;
+
+      margin-top: 0;
+    }
+
+    .pay-info {
+      line-height: 54px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #666;
+
+      .pay-info-num {
+        margin-left: 20px;
+        font-size: 14px;
+      }
+
+      .pay-info-total {
+        float: right;
+        margin-right: 20px;
+
+        .pay-info-money {
+          font-style: normal;
+          font-size: 18px;
+          font-weight: bold;
+          color: #cc0001;
+          margin: 0 8px;
+        }
+      }
+    }
+
+    .pay-center {
+      margin-top: 20px;
+      background-color: #fff;
+      border-width: 3px 1px 1px;
+      border-color: map_get($default-app-primary, 500) #ddd #ddd;
+      border-style: solid;
+
+      .pay-center-head {
+        padding-left: 18px;
+        line-height: 40px;
+        color: #7f7f7f;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .pay-center-body {
+        width: 940px;
+        margin: auto;
+        padding: 20px 10px;
+
+        .pay-radio-group {
+          display: inline-flex;
+          flex-direction: column;
+        }
+
+        .pay-radio-btn {
+          margin: 10px 30px;
+
+          img {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+          }
+        }
+
+        .divider-border {
+          height: 2px;
+          width: 896px;
+          margin: 0 8px;
+          border-bottom: 1px solid #eee;
+        }
+      }
+    }
+
+    .pay-footer {
+      padding: 30px 0 44px;
+
+      .pay-footer-btn {
+        float: left;
+        width: 160px;
+        margin-left: 40px;
+        height: 50px;
+      }
+      .pay-footer-tips {
+        margin-left: 40px;
+        text-align: left;
+        line-height: 20px;
+        float: left;
+
+        .pay-footer-tip1 {
+          color: #666;
+        }
+        .pay-footer-tip2 {
+          color: #666;
+
+          .pay-timer {
+            color: #cc0001;
+            em {
+              font-size: 24px;
+              margin: 0 5px;
+              font-style: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pay-success {
+
+    i.pay-success-ico {
+      margin-left: 460px;
+      font-size: 100px;
+    }
+    .pay-success-info {
+      margin-left: 480px;
+    }
+    .pay-success-goto {
+      margin-left: 424px;
+
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        color: map_get($default-app-primary, 400);
+
+        &:hover {
+          color: map_get($default-app-primary, 300);
+        }
+      }
+
+    }
+  }
 }
 
 .clear-float {
